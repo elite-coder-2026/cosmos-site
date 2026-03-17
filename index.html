@@ -111,6 +111,135 @@
         .svc-price { font-size: 15px; font-weight: 500; color: var(--gold-dk); margin-bottom: 4px; }
         .svc-meta { font-size: 11.5px; color: var(--ink-3); }
 
+        /* ABOUT */
+        .about {
+            background: var(--white);
+            border-radius: var(--r);
+            box-shadow: var(--sh);
+            padding: 36px 40px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .about-lead {
+            display: grid;
+            grid-template-columns: minmax(0, 1.25fr) minmax(220px, .75fr);
+            gap: 24px;
+            align-items: start;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .about-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            font-weight: 400;
+            line-height: 1.02;
+            margin-bottom: 12px;
+        }
+
+        .about-copy {
+            font-size: 14px;
+            line-height: 1.85;
+            color: var(--ink-2);
+        }
+
+        .about-summary {
+            background: linear-gradient(180deg, var(--champagne), #fbf7ec);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 20px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .summary-label {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+            color: var(--gold-dk);
+        }
+
+        .summary-item {
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(138, 110, 47, .14);
+        }
+
+        .summary-item:last-child {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .summary-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            margin-bottom: 4px;
+            color: var(--ink);
+        }
+
+        .summary-text {
+            font-size: 12.5px;
+            line-height: 1.7;
+            color: var(--ink-2);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .about-card {
+            background: var(--cream);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 24px;
+        }
+
+        .about-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--ink);
+        }
+
+        .about-card p {
+            font-size: 13px;
+            line-height: 1.75;
+            color: var(--ink-2);
+        }
+
+        .about-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+            margin-top: 16px;
+        }
+
+        .about-list li {
+            position: relative;
+            padding-left: 16px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--ink-2);
+        }
+
+        .about-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 9px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
         /* LOWER */
         .lower { display: grid; grid-template-columns: 1fr 300px; gap: 20px; align-items: start; }
         .left { display: flex; flex-direction: column; gap: 20px; }
@@ -313,6 +442,11 @@
             .hero { grid-template-columns: 1fr; }
             .hero-img { height: 240px; }
             .hero-body { padding: 24px; }
+            .about,
+            .services-head,
+            .booking-body { padding-left: 24px; padding-right: 24px; }
+            .about-lead,
+            .about-grid { grid-template-columns: 1fr; }
             .services-grid { grid-template-columns: 1fr 1fr; }
             .lower { grid-template-columns: 1fr; }
             .booking-grid { grid-template-columns: 1fr; }
@@ -345,6 +479,87 @@
             </div>
         </div>
     </div>
+
+    <section class="about">
+        <div class="about-lead">
+            <div>
+                <div class="eyebrow">Cosmos</div>
+                <h2 class="about-title">Beauty, tattoo, and wellness booking with a polished front-end experience.</h2>
+                <p class="about-copy">Cosmos is a beauty, tattoo, and wellness marketplace concept built as a polished front-end profile and booking experience. The project is designed to present service providers clearly, explain what they offer, and make it easier for clients to request appointments with the right professional.</p>
+            </div>
+            <div class="about-summary">
+                <div class="summary-label">Overview</div>
+                <div class="summary-item">
+                    <div class="summary-title">Static Website Prototype</div>
+                    <p class="summary-text">This repository contains a static website prototype for Cosmos focused on premium presentation, clear service communication, and a clean booking flow across multiple service categories.</p>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-title">Provider-First Profiles</div>
+                    <p class="summary-text">Professionals can be presented with biography, service listings, starting prices, availability, reputation signals, and portfolio or showcase content.</p>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-title">Client Booking Flow</div>
+                    <p class="summary-text">Clients can request appointments with contact info, date and time preferences, service notes, provider preferences, and optional transportation details.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-grid">
+            <article class="about-card">
+                <h3>Stylist Services</h3>
+                <p>Cosmos supports salon and independent hair professionals with service descriptions, estimated timing, and pricing so clients know what to expect before booking.</p>
+                <ul class="about-list">
+                    <li>Haircuts and precision cuts</li>
+                    <li>Coloring and blonding services</li>
+                    <li>Balayage and lived-in color</li>
+                    <li>Extensions</li>
+                    <li>Scalp and hair treatments</li>
+                    <li>Bridal and event styling</li>
+                </ul>
+            </article>
+
+            <article class="about-card">
+                <h3>Tattoo Artist Services</h3>
+                <p>Cosmos gives tattoo professionals room to describe their style, rates, studio details, portfolio links, and booking requirements in a premium profile format.</p>
+                <ul class="about-list">
+                    <li>Custom tattoo consultations</li>
+                    <li>Small, medium, and large tattoo sessions</li>
+                    <li>Fine line, realism, blackwork, geometric, and illustrative work</li>
+                    <li>Cover-ups</li>
+                    <li>Touch-ups</li>
+                </ul>
+            </article>
+
+            <article class="about-card">
+                <h3>Massage And Wellness Services</h3>
+                <p>Massage therapists and wellness providers can present service types, client preferences, and intake notes that help them prepare for each appointment.</p>
+                <ul class="about-list">
+                    <li>Swedish massage</li>
+                    <li>Deep tissue massage</li>
+                    <li>Hot stone therapy</li>
+                    <li>Sports massage</li>
+                    <li>Prenatal massage</li>
+                    <li>Reflexology</li>
+                    <li>Lymphatic drainage</li>
+                    <li>Aromatherapy</li>
+                    <li>Thai massage</li>
+                </ul>
+            </article>
+
+            <article class="about-card">
+                <h3>Project Features</h3>
+                <p>Cosmos is built to make providers easier to compare and easier to book, while keeping the prototype lightweight and presentation-focused.</p>
+                <ul class="about-list">
+                    <li>Static single-page site in <code>index.html</code></li>
+                    <li>Premium editorial-style visual design</li>
+                    <li>Service cards with pricing and descriptions</li>
+                    <li>Booking form for multiple service categories</li>
+                    <li>Profile-focused layout for beauty and wellness professionals</li>
+                    <li>Responsive structure for smaller screens</li>
+                </ul>
+            </article>
+        </div>
+    </section>
 
     <div class="services">
         <div class="services-head">
