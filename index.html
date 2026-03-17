@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylist Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --gold:       #C9A84C;
+            --gold-lt:    #E8D5A3;
+            --gold-dk:    #8A6E2F;
+            --champagne:  #F5EDD8;
+            --cream:      #F2EBE0;
+            --white:      #FFFFFF;
+            --ink:        #1C1712;
+            --ink-2:      #4A3F33;
+            --ink-3:      #8C7D6E;
+            --line:       #E5D9C5;
+            --r:          12px;
+            --sh:         0 2px 16px rgba(60,40,10,.08);
+            --sh-lg:      0 8px 40px rgba(60,40,10,.13);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--ink);
+            min-height: 100vh;
+            padding: 48px 24px 96px;
+        }
+
+        .page {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* HERO */
+        .hero {
+            background: var(--white);
+            border-radius: var(--r);
+            box-shadow: var(--sh-lg);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            min-height: 380px;
+        }
+
+        .hero-img { position: relative; overflow: hidden; background: var(--champagne); }
+        .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .badge {
+            position: absolute; top: 14px; left: 14px;
+            background: var(--gold); color: #fff;
+            font-size: 10px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase;
+            padding: 5px 13px 5px 10px; border-radius: 99px;
+            display: flex; align-items: center; gap: 7px;
+        }
+
+        .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.85); flex-shrink: 0; }
+
+        .hero-body { padding: 38px 40px; display: flex; flex-direction: column; justify-content: space-between; }
+
+        .eyebrow { font-size: 10px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+
+        .hero-name { font-family: 'Cormorant Garamond', serif; font-size: 46px; font-weight: 300; line-height: 1.05; color: var(--ink); margin-bottom: 7px; }
+
+        .hero-role { font-size: 13px; color: var(--ink-3); font-weight: 300; margin-bottom: 22px; }
+
+        .hero-bio { font-size: 13.5px; line-height: 1.78; color: var(--ink-2); margin-bottom: 26px; max-width: 400px; }
+
+        .stats { display: flex; align-items: center; margin-bottom: 30px; }
+
+        .stat { display: flex; flex-direction: column; padding-right: 24px; margin-right: 24px; border-right: 1px solid var(--line); }
+        .stat:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+
+        .stat-n { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 500; color: var(--ink); line-height: 1; }
+        .stat-l { font-size: 10px; color: var(--ink-3); margin-top: 4px; text-transform: uppercase; letter-spacing: .07em; }
+
+        .actions { display: flex; gap: 10px; }
+
+        .btn { padding: 11px 26px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; border: none; letter-spacing: .02em; transition: all .18s; }
+        .btn-gold { background: var(--gold); color: #fff; }
+        .btn-gold:hover { background: var(--gold-dk); transform: translateY(-1px); }
+        .btn-outline { background: transparent; color: var(--ink-2); border: 1.5px solid var(--line); }
+        .btn-outline:hover { border-color: var(--gold-lt); color: var(--gold-dk); }
+
+        /* SERVICES */
+        .services { background: var(--white); border-radius: var(--r); box-shadow: var(--sh); overflow: hidden; }
+
+        .services-head { display: flex; justify-content: space-between; align-items: flex-end; padding: 36px 40px 30px; border-bottom: 1px solid var(--line); }
+
+        .services-h1 { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 400; color: var(--ink); line-height: 1; }
+
+        .services-note { font-size: 13px; color: var(--ink-3); line-height: 1.7; text-align: right; max-width: 200px; }
+
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+
+        .svc { padding: 28px 30px 32px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+        .svc:nth-child(3n) { border-right: none; }
+        .svc:nth-last-child(-n+3) { border-bottom: none; }
+
+        .svc-cat { font-size: 10px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 11px; }
+        .svc-name { font-family: 'Cormorant Garamond', serif; font-size: 23px; font-weight: 600; color: var(--ink); line-height: 1.15; margin-bottom: 11px; }
+        .svc-desc { font-size: 13px; line-height: 1.72; color: var(--ink-2); margin-bottom: 20px; }
+        .svc-price { font-size: 15px; font-weight: 500; color: var(--gold-dk); margin-bottom: 4px; }
+        .svc-meta { font-size: 11.5px; color: var(--ink-3); }
+
+        /* LOWER */
+        .lower { display: grid; grid-template-columns: 1fr 300px; gap: 20px; align-items: start; }
+        .left { display: flex; flex-direction: column; gap: 20px; }
+        .right { display: flex; flex-direction: column; gap: 20px; }
+
+        .card { background: var(--white); border-radius: var(--r); box-shadow: var(--sh); padding: 26px 28px 30px; }
+
+        .card-title { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600; color: var(--ink); padding-bottom: 14px; margin-bottom: 18px; border-bottom: 1px solid var(--line); }
+
+        /* TAGS */
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag { background: var(--champagne); color: var(--gold-dk); font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 99px; border: 1px solid var(--gold-lt); }
+
+        /* WORK */
+        .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .thumb { aspect-ratio: 1; border-radius: 8px; overflow: hidden; cursor: pointer; }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; }
+        .thumb:hover img { transform: scale(1.07); }
+
+        /* CONTACT */
+        .info-list { display: flex; flex-direction: column; gap: 13px; }
+        .info-row { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--ink-2); }
+        .info-icon { width: 30px; height: 30px; background: var(--champagne); border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
+
+        /* SCHEDULE */
+        .sched { display: flex; flex-direction: column; gap: 7px; }
+        .sched-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; border-radius: 7px; background: var(--cream); font-size: 13px; }
+        .sched-row.off { opacity: .4; }
+        .sched-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+        .sched-row.off .sched-dot { background: var(--line); }
+        .sched-day { font-weight: 500; color: var(--ink); width: 36px; }
+        .sched-hrs { color: var(--ink-2); font-size: 12.5px; }
+
+        /* RATINGS */
+        .rating-top { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+        .rating-big { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 600; color: var(--gold); line-height: 1; }
+        .stars { color: var(--gold); font-size: 13px; letter-spacing: 1px; margin-bottom: 3px; }
+        .rating-sub { font-size: 11.5px; color: var(--ink-3); }
+        .bar-row { display: flex; align-items: center; gap: 9px; margin-bottom: 6px; font-size: 11.5px; color: var(--ink-3); }
+        .bar-n { width: 8px; text-align: right; }
+        .bar-bg { flex: 1; height: 4px; border-radius: 99px; background: var(--champagne); overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 99px; background: var(--gold); }
+
+        /* BOOKING FORM */
+        .booking-body { padding: 32px 40px 40px; }
+
+        .booking-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .field-group { display: flex; flex-direction: column; gap: 7px; }
+        .field-full { grid-column: 1 / -1; }
+
+        .field-label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--ink-3);
+        }
+
+        .field-optional {
+            font-size: 10px;
+            color: var(--ink-3);
+            font-weight: 400;
+            text-transform: none;
+            letter-spacing: 0;
+            margin-left: 4px;
+        }
+
+        .field-input {
+            background: var(--cream);
+            border: 1.5px solid var(--line);
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13.5px;
+            color: var(--ink);
+            outline: none;
+            transition: border-color .18s, background .18s;
+            width: 100%;
+        }
+
+        .field-input::placeholder { color: var(--ink-3); }
+        .field-input:focus { border-color: var(--gold); background: var(--white); }
+
+        .field-select-wrap { position: relative; }
+
+        .field-select {
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            padding-right: 40px;
+        }
+
+        .select-arrow {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--ink-3);
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+        .field-textarea {
+            resize: vertical;
+            min-height: 110px;
+            line-height: 1.6;
+        }
+
+        .field-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-top: 4px;
+        }
+
+        .form-note {
+            font-size: 12px;
+            color: var(--ink-3);
+        }
+
+        .btn-group {
+            display: flex;
+        }
+
+        .btn-group .btn {
+            border-radius: 0;
+        }
+
+        .btn-group .btn:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+
+        .btn-group .btn:last-child {
+            border-radius: 0 8px 8px 0;
+            border-left: none;
+        }
+
+        /* CHECKBOX */
+        .check-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .check-row input[type="checkbox"] { display: none; }
+
+        .check-box {
+            width: 20px; height: 20px;
+            border-radius: 5px;
+            border: 1.5px solid var(--line);
+            background: var(--cream);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color .18s, background .18s;
+        }
+
+        .check-row input[type="checkbox"]:checked + .check-box {
+            background: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .check-row input[type="checkbox"]:checked + .check-box::after {
+            content: '';
+            width: 5px; height: 9px;
+            border: 2px solid #fff;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg) translateY(-1px);
+            display: block;
+        }
+
+        .check-label {
+            font-size: 13.5px;
+            color: var(--ink-2);
+        }
+
+        /* TRANSPORT FIELDS */
+        #transport-fields {
+            display: contents;
+        }
+
+        .transport-divider {
+            padding-top: 8px;
+            border-top: 1px solid var(--line);
+            margin-top: 4px;
+        }
+
+
+
+        @media (max-width: 740px) {
+            .hero { grid-template-columns: 1fr; }
+            .hero-img { height: 240px; }
+            .hero-body { padding: 24px; }
+            .services-grid { grid-template-columns: 1fr 1fr; }
+            .lower { grid-template-columns: 1fr; }
+            .booking-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <div class="hero">
+        <div class="hero-img">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=520&h=680&fit=crop&crop=face" alt="Monique Delacroix">
+            <div class="badge"><div class="badge-dot"></div>Available Today</div>
+        </div>
+        <div class="hero-body">
+            <div>
+                <div class="eyebrow">Senior Stylist · 8 yrs experience</div>
+                <div class="hero-name">Monique<br>Delacroix</div>
+                <div class="hero-role">Color Specialist &amp; Creative Director</div>
+                <p class="hero-bio">Transforming hair into art since 2016. Known for precision cuts, lived-in color, and a client-first approach that turns first-timers into regulars. Certified Redken colorist with advanced balayage training.</p>
+                <div class="stats">
+                    <div class="stat"><div class="stat-n">412</div><div class="stat-l">Clients</div></div>
+                    <div class="stat"><div class="stat-n">4.9</div><div class="stat-l">Rating</div></div>
+                    <div class="stat"><div class="stat-n">98%</div><div class="stat-l">Rebooking</div></div>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="btn btn-gold">Book Appointment</button>
+                <button class="btn btn-outline">Send Message</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="services">
+        <div class="services-head">
+            <div>
+                <div class="eyebrow">What I Offer</div>
+                <div class="services-h1">Services &amp; Pricing</div>
+            </div>
+            <div class="services-note">All services begin with a consultation. Pricing reflects the work, not the clock.</div>
+        </div>
+        <div class="services-grid">
+            <div class="svc"><div class="svc-cat">Color</div><div class="svc-name">Signature Blonding</div><p class="svc-desc">Foilyage, highlights, and gloss for soft contrast and luminous movement between appointments.</p><div class="svc-price">From $220</div><div class="svc-meta">3–4 hrs · includes toner + blowout</div></div>
+            <div class="svc"><div class="svc-cat">Color</div><div class="svc-name">Lived-In Balayage</div><p class="svc-desc">Hand-painted dimension that grows out cleanly and looks expensive at every stage.</p><div class="svc-price">From $185</div><div class="svc-meta">2.5–3 hrs</div></div>
+            <div class="svc"><div class="svc-cat">Cut</div><div class="svc-name">Precision Cut</div><p class="svc-desc">Weight removal, face framing, and shape refinement that moves well long after you leave.</p><div class="svc-price">From $95</div><div class="svc-meta">60–90 min · all textures</div></div>
+            <div class="svc"><div class="svc-cat">Extensions</div><div class="svc-name">Tape-In Extensions</div><p class="svc-desc">Seamless volume and length with a focus on blend, comfort, and scalp health.</p><div class="svc-price">From $380</div><div class="svc-meta">Consultation required</div></div>
+            <div class="svc"><div class="svc-cat">Wellness</div><div class="svc-name">Scalp Renewal</div><p class="svc-desc">Detox, massage, steam, and bond repair — the foundation behind every great result.</p><div class="svc-price">From $75</div><div class="svc-meta">60 min · add-on or standalone</div></div>
+            <div class="svc"><div class="svc-cat">Events</div><div class="svc-name">Bridal + Occasion</div><p class="svc-desc">Refined updos and event styling that holds on camera and still feels like you.</p><div class="svc-price">From $150</div><div class="svc-meta">Trial session included</div></div>
+        </div>
+    </div>
+
+
+    <!-- ADD SERVICE FORM -->
+    <div class="services">
+        <div class="services-head">
+            <div>
+                <div class="eyebrow">Manage Offerings</div>
+                <div class="services-h1">Add a Service</div>
+            </div>
+            <div class="services-note">New services appear on your profile immediately after saving.</div>
+        </div>
+        <div class="booking-body">
+            <div class="booking-grid">
+
+                <div class="field-group">
+                    <label class="field-label">Service Name</label>
+                    <input class="field-input" type="text" placeholder="e.g. Lived-In Balayage">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Category</label>
+                    <div class="field-select-wrap">
+                        <select class="field-input field-select">
+                            <option value="" disabled selected>Select a category</option>
+                            <option>Color</option>
+                            <option>Cut</option>
+                            <option>Extensions</option>
+                            <option>Wellness</option>
+                            <option>Events</option>
+                            <option>Treatment</option>
+                            <option>Other</option>
+                        </select>
+                        <div class="select-arrow">&#8964;</div>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Starting Price</label>
+                    <input class="field-input" type="text" placeholder="e.g. 185">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Duration</label>
+                    <input class="field-input" type="text" placeholder="e.g. 2.5–3 hrs">
+                </div>
+
+                <div class="field-group field-full">
+                    <label class="field-label">Description</label>
+                    <textarea class="field-input field-textarea" placeholder="Describe the service — what it includes, who it's for, what results to expect..."></textarea>
+                </div>
+
+                <div class="field-group field-full">
+                    <label class="field-label">Additional Notes <span class="field-optional">optional</span></label>
+                    <input class="field-input" type="text" placeholder="e.g. Consultation required · includes toner + blowout">
+                </div>
+
+                <div class="field-group field-full field-actions">
+                    <div class="btn-group">
+                        <button class="btn btn-gold" style="padding: 14px 40px; font-size: 14px;">Save Service</button>
+                        <button class="btn btn-outline" style="padding: 14px 28px; font-size: 14px;">Clear</button>
+                    </div>
+                    <span class="form-note">Service will be visible on your profile immediately.</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOKING FORM -->
+    <div class="services">
+        <div class="services-head">
+            <div>
+                <div class="eyebrow">Reserve Your Chair</div>
+                <div class="services-h1">Book an Appointment</div>
+            </div>
+            <div class="services-note">Appointments confirmed within 24 hours. New clients start with a complimentary consultation.</div>
+        </div>
+        <div class="booking-body">
+            <div class="booking-grid">
+
+                <div class="field-group">
+                    <label class="field-label">First Name</label>
+                    <input class="field-input" type="text" placeholder="Your first name">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Last Name</label>
+                    <input class="field-input" type="text" placeholder="Your last name">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Email</label>
+                    <input class="field-input" type="email" placeholder="you@email.com">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Phone</label>
+                    <input class="field-input" type="tel" placeholder="(000) 000-0000">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Appointment Type</label>
+                    <div class="field-select-wrap">
+                        <select class="field-input field-select" id="appt-type" onchange="showApptFields(this.value)">
+                            <option value="" disabled selected>Select a type</option>
+                            <option value="stylist">Stylist</option>
+                            <option value="tattoo">Tattoo Artist</option>
+                            <option value="massage">Masseuse</option>
+                        </select>
+                        <div class="select-arrow">&#8964;</div>
+                    </div>
+                </div>
+
+                <div class="field-group" id="service-field" style="display:none">
+                    <label class="field-label">Service</label>
+                    <div class="field-select-wrap">
+                        <select class="field-input field-select" id="service-select">
+                            <option value="" disabled selected>Select a service</option>
+                        </select>
+                        <div class="select-arrow">&#8964;</div>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Preferred Date</label>
+                    <input class="field-input" type="date">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Preferred Time</label>
+                    <input class="field-input" type="time">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Duration</label>
+                    <div class="field-select-wrap">
+                        <select class="field-input field-select">
+                            <option value="" disabled selected>Estimated length</option>
+                            <option>30 min</option>
+                            <option>60 min</option>
+                            <option>90 min</option>
+                            <option>2 hrs</option>
+                            <option>3 hrs</option>
+                            <option>4+ hrs</option>
+                        </select>
+                        <div class="select-arrow">&#8964;</div>
+                    </div>
+                </div>
+
+                <!-- STYLIST FIELDS -->
+                <div id="fields-stylist" class="appt-fields" style="display:none">
+                    <div class="field-group field-full transport-divider">
+                        <div class="eyebrow" style="color:var(--gold);">Stylist Details</div>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Stylist Preference <span class="field-optional">optional</span></label>
+                        <input class="field-input" type="text" placeholder="Request a specific stylist">
+                    </div>
+                    <div class="field-group field-full">
+                        <label class="field-label">Hair Notes <span class="field-optional">optional</span></label>
+                        <textarea class="field-input field-textarea" style="min-height:80px" placeholder="Hair history, inspiration photos, concerns..."></textarea>
+                    </div>
+                </div>
+
+                <!-- TATTOO FIELDS -->
+                <div id="fields-tattoo" class="appt-fields" style="display:none">
+                    <div class="field-group field-full transport-divider">
+                        <div class="eyebrow" style="color:var(--gold);">Tattoo Details</div>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Placement</label>
+                        <input class="field-input" type="text" placeholder="e.g. Inner forearm, left shoulder">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Approximate Size</label>
+                        <div class="field-select-wrap">
+                            <select class="field-input field-select">
+                                <option value="" disabled selected>Select size</option>
+                                <option>Small — under 2"</option>
+                                <option>Medium — 2–4"</option>
+                                <option>Large — 4–6"</option>
+                                <option>Extra Large — 6"+</option>
+                                <option>Full sleeve / back piece</option>
+                            </select>
+                            <div class="select-arrow">&#8964;</div>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Style</label>
+                        <div class="field-select-wrap">
+                            <select class="field-input field-select">
+                                <option value="" disabled selected>Select a style</option>
+                                <option>Fine Line</option>
+                                <option>Traditional / Old School</option>
+                                <option>Neo Traditional</option>
+                                <option>Blackwork</option>
+                                <option>Realism</option>
+                                <option>Watercolor</option>
+                                <option>Geometric</option>
+                                <option>Japanese</option>
+                                <option>Illustrative</option>
+                                <option>Cover-Up</option>
+                            </select>
+                            <div class="select-arrow">&#8964;</div>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Artist Preference <span class="field-optional">optional</span></label>
+                        <input class="field-input" type="text" placeholder="Request a specific artist">
+                    </div>
+                    <div class="field-group field-full">
+                        <label class="field-label">Design Description</label>
+                        <textarea class="field-input field-textarea" style="min-height:80px" placeholder="Describe the design, any reference images, colors, or ideas..."></textarea>
+                    </div>
+                    <div class="field-group field-full">
+                        <label class="field-label">Reference Images <span class="field-optional">optional</span></label>
+                        <input class="field-input" type="url" placeholder="Link to mood board, Pinterest, or Instagram">
+                    </div>
+                </div>
+
+                <!-- MASSAGE FIELDS -->
+                <div id="fields-massage" class="appt-fields" style="display:none">
+                    <div class="field-group field-full transport-divider">
+                        <div class="eyebrow" style="color:var(--gold);">Massage Details</div>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Modality</label>
+                        <div class="field-select-wrap">
+                            <select class="field-input field-select">
+                                <option value="" disabled selected>Select a modality</option>
+                                <option>Swedish</option>
+                                <option>Deep Tissue</option>
+                                <option>Hot Stone</option>
+                                <option>Sports Massage</option>
+                                <option>Prenatal</option>
+                                <option>Reflexology</option>
+                                <option>Lymphatic Drainage</option>
+                                <option>Aromatherapy</option>
+                                <option>Thai Massage</option>
+                            </select>
+                            <div class="select-arrow">&#8964;</div>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Pressure Preference</label>
+                        <div class="field-select-wrap">
+                            <select class="field-input field-select">
+                                <option value="" disabled selected>Select pressure</option>
+                                <option>Light</option>
+                                <option>Medium</option>
+                                <option>Firm</option>
+                                <option>Deep</option>
+                            </select>
+                            <div class="select-arrow">&#8964;</div>
+                        </div>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Therapist Preference <span class="field-optional">optional</span></label>
+                        <input class="field-input" type="text" placeholder="Request a specific therapist">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Focus Areas <span class="field-optional">optional</span></label>
+                        <input class="field-input" type="text" placeholder="e.g. Lower back, shoulders, neck">
+                    </div>
+                    <div class="field-group field-full">
+                        <label class="field-label">Health Notes <span class="field-optional">optional</span></label>
+                        <textarea class="field-input field-textarea" style="min-height:80px" placeholder="Injuries, conditions, sensitivities, or anything the therapist should know..."></textarea>
+                    </div>
+                </div>
+
+                <div class="field-group field-full">
+                    <label class="check-row">
+                        <input type="checkbox" id="transport-toggle" onchange="document.getElementById('transport-fields').style.display = this.checked ? 'contents' : 'none'">
+                        <div class="check-box"></div>
+                        <span class="check-label">I'd like to request transportation</span>
+                    </label>
+                </div>
+
+                <!-- Transportation fields — hidden by default -->
+                <div id="transport-fields" style="display:none; contents: unset;" class="transport-fields">
+                    <div class="field-group field-full transport-divider">
+                        <div class="eyebrow" style="color: var(--gold);">Transportation Details</div>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Pickup Address</label>
+                        <input class="field-input" type="text" placeholder="Street address">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">City / ZIP</label>
+                        <input class="field-input" type="text" placeholder="City, IL 60000">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Pickup Time</label>
+                        <input class="field-input" type="time">
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Return Trip?</label>
+                        <div class="field-select-wrap">
+                            <select class="field-input field-select">
+                                <option value="" disabled selected>Select</option>
+                                <option>Yes — round trip</option>
+                                <option>No — one way only</option>
+                            </select>
+                            <div class="select-arrow">&#8964;</div>
+                        </div>
+                    </div>
+                    <div class="field-group field-full">
+                        <label class="field-label">Transportation Notes <span class="field-optional">optional</span></label>
+                        <input class="field-input" type="text" placeholder="Gate code, building instructions, accessibility needs...">
+                    </div>
+                </div>
+
+                <div class="field-group field-full field-actions">
+                    <button class="btn btn-gold" style="padding: 14px 40px; font-size: 14px;">Request Appointment</button>
+                    <span class="form-note">We'll confirm your time within 24 hours.</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const services = {
+            stylist: [
+                'Signature Blonding — From $220',
+                'Lived-In Balayage — From $185',
+                'Precision Cut — From $95',
+                'Tape-In Extensions — From $380',
+                'Scalp Renewal — From $75',
+                'Bridal + Occasion — From $150'
+            ],
+            tattoo: [
+                'Custom Design Consultation — From $100',
+                'Small Tattoo (under 2") — From $150',
+                'Medium Tattoo (2–4") — From $250',
+                'Large Tattoo (4–6") — From $400',
+                'Extra Large / Sleeve — From $800',
+                'Cover-Up — From $300',
+                'Touch-Up — From $80'
+            ],
+            massage: [
+                'Swedish — $90 / 60 min',
+                'Deep Tissue — $110 / 60 min',
+                'Hot Stone — $120 / 60 min',
+                'Sports Massage — $110 / 60 min',
+                'Prenatal — $95 / 60 min',
+                'Reflexology — $85 / 45 min',
+                'Lymphatic Drainage — $100 / 60 min',
+                'Aromatherapy — $95 / 60 min',
+                'Thai Massage — $110 / 60 min'
+            ]
+        };
+
+        function showApptFields(type) {
+            document.querySelectorAll('.appt-fields').forEach(el => el.style.display = 'none');
+
+            const serviceField = document.getElementById('service-field');
+            const serviceSelect = document.getElementById('service-select');
+
+            if (type && services[type]) {
+                serviceSelect.innerHTML = '<option value="" disabled selected>Select a service</option>';
+                services[type].forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.textContent = s;
+                    serviceSelect.appendChild(opt);
+                });
+                serviceField.style.display = 'flex';
+            } else {
+                serviceField.style.display = 'none';
+            }
+
+            if (type) {
+                const el = document.getElementById('fields-' + type);
+                if (el) el.style.display = 'contents';
+            }
+        }
+    </script>
+
+
+    <!-- TATTOO ARTIST FORM -->
+    <div class="services">
+        <div class="services-head">
+            <div>
+                <div class="eyebrow">Artist Registration</div>
+                <div class="services-h1">Tattoo Artist Profile</div>
+            </div>
+            <div class="services-note">Complete your profile to start accepting bookings and showcasing your portfolio.</div>
+        </div>
+        <div class="booking-body">
+            <div class="booking-grid">
+
+                <div class="field-group">
+                    <label class="field-label">Artist Name</label>
+                    <input class="field-input" type="text" placeholder="Name or studio alias">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Studio / Shop Name</label>
+                    <input class="field-input" type="text" placeholder="Where do you work?">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Email</label>
+                    <input class="field-input" type="email" placeholder="you@studio.com">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Phone</label>
+                    <input class="field-input" type="tel" placeholder="(000) 000-0000">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Primary Style</label>
+                    <div class="field-select-wrap">
+                        <select class="field-input field-select">
+                            <option value="" disabled selected>Select your style</option>
+                            <option>Fine Line</option>
+                            <option>Traditional / Old School</option>
+                            <option>Neo Traditional</option>
+                            <option>Blackwork</option>
+                            <option>Realism</option>
+                            <option>Watercolor</option>
+                            <option>Geometric</option>
+                            <option>Japanese</option>
+                            <option>Illustrative</option>
+                            <option>Cover-Up Specialist</option>
+                            <option>Other</option>
+                        </select>
+                        <div class="select-arrow">&#8964;</div>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Years of Experience</label>
+                    <input class="field-input" type="text" placeholder="e.g. 6">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Starting Rate</label>
+                    <input class="field-input" type="text" placeholder="e.g. $150 / hr or $200 minimum">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Deposit Required</label>
+                    <div class="field-select-wrap">
+                        <select class="field-input field-select">
+                            <option value="" disabled selected>Select</option>
+                            <option>Yes — required to book</option>
+                            <option>No — pay day of</option>
+                        </select>
+                        <div class="select-arrow">&#8964;</div>
+                    </div>
+                </div>
+
+                <div class="field-group field-full">
+                    <label class="field-label">Bio</label>
+                    <textarea class="field-input field-textarea" placeholder="Tell clients about your background, influences, and what makes your work distinctive..."></textarea>
+                </div>
+
+                <div class="field-group field-full">
+                    <label class="field-label">Portfolio URL <span class="field-optional">optional</span></label>
+                    <input class="field-input" type="url" placeholder="https://instagram.com/yourhandle">
+                </div>
+
+                <div class="field-group field-full field-actions">
+                    <div class="btn-group">
+                        <button class="btn btn-gold" style="padding: 14px 40px; font-size: 14px;">Save Artist Profile</button>
+                        <button class="btn btn-outline" style="padding: 14px 28px; font-size: 14px;">Clear</button>
+                    </div>
+                    <span class="form-note">Profile goes live after admin review.</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW CLIENT FORM -->
+    <!-- ADD STYLIST FORM -->
+    <div class="services">
+        <div class="services-head">
+            <div>
+                <div class="eyebrow">Team Management</div>
+                <div class="services-h1">Add a Stylist</div>
+            </div>
+            <div class="services-note">New stylists are added to the team roster and can start accepting bookings immediately.</div>
+        </div>
+        <div class="booking-body">
+            <div class="booking-grid">
+
+                <div class="field-group">
+                    <label class="field-label">First Name</label>
+                    <input class="field-input" type="text" placeholder="Stylist first name">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Last Name</label>
+                    <input class="field-input" type="text" placeholder="Stylist last name">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Email</label>
+                    <input class="field-input" type="email" placeholder="stylist@salon.com">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Phone</label>
+                    <input class="field-input" type="tel" placeholder="(000) 000-0000">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Title / Role</label>
+                    <div class="field-select-wrap">
+                        <select class="field-input field-select">
+                            <option value="" disabled selected>Select a role</option>
+                            <option>Junior Stylist</option>
+                            <option>Stylist</option>
+                            <option>Senior Stylist</option>
+                            <option>Color Specialist</option>
+                            <option>Creative Director</option>
+                            <option>Booth Renter</option>
+                        </select>
+                        <div class="select-arrow">&#8964;</div>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Years of Experience</label>
+                    <input class="field-input" type="text" placeholder="e.g. 5">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Chair / Station</label>
+                    <input class="field-input" type="text" placeholder="e.g. Chair 4, Main Floor">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Start Date</label>
+                    <input class="field-input" type="date">
+                </div>
+
+                <div class="field-group field-full">
+                    <label class="field-label">Specialties <span class="field-optional">optional</span></label>
+                    <input class="field-input" type="text" placeholder="e.g. Balayage, Precision Cut, Textured Hair">
+                </div>
+
+                <div class="field-group field-full">
+                    <label class="field-label">Bio <span class="field-optional">optional</span></label>
+                    <textarea class="field-input field-textarea" placeholder="A short bio displayed on the stylist's public profile..."></textarea>
+                </div>
+
+                <div class="field-group field-full field-actions">
+                    <div class="btn-group">
+                        <button class="btn btn-gold" style="padding: 14px 40px; font-size: 14px;">Add Stylist</button>
+                        <button class="btn btn-outline" style="padding: 14px 28px; font-size: 14px;">Clear</button>
+                    </div>
+                    <span class="form-note">Stylist will appear on the team roster immediately.</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MASSEUSE FORM -->
+    <div class="services">
+        <div class="services-head">
+            <div>
+                <div class="eyebrow">Wellness Team</div>
+                <div class="services-h1">Add a Masseuse</div>
+            </div>
+            <div class="services-note">Complete the profile to list the therapist and their available modalities.</div>
+        </div>
+        <div class="booking-body">
+            <div class="booking-grid">
+
+                <div class="field-group">
+                    <label class="field-label">First Name</label>
+                    <input class="field-input" type="text" placeholder="Therapist first name">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Last Name</label>
+                    <input class="field-input" type="text" placeholder="Therapist last name">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Email</label>
+                    <input class="field-input" type="email" placeholder="therapist@salon.com">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Phone</label>
+                    <input class="field-input" type="tel" placeholder="(000) 000-0000">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Primary Modality</label>
+                    <div class="field-select-wrap">
+                        <select class="field-input field-select">
+                            <option value="" disabled selected>Select a modality</option>
+                            <option>Swedish</option>
+                            <option>Deep Tissue</option>
+                            <option>Hot Stone</option>
+                            <option>Sports Massage</option>
+                            <option>Prenatal</option>
+                            <option>Reflexology</option>
+                            <option>Lymphatic Drainage</option>
+                            <option>Aromatherapy</option>
+                            <option>Thai Massage</option>
+                            <option>Other</option>
+                        </select>
+                        <div class="select-arrow">&#8964;</div>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">License Number</label>
+                    <input class="field-input" type="text" placeholder="State license #">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Session Rate</label>
+                    <input class="field-input" type="text" placeholder="e.g. $90 / 60 min">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Years of Experience</label>
+                    <input class="field-input" type="text" placeholder="e.g. 4">
+                </div>
+
+                <div class="field-group field-full">
+                    <label class="field-label">Additional Modalities <span class="field-optional">optional</span></label>
+                    <input class="field-input" type="text" placeholder="e.g. Hot Stone, Aromatherapy, Prenatal">
+                </div>
+
+                <div class="field-group field-full">
+                    <label class="field-label">Bio <span class="field-optional">optional</span></label>
+                    <textarea class="field-input field-textarea" placeholder="Describe the therapist's approach, training, and what clients can expect..."></textarea>
+                </div>
+
+                <div class="field-group field-full field-actions">
+                    <div class="btn-group">
+                        <button class="btn btn-gold" style="padding: 14px 40px; font-size: 14px;">Add Masseuse</button>
+                        <button class="btn btn-outline" style="padding: 14px 28px; font-size: 14px;">Clear</button>
+                    </div>
+                    <span class="form-note">Profile goes live after admin review.</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW CLIENT FORM -->
+    <div class="services">
+        <div class="services-head">
+            <div>
+                <div class="eyebrow">Welcome</div>
+                <div class="services-h1">New Client Intake</div>
+            </div>
+            <div class="services-note">Help us get to know you before your first visit. Takes less than two minutes.</div>
+        </div>
+        <div class="booking-body">
+            <div class="booking-grid">
+
+                <div class="field-group">
+                    <label class="field-label">First Name</label>
+                    <input class="field-input" type="text" placeholder="Your first name">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Last Name</label>
+                    <input class="field-input" type="text" placeholder="Your last name">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Email</label>
+                    <input class="field-input" type="email" placeholder="you@email.com">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Phone</label>
+                    <input class="field-input" type="tel" placeholder="(000) 000-0000">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Date of Birth</label>
+                    <input class="field-input" type="date">
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">How Did You Hear About Us?</label>
+                    <div class="field-select-wrap">
+                        <select class="field-input field-select">
+                            <option value="" disabled selected>Select one</option>
+                            <option>Instagram</option>
+                            <option>Google Search</option>
+                            <option>Friend / Referral</option>
+                            <option>Walk-In</option>
+                            <option>Yelp</option>
+                            <option>Other</option>
+                        </select>
+                        <div class="select-arrow">&#8964;</div>
+                    </div>
+                </div>
+
+                <div class="field-group field-full">
+                    <label class="field-label">What Service Are You Interested In?</label>
+                    <div class="field-select-wrap">
+                        <select class="field-input field-select">
+                            <option value="" disabled selected>Select a service</option>
+                            <option>Signature Blonding — From $220</option>
+                            <option>Lived-In Balayage — From $185</option>
+                            <option>Precision Cut — From $95</option>
+                            <option>Tape-In Extensions — From $380</option>
+                            <option>Scalp Renewal — From $75</option>
+                            <option>Bridal + Occasion — From $150</option>
+                            <option>Not sure yet</option>
+                        </select>
+                        <div class="select-arrow">&#8964;</div>
+                    </div>
+                </div>
+
+                <div class="field-group field-full">
+                    <label class="field-label">Hair History <span class="field-optional">optional</span></label>
+                    <textarea class="field-input field-textarea" placeholder="Any recent color, chemical treatments, or damage we should know about before your appointment..."></textarea>
+                </div>
+
+                <div class="field-group field-full">
+                    <label class="field-label">Allergies or Sensitivities <span class="field-optional">optional</span></label>
+                    <input class="field-input" type="text" placeholder="e.g. PPD allergy, sensitive scalp, fragrance sensitivity">
+                </div>
+
+                <div class="field-group field-full">
+                    <label class="check-row">
+                        <input type="checkbox">
+                        <div class="check-box"></div>
+                        <span class="check-label">I agree to the cancellation policy — 24 hours notice required</span>
+                    </label>
+                </div>
+
+                <div class="field-group field-full field-actions">
+                    <button class="btn btn-gold" style="padding: 14px 40px; font-size: 14px;">Submit Intake Form</button>
+                    <span class="form-note">Your info is kept private and never shared.</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- CHAT WIDGET -->
+<div id="chat-widget">
+
+    <div id="chat-window">
+        <div id="chat-head">
+            <div id="chat-head-left">
+                <div id="chat-ava">M</div>
+                <div>
+                    <div id="chat-who">Monique Delacroix</div>
+                    <div id="chat-online"><span class="online-dot"></span>Online now</div>
+                </div>
+            </div>
+            <div id="chat-x" onclick="toggleChat()">✕</div>
+        </div>
+
+        <div id="chat-msgs">
+            <div class="msg-in">
+                <div class="msg-bubble">Hey! 👋 Ready to book or have a question? I'm here.</div>
+                <div class="msg-time">Just now</div>
+            </div>
+        </div>
+
+        <div id="chat-input-row">
+            <input id="chat-input" class="field-input" type="text" placeholder="Type a message..." onkeydown="if(event.key==='Enter') sendMsg()">
+            <button id="chat-send" onclick="sendMsg()">&#10148;</button>
+        </div>
+    </div>
+
+    <div id="chat-bubble" onclick="toggleChat()">
+        <div id="chat-bubble-ava">M</div>
+        <div id="chat-bubble-text">
+            <div id="chat-bubble-name">Monique</div>
+            <div id="chat-bubble-sub">Chat with me</div>
+        </div>
+        <div id="chat-unread">1</div>
+    </div>
+
+</div>
+
+<style>
+    #chat-widget {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 12px;
+        font-family: 'DM Sans', sans-serif;
+    }
+
+    /* Bubble */
+    #chat-bubble {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--white);
+        border-radius: 99px;
+        padding: 10px 18px 10px 10px;
+        box-shadow: 0 8px 32px rgba(60,40,10,.18);
+        cursor: pointer;
+        transition: transform .2s, box-shadow .2s;
+        border: 1.5px solid var(--gold-lt);
+        position: relative;
+    }
+
+    #chat-bubble:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(60,40,10,.22); }
+
+    #chat-bubble-ava {
+        width: 40px; height: 40px;
+        border-radius: 50%;
+        background: var(--gold);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    #chat-bubble-name { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.2; }
+    #chat-bubble-sub { font-size: 11px; color: var(--ink-3); }
+
+    #chat-unread {
+        position: absolute;
+        top: -4px; right: -4px;
+        width: 18px; height: 18px;
+        background: var(--gold);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 600;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Window */
+    #chat-window {
+        display: none;
+        width: 340px;
+        background: var(--white);
+        border-radius: 16px;
+        box-shadow: 0 16px 60px rgba(60,40,10,.2);
+        overflow: hidden;
+        border: 1.5px solid var(--gold-lt);
+        flex-direction: column;
+    }
+
+    #chat-window.open { display: flex; }
+
+    #chat-head {
+        background: var(--gold);
+        padding: 14px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    #chat-head-left { display: flex; align-items: center; gap: 10px; }
+
+    #chat-ava {
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.25);
+        color: #fff;
+        font-size: 15px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    #chat-who { font-size: 13px; font-weight: 500; color: #fff; }
+
+    #chat-online {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+        color: rgba(255,255,255,.8);
+        margin-top: 1px;
+    }
+
+    .online-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: #b6f5b6;
+        flex-shrink: 0;
+    }
+
+    #chat-x {
+        color: rgba(255,255,255,.8);
+        font-size: 14px;
+        cursor: pointer;
+        padding: 4px;
+        transition: color .15s;
+    }
+
+    #chat-x:hover { color: #fff; }
+
+    #chat-msgs {
+        flex: 1;
+        padding: 16px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 300px;
+        overflow-y: auto;
+        background: var(--cream);
+    }
+
+    .msg-in, .msg-out { display: flex; flex-direction: column; }
+    .msg-out { align-items: flex-end; }
+
+    .msg-bubble {
+        max-width: 80%;
+        padding: 10px 14px;
+        border-radius: 14px;
+        font-size: 13px;
+        line-height: 1.55;
+    }
+
+    .msg-in .msg-bubble {
+        background: var(--white);
+        color: var(--ink);
+        border-bottom-left-radius: 4px;
+        border: 1px solid var(--line);
+    }
+
+    .msg-out .msg-bubble {
+        background: var(--gold);
+        color: #fff;
+        border-bottom-right-radius: 4px;
+    }
+
+    .msg-time {
+        font-size: 10px;
+        color: var(--ink-3);
+        margin-top: 4px;
+        padding: 0 4px;
+    }
+
+    #chat-input-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 14px;
+        border-top: 1px solid var(--line);
+        background: var(--white);
+    }
+
+    #chat-input-row .field-input {
+        flex: 1;
+        padding: 10px 14px;
+        font-size: 13px;
+        border-radius: 99px;
+    }
+
+    #chat-send {
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        background: var(--gold);
+        color: #fff;
+        border: none;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: background .18s;
+    }
+
+    #chat-send:hover { background: var(--gold-dk); }
+
+    .typing-bubble {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 12px 16px;
+    }
+
+    .dot {
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        background: var(--ink-3);
+        animation: bounce 1.2s infinite ease-in-out;
+    }
+
+    .dot:nth-child(2) { animation-delay: .2s; }
+    .dot:nth-child(3) { animation-delay: .4s; }
+
+    @keyframes bounce {
+        0%, 60%, 100% { transform: translateY(0); opacity: .4; }
+        30% { transform: translateY(-6px); opacity: 1; }
+    }
+</style>
+
+<script>
+    function toggleChat() {
+        const win = document.getElementById('chat-window');
+        const unread = document.getElementById('chat-unread');
+        const isOpen = win.classList.contains('open');
+        win.classList.toggle('open', !isOpen);
+        if (!isOpen && unread) unread.style.display = 'none';
+    }
+
+    function sendMsg() {
+        const input = document.getElementById('chat-input');
+        const msgs = document.getElementById('chat-msgs');
+        const text = input.value.trim();
+        if (!text) return;
+
+        const out = document.createElement('div');
+        out.className = 'msg-out';
+        out.innerHTML = `<div class="msg-bubble">${text}</div><div class="msg-time">Just now</div>`;
+        msgs.appendChild(out);
+        input.value = '';
+        msgs.scrollTop = msgs.scrollHeight;
+
+        // Typing indicator
+        const typing = document.createElement('div');
+        typing.className = 'msg-in';
+        typing.id = 'typing-indicator';
+        typing.innerHTML = `<div class="msg-bubble typing-bubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
+        msgs.appendChild(typing);
+        msgs.scrollTop = msgs.scrollHeight;
+
+        setTimeout(() => {
+            const replies = [
+                "Thanks for reaching out! I'll get back to you shortly.",
+                "Great question — let me check on that for you.",
+                "I'd love to help with that. Can you share a bit more?",
+                "Got it! I'll follow up within the hour.",
+            ];
+            const reply = replies[Math.floor(Math.random() * replies.length)];
+
+            // Remove typing indicator
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+
+            const inn = document.createElement('div');
+            inn.className = 'msg-in';
+            inn.innerHTML = `<div class="msg-bubble">${reply}</div><div class="msg-time">Just now</div>`;
+            msgs.appendChild(inn);
+            msgs.scrollTop = msgs.scrollHeight;
+        }, 1400);
+    }
+</script>
+
+</body>
+</html>
