@@ -1,10 +1,14 @@
-# Cosmos Services
+# Cosmos
 
-Cosmos is a service marketplace designed to connect clients with trusted beauty, body art, and wellness professionals through a polished booking experience.
+Cosmos is a beauty, tattoo, and wellness marketplace concept built as a polished front-end profile and booking experience. The project is designed to present service providers clearly, explain what they offer, and make it easier for clients to request appointments with the right professional.
 
-## What Cosmos Provides
+## Overview
 
-### 1. Stylist Services
+This repository contains a static website prototype for Cosmos. It focuses on premium presentation, clear service communication, and a clean booking flow for professionals working across multiple service categories.
+
+## Services Provided By Cosmos
+
+### Stylist Services
 
 Cosmos supports salon and independent hair professionals who offer:
 
@@ -15,9 +19,9 @@ Cosmos supports salon and independent hair professionals who offer:
 - Scalp and hair treatments
 - Bridal and event styling
 
-These services are presented with clear descriptions, estimated timing, and pricing so clients can understand what to expect before booking.
+These services can be shown with descriptions, estimated timing, and pricing so clients know what to expect before booking.
 
-### 2. Tattoo Artist Services
+### Tattoo Artist Services
 
 Cosmos also supports tattoo professionals by helping them showcase:
 
@@ -27,9 +31,9 @@ Cosmos also supports tattoo professionals by helping them showcase:
 - Cover-ups
 - Touch-ups
 
-The platform gives artists space to describe their style, rates, studio details, portfolio links, and booking requirements.
+The platform gives artists room to describe their style, rates, studio details, portfolio links, and booking requirements.
 
-### 3. Massage and Wellness Services
+### Massage And Wellness Services
 
 For massage therapists and wellness providers, Cosmos can present services such as:
 
@@ -45,7 +49,7 @@ For massage therapists and wellness providers, Cosmos can present services such 
 
 Clients can review service types, choose preferences, and provide notes that help therapists prepare for the appointment.
 
-### 4. Appointment Booking
+### Appointment Booking
 
 Cosmos includes a booking flow that helps clients request appointments by submitting:
 
@@ -54,10 +58,11 @@ Cosmos includes a booking flow that helps clients request appointments by submit
 - Service type
 - Service-specific notes
 - Professional preferences
+- Optional transportation details
 
 This helps providers gather the right details upfront and confirm appointments more efficiently.
 
-### 5. Provider Profiles
+### Provider Profiles
 
 Cosmos is built to highlight individual professionals with profile features such as:
 
@@ -70,10 +75,46 @@ Cosmos is built to highlight individual professionals with profile features such
 
 This makes it easier for clients to compare providers and choose the right fit.
 
-### 6. Transportation Requests
+## Project Features
 
-Cosmos can also support transportation-related booking details, allowing clients to request pickup and share location notes when that service is available.
+- Static single-page site in `index.html`
+- Premium editorial-style visual design
+- Service cards with pricing and descriptions
+- Booking form for multiple service categories
+- Profile-focused layout for beauty and wellness professionals
+- Responsive structure for smaller screens
 
-## Summary
+## Why This Repo Exists
 
-At its core, Cosmos provides a clean platform for discovering professionals, understanding their services, and requesting appointments across beauty, tattoo, and wellness categories.
+This project is intended to demonstrate a clean marketplace experience for service-based businesses. It can serve as:
+
+- A landing page concept
+- A portfolio piece
+- A design prototype
+- A starting point for a larger booking platform
+
+## Tech Stack
+
+- HTML
+- CSS
+- Vanilla JavaScript
+
+## Running Locally
+
+Open `index.html` directly in a browser, or serve the project from the repository root with a simple static server.
+
+Example:
+
+```bash
+python3 -m http.server 8000
+```
+
+Then visit `http://localhost:8000`.
+
+## Repository Notes
+
+This repository is public and intended to showcase the Cosmos concept as a searchable GitHub project around beauty services, tattoo booking, massage services, and service marketplace design.
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](/Users/darrellparkhouse/development/cosmos-site/LICENSE).
