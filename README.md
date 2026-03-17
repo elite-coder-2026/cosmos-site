@@ -109,6 +109,27 @@ Example:
 python3 -m http.server 8000
 ```
 
+# elite-coder-2026
+
+Builder of web projects and digital products.
+
+## About Me
+
+I create front-end and full-stack projects focused on clean design, usability, and real-world functionality.
+
+## Projects
+
+- [cosmos-site](https://github.com/elite-coder-2026/cosmos-site) - Beauty, tattoo, and wellness marketplace concept
+- More projects coming soon
+
+## Tech
+
+HTML, CSS, JavaScript, GitHub
+
+## Find Me
+
+- GitHub: https://github.com/elite-coder-2026
+
 Then visit `http://localhost:8000`.
 
 ## Repository Notes
