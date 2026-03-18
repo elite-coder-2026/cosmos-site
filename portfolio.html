@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Cosmos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --sand: #efe4d2;
+            --paper: #fbf7f1;
+            --white: #ffffff;
+            --ink: #1f1813;
+            --muted: #6f6256;
+            --gold: #b88a3a;
+            --gold-deep: #8a6325;
+            --line: #e3d4be;
+            --shadow: 0 20px 60px rgba(44, 28, 8, 0.12);
+            --radius: 18px;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(184, 138, 58, 0.12), transparent 34%),
+                linear-gradient(180deg, #f7f0e6 0%, #f3eadc 40%, #efe3d2 100%);
+            color: var(--ink);
+            padding: 40px 20px 80px;
+        }
+
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .hero,
+        .panel {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(227, 212, 190, 0.9);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+            overflow: hidden;
+        }
+
+        .hero-copy {
+            padding: 48px;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--gold-deep);
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 500;
+            color: var(--ink);
+        }
+
+        h1 {
+            font-size: 64px;
+            line-height: 0.95;
+            margin-bottom: 18px;
+        }
+
+        .hero-copy p,
+        .panel p,
+        .list li {
+            color: var(--muted);
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .hero-copy p {
+            max-width: 640px;
+            margin-bottom: 26px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 0 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--white);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid var(--line);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .hero-aside {
+            background: linear-gradient(180deg, rgba(184, 138, 58, 0.16), rgba(255, 255, 255, 0.95));
+            padding: 36px 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 24px;
+            border-left: 1px solid rgba(227, 212, 190, 0.9);
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, 0.76);
+            border: 1px solid rgba(227, 212, 190, 0.9);
+            border-radius: 14px;
+            padding: 18px 16px;
+        }
+
+        .stat strong {
+            display: block;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+
+        .stat span {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gold-deep);
+        }
+
+        .meta {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(227, 212, 190, 0.9);
+            font-size: 13px;
+        }
+
+        .meta-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .meta-label {
+            color: var(--muted);
+        }
+
+        .meta-value {
+            color: var(--ink);
+            font-weight: 700;
+            text-align: right;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 24px;
+        }
+
+        .panel {
+            padding: 34px;
+        }
+
+        .panel h2 {
+            font-size: 38px;
+            margin-bottom: 14px;
+        }
+
+        .panel h3 {
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .stack,
+        .list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .service-card {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 22px;
+        }
+
+        .service-card p {
+            margin-bottom: 14px;
+        }
+
+        .list {
+            list-style: none;
+        }
+
+        .list li {
+            position: relative;
+            padding-left: 18px;
+        }
+
+        .list li::before {
+            content: "";
+            position: absolute;
+            top: 11px;
+            left: 0;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        .feature-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .feature {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 18px 20px;
+        }
+
+        .feature strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gold-deep);
+        }
+
+        @media (max-width: 860px) {
+            .hero,
+            .grid,
+            .services {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-aside {
+                border-left: none;
+                border-top: 1px solid rgba(227, 212, 190, 0.9);
+            }
+
+            .hero-copy,
+            .panel,
+            .hero-aside {
+                padding: 28px 24px;
+            }
+
+            h1 {
+                font-size: 46px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <section class="hero">
+            <div class="hero-copy">
+                <div class="eyebrow">Portfolio Item</div>
+                <h1>Cosmos</h1>
+                <p>Cosmos is a beauty, tattoo, and wellness marketplace concept built as a polished front-end profile and booking experience. The project is designed to present service providers clearly, explain what they offer, and make it easier for clients to request appointments with the right professional.</p>
+                <div class="actions">
+                    <a class="btn btn-primary" href="index.html">Open Main Experience</a>
+                    <a class="btn btn-secondary" href="index.html">View Live Prototype</a>
+                </div>
+            </div>
+            <aside class="hero-aside">
+                <div class="stat-grid">
+                    <div class="stat">
+                        <strong>3</strong>
+                        <span>Service Categories</span>
+                    </div>
+                    <div class="stat">
+                        <strong>1</strong>
+                        <span>Single-Page Prototype</span>
+                    </div>
+                    <div class="stat">
+                        <strong>100%</strong>
+                        <span>Static Front-End</span>
+                    </div>
+                    <div class="stat">
+                        <strong>Multi</strong>
+                        <span>Booking Paths</span>
+                    </div>
+                </div>
+                <div class="meta">
+                    <div class="meta-row">
+                        <span class="meta-label">Project Type</span>
+                        <span class="meta-value">Marketplace concept</span>
+                    </div>
+                    <div class="meta-row">
+                        <span class="meta-label">Built With</span>
+                        <span class="meta-value">HTML, CSS, JavaScript</span>
+                    </div>
+                    <div class="meta-row">
+                        <span class="meta-label">Focus</span>
+                        <span class="meta-value">Profiles, services, booking</span>
+                    </div>
+                </div>
+            </aside>
+        </section>
+
+        <section class="grid">
+            <article class="panel">
+                <div class="eyebrow">Overview</div>
+                <h2>Premium presentation for service-based professionals</h2>
+                <p>This repository contains a static website prototype for Cosmos. It focuses on premium presentation, clear service communication, and a clean booking flow for professionals working across multiple service categories.</p>
+
+                <div class="services">
+                    <section class="service-card">
+                        <h3>Stylist Services</h3>
+                        <p>Cosmos supports salon and independent hair professionals with detailed service presentation before booking.</p>
+                        <ul class="list">
+                            <li>Haircuts and precision cuts</li>
+                            <li>Coloring and blonding services</li>
+                            <li>Balayage and lived-in color</li>
+                            <li>Extensions</li>
+                            <li>Scalp and hair treatments</li>
+                            <li>Bridal and event styling</li>
+                        </ul>
+                    </section>
+
+                    <section class="service-card">
+                        <h3>Tattoo Artist Services</h3>
+                        <p>Artists can showcase their style, rates, studio details, portfolio links, and booking requirements.</p>
+                        <ul class="list">
+                            <li>Custom tattoo consultations</li>
+                            <li>Small, medium, and large sessions</li>
+                            <li>Fine line, realism, blackwork, geometric, and illustrative work</li>
+                            <li>Cover-ups</li>
+                            <li>Touch-ups</li>
+                        </ul>
+                    </section>
+
+                    <section class="service-card">
+                        <h3>Massage And Wellness Services</h3>
+                        <p>Wellness providers can present service types, preferences, and notes that help prepare for appointments.</p>
+                        <ul class="list">
+                            <li>Swedish massage</li>
+                            <li>Deep tissue massage</li>
+                            <li>Hot stone therapy</li>
+                            <li>Sports massage</li>
+                            <li>Prenatal massage</li>
+                            <li>Reflexology, lymphatic drainage, aromatherapy, and Thai massage</li>
+                        </ul>
+                    </section>
+
+                    <section class="service-card">
+                        <h3>Appointment Booking</h3>
+                        <p>Clients can request appointments with the details providers need up front.</p>
+                        <ul class="list">
+                            <li>Contact information</li>
+                            <li>Preferred date and time</li>
+                            <li>Service type and service-specific notes</li>
+                            <li>Professional preferences</li>
+                            <li>Optional transportation details</li>
+                        </ul>
+                    </section>
+                </div>
+            </article>
+
+            <aside class="panel">
+                <div class="eyebrow">Highlights</div>
+                <h2>What this portfolio item demonstrates</h2>
+                <div class="feature-list">
+                    <div class="feature">
+                        <strong>Provider Profiles</strong>
+                        <p>Cosmos is built to highlight biographies, experience, service listings, pricing, availability, ratings, and showcase content so clients can compare providers more easily.</p>
+                    </div>
+                    <div class="feature">
+                        <strong>Booking Experience</strong>
+                        <p>The concept uses a structured intake flow to collect useful details early and make appointment confirmation more efficient for professionals.</p>
+                    </div>
+                    <div class="feature">
+                        <strong>Project Features</strong>
+                        <p>Static single-page site in <code>index.html</code>, premium editorial-style visual design, service cards with pricing and descriptions, multi-category booking form, and responsive structure for smaller screens.</p>
+                    </div>
+                    <div class="feature">
+                        <strong>Use Case</strong>
+                        <p>This works as a portfolio piece, a landing page concept, a design prototype, or a starting point for a larger marketplace booking platform.</p>
+                    </div>
+                </div>
+            </aside>
+        </section>
+    </main>
+</body>
+</html>
