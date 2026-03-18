@@ -1,1646 +1,1822 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosmos</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cosmos — Beauty, Tattoo & Wellness</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --gold:       #C9A84C;
-            --gold-lt:    #E8D5A3;
-            --gold-dk:    #8A6E2F;
-            --champagne:  #F5EDD8;
-            --cream:      #F2EBE0;
-            --white:      #FFFFFF;
-            --ink:        #1C1712;
-            --ink-2:      #4A3F33;
-            --ink-3:      #8C7D6E;
-            --line:       #E5D9C5;
-            --r:          12px;
-            --sh:         0 2px 16px rgba(60,40,10,.08);
-            --sh-lg:      0 8px 40px rgba(60,40,10,.13);
+            --bg:          #09080a;
+            --surface:     #111013;
+            --surface-2:   #1a181d;
+            --border:      rgba(201,169,110,0.14);
+            --border-soft: rgba(255,255,255,0.06);
+            --gold:        #c9a96e;
+            --gold-light:  #e8d5a8;
+            --gold-dim:    rgba(201,169,110,0.35);
+            --text:        #f0ebe7;
+            --text-muted:  #8c8789;
+            --text-faint:  #4a484c;
+            --accent:      #e4c98a;
+            --radius:      4px;
+            --radius-lg:   10px;
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
+            background: var(--bg);
+            color: var(--text);
             font-family: 'DM Sans', sans-serif;
-            background: var(--cream);
-            color: var(--ink);
-            min-height: 100vh;
-            padding: 48px 24px 96px;
+            font-weight: 300;
+            line-height: 1.65;
+            overflow-x: hidden;
         }
 
-        .page {
-            max-width: 960px;
-            margin: 0 auto;
+        /* ── CANVAS STARS ─────────────────────── */
+        #starfield {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.55;
+        }
+
+        /* ── NAV ───────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
             display: flex;
-            flex-direction: column;
-            gap: 20px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+            height: 72px;
+            background: rgba(9,8,10,0.72);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-soft);
         }
 
-        /* HERO */
-        .hero {
-            background: var(--white);
-            border-radius: var(--r);
-            box-shadow: var(--sh-lg);
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: 260px 1fr;
-            min-height: 380px;
-        }
-
-        .hero-img { position: relative; overflow: hidden; background: var(--champagne); }
-        .hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-        .badge {
-            position: absolute; top: 14px; left: 14px;
-            background: var(--gold); color: #fff;
-            font-size: 10px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase;
-            padding: 5px 13px 5px 10px; border-radius: 99px;
-            display: flex; align-items: center; gap: 7px;
-        }
-
-        .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.85); flex-shrink: 0; }
-
-        .hero-body { padding: 38px 40px; display: flex; flex-direction: column; justify-content: space-between; }
-
-        .eyebrow { font-size: 10px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-
-        .hero-name { font-family: 'Cormorant Garamond', serif; font-size: 46px; font-weight: 300; line-height: 1.05; color: var(--ink); margin-bottom: 7px; }
-
-        .hero-role { font-size: 13px; color: var(--ink-3); font-weight: 300; margin-bottom: 22px; }
-
-        .hero-bio { font-size: 13.5px; line-height: 1.78; color: var(--ink-2); margin-bottom: 26px; max-width: 400px; }
-
-        .stats { display: flex; align-items: center; margin-bottom: 30px; }
-
-        .stat { display: flex; flex-direction: column; padding-right: 24px; margin-right: 24px; border-right: 1px solid var(--line); }
-        .stat:last-child { border-right: none; padding-right: 0; margin-right: 0; }
-
-        .stat-n { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 500; color: var(--ink); line-height: 1; }
-        .stat-l { font-size: 10px; color: var(--ink-3); margin-top: 4px; text-transform: uppercase; letter-spacing: .07em; }
-
-        .actions { display: flex; gap: 10px; }
-
-        .btn { padding: 11px 26px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; border: none; letter-spacing: .02em; transition: all .18s; }
-        .btn-gold { background: var(--gold); color: #fff; }
-        .btn-gold:hover { background: var(--gold-dk); transform: translateY(-1px); }
-        .btn-outline { background: transparent; color: var(--ink-2); border: 1.5px solid var(--line); }
-        .btn-outline:hover { border-color: var(--gold-lt); color: var(--gold-dk); }
-
-        /* SERVICES */
-        .services { background: var(--white); border-radius: var(--r); box-shadow: var(--sh); overflow: hidden; }
-
-        .services-head { display: flex; justify-content: space-between; align-items: flex-end; padding: 36px 40px 30px; border-bottom: 1px solid var(--line); }
-
-        .services-h1 { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 400; color: var(--ink); line-height: 1; }
-
-        .services-note { font-size: 13px; color: var(--ink-3); line-height: 1.7; text-align: right; max-width: 200px; }
-
-        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
-
-        .svc { padding: 28px 30px 32px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-        .svc:nth-child(3n) { border-right: none; }
-        .svc:nth-last-child(-n+3) { border-bottom: none; }
-
-        .svc-cat { font-size: 10px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 11px; }
-        .svc-name { font-family: 'Cormorant Garamond', serif; font-size: 23px; font-weight: 600; color: var(--ink); line-height: 1.15; margin-bottom: 11px; }
-        .svc-desc { font-size: 13px; line-height: 1.72; color: var(--ink-2); margin-bottom: 20px; }
-        .svc-price { font-size: 15px; font-weight: 500; color: var(--gold-dk); margin-bottom: 4px; }
-        .svc-meta { font-size: 11.5px; color: var(--ink-3); }
-
-        /* ABOUT */
-        .about {
-            background: var(--white);
-            border-radius: var(--r);
-            box-shadow: var(--sh);
-            padding: 36px 40px 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
-
-        .about-lead {
-            display: grid;
-            grid-template-columns: minmax(0, 1.25fr) minmax(220px, .75fr);
-            gap: 24px;
-            align-items: start;
-            padding-bottom: 24px;
-            border-bottom: 1px solid var(--line);
-        }
-
-        .about-title {
+        .nav-logo {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 42px;
-            font-weight: 400;
-            line-height: 1.02;
-            margin-bottom: 12px;
-        }
-
-        .about-copy {
-            font-size: 14px;
-            line-height: 1.85;
-            color: var(--ink-2);
-        }
-
-        .about-summary {
-            background: linear-gradient(180deg, var(--champagne), #fbf7ec);
-            border: 1px solid var(--line);
-            border-radius: 10px;
-            padding: 20px 22px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .summary-label {
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: .13em;
+            font-weight: 300;
+            font-size: 1.55rem;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
-            color: var(--gold-dk);
+            color: var(--gold-light);
+            text-decoration: none;
         }
 
-        .summary-item {
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(138, 110, 47, .14);
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
         }
 
-        .summary-item:last-child {
-            padding-bottom: 0;
-            border-bottom: none;
+        .nav-links a {
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
         }
 
-        .summary-title {
+        .nav-links a:hover { color: var(--gold-light); }
+
+        .nav-cta {
+            font-size: 0.7rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--bg);
+            background: var(--gold);
+            border: none;
+            padding: 9px 22px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+        /* ── HERO ──────────────────────────────── */
+        .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                    radial-gradient(ellipse 70% 55% at 50% 60%, rgba(201,169,110,0.07) 0%, transparent 70%),
+                    radial-gradient(ellipse 40% 30% at 20% 80%, rgba(120,80,160,0.06) 0%, transparent 60%),
+                    radial-gradient(ellipse 35% 25% at 80% 20%, rgba(80,120,180,0.05) 0%, transparent 55%);
+            pointer-events: none;
+        }
+
+        .hero-eyebrow {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 22px;
-            margin-bottom: 4px;
-            color: var(--ink);
+            font-weight: 300;
+            font-size: clamp(4rem, 10vw, 9rem);
+            line-height: 0.92;
+            letter-spacing: -0.01em;
+            color: var(--text);
+            margin-bottom: 12px;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.35s forwards;
         }
 
-        .summary-text {
-            font-size: 12.5px;
-            line-height: 1.7;
-            color: var(--ink-2);
+        .hero-title em {
+            font-style: italic;
+            color: var(--gold-light);
         }
 
-        .about-grid {
+        .hero-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1rem, 2.5vw, 1.45rem);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-muted);
+            margin-top: 20px;
+            margin-bottom: 52px;
+            max-width: 500px;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.5s forwards;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.65s forwards;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gold);
+            color: var(--bg);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 14px 32px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(201,169,110,0.25);
+        }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 400;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 14px 32px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            border: 1px solid var(--border-soft);
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .btn-ghost:hover {
+            color: var(--gold-light);
+            border-color: var(--border);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.2s forwards;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(to bottom, var(--gold-dim), transparent);
+            animation: scrollPulse 2s ease infinite;
+        }
+
+        .scroll-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-faint);
+        }
+
+        /* ── CATEGORIES ─────────────────────────── */
+        .section { position: relative; z-index: 1; }
+
+        .categories {
+            padding: 100px 48px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.26em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            line-height: 1.1;
+            color: var(--text);
+            margin-bottom: 60px;
+        }
+
+        .section-title span { color: var(--gold-light); font-style: italic; }
+
+        .cat-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+
+        .cat-card {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            background: var(--surface);
+        }
+
+        .cat-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(160deg, transparent 40%, rgba(0,0,0,0.85) 100%);
+            z-index: 1;
+            transition: opacity 0.4s;
+        }
+
+        .cat-card:hover::before { opacity: 0.6; }
+
+        .cat-bg {
+            position: absolute;
+            inset: 0;
+            transition: transform 0.6s ease;
+        }
+
+        .cat-card:hover .cat-bg { transform: scale(1.04); }
+
+        /* Gradient bg art per card */
+        .cat-beauty .cat-bg {
+            background:
+                    radial-gradient(ellipse 80% 60% at 60% 30%, #3a2040 0%, #1a0e20 50%, #0d0a10 100%),
+                    repeating-linear-gradient(45deg, rgba(201,169,110,0.03) 0px, rgba(201,169,110,0.03) 1px, transparent 1px, transparent 12px);
+        }
+
+        .cat-tattoo .cat-bg {
+            background:
+                    radial-gradient(ellipse 70% 80% at 40% 60%, #0f1a2a 0%, #080e18 60%, #060809 100%),
+                    repeating-linear-gradient(135deg, rgba(100,140,200,0.03) 0px, transparent 1px, transparent 10px);
+        }
+
+        .cat-wellness .cat-bg {
+            background:
+                    radial-gradient(ellipse 70% 60% at 50% 40%, #1a2a1a 0%, #0e180e 55%, #080a08 100%),
+                    repeating-linear-gradient(90deg, rgba(80,160,80,0.03) 0px, transparent 1px, transparent 14px);
+        }
+
+        /* Decorative orb on each card */
+        .cat-beauty .cat-bg::after {
+            content: '';
+            position: absolute;
+            width: 220px; height: 220px;
+            border-radius: 50%;
+            top: -40px; right: -40px;
+            background: radial-gradient(circle, rgba(180,120,200,0.18), transparent 70%);
+        }
+
+        .cat-content {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 32px 28px;
+            z-index: 2;
+        }
+
+        .cat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--gold-dim);
+            margin-bottom: 10px;
+        }
+
+        .cat-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: 2.1rem;
+            line-height: 1.05;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .cat-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 18px;
+            max-width: 240px;
+        }
+
+        .cat-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.65rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--gold);
+            text-decoration: none;
+            transition: gap 0.2s;
+        }
+
+        .cat-link:hover { gap: 12px; }
+        .cat-link::after { content: '→'; }
+
+        /* ── DIVIDER ────────────────────────────── */
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border), transparent);
+            position: relative; z-index: 1;
+        }
+
+        /* ── PROVIDERS ──────────────────────────── */
+        .providers {
+            padding: 100px 48px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .providers-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .provider-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
         }
 
-        .about-card {
-            background: var(--cream);
-            border: 1px solid var(--line);
-            border-radius: 10px;
-            padding: 24px;
+        .provider-card {
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s;
         }
 
-        .about-card h3 {
+        .provider-card:hover {
+            border-color: var(--border);
+            transform: translateY(-4px);
+        }
+
+        .provider-hero-img {
+            height: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .provider-img-beauty {
+            background:
+                    radial-gradient(ellipse 100% 100% at 50% 0%, #3d1e50 0%, #1c0e28 60%, #100a16 100%);
+        }
+
+        .provider-img-tattoo {
+            background:
+                    radial-gradient(ellipse 100% 100% at 30% 100%, #0e2038 0%, #07111e 60%, #060810 100%);
+        }
+
+        .provider-img-wellness {
+            background:
+                    radial-gradient(ellipse 100% 100% at 70% 0%, #183018 0%, #0c180c 60%, #080a08 100%);
+        }
+
+        .provider-avatar {
+            position: absolute;
+            bottom: -28px;
+            left: 24px;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            border: 2px solid var(--gold-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-family: 'Cormorant Garamond', serif;
-            font-size: 26px;
-            font-weight: 600;
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--gold-light);
+            background: var(--surface-2);
+        }
+
+        .provider-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(201,169,110,0.12);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.6rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .provider-body {
+            padding: 44px 24px 24px;
+        }
+
+        .provider-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .provider-title {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            color: var(--gold);
+            text-transform: uppercase;
             margin-bottom: 12px;
-            color: var(--ink);
         }
 
-        .about-card p {
-            font-size: 13px;
-            line-height: 1.75;
-            color: var(--ink-2);
+        .provider-bio {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
 
-        .about-list {
+        .provider-stats {
+            display: flex;
+            gap: 0;
+            border-top: 1px solid var(--border-soft);
+            border-bottom: 1px solid var(--border-soft);
+            margin-bottom: 20px;
+        }
+
+        .pstat {
+            flex: 1;
+            padding: 14px 0;
+            text-align: center;
+        }
+
+        .pstat + .pstat {
+            border-left: 1px solid var(--border-soft);
+        }
+
+        .pstat-val {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--text);
+            display: block;
+        }
+
+        .pstat-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-faint);
+        }
+
+        .provider-services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .service-tag {
+            font-size: 0.62rem;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            background: var(--surface-2);
+            border: 1px solid var(--border-soft);
+            border-radius: 20px;
+            padding: 4px 10px;
+        }
+
+        .provider-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .provider-rate {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--gold-light);
+        }
+
+        .provider-rate span {
+            font-size: 0.65rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-faint);
+            margin-left: 4px;
+            font-weight: 300;
+        }
+
+        .btn-book {
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold);
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 8px 18px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+        }
+
+        .btn-book:hover {
+            background: var(--gold);
+            color: var(--bg);
+            border-color: var(--gold);
+        }
+
+        /* ── SERVICES ───────────────────────────── */
+        .services-section {
+            padding: 100px 48px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .services-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2px;
+            margin-top: 60px;
+        }
+
+        .service-col {
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            padding: 40px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-col::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--gold-dim);
+        }
+
+        .service-col:nth-child(2)::before { background: rgba(100,140,200,0.35); }
+        .service-col:nth-child(3)::before { background: rgba(80,160,80,0.3); }
+
+        .service-col-icon {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .service-col-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: var(--text);
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .service-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 9px;
-            margin-top: 16px;
+            gap: 0;
         }
 
-        .about-list li {
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-soft);
+            transition: padding-left 0.2s;
+            cursor: pointer;
+        }
+
+        .service-item:hover { padding-left: 8px; }
+        .service-item:last-child { border-bottom: none; }
+
+        .service-item-name {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+
+        .service-item:hover .service-item-name { color: var(--text); }
+
+        .service-item-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+        }
+
+        .service-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: var(--gold);
+        }
+
+        .service-time {
+            font-size: 0.6rem;
+            color: var(--text-faint);
+            letter-spacing: 0.08em;
+        }
+
+        /* ── BOOKING ────────────────────────────── */
+        .booking-section {
             position: relative;
-            padding-left: 16px;
-            font-size: 13px;
-            line-height: 1.7;
-            color: var(--ink-2);
+            z-index: 1;
+            padding: 120px 48px;
+            overflow: hidden;
         }
 
-        .about-list li::before {
+        .booking-section::before {
             content: '';
             position: absolute;
-            left: 0;
-            top: 9px;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--gold);
+            inset: 0;
+            background:
+                    radial-gradient(ellipse 60% 80% at 10% 50%, rgba(201,169,110,0.04) 0%, transparent 60%),
+                    radial-gradient(ellipse 50% 60% at 90% 50%, rgba(120,80,160,0.04) 0%, transparent 60%);
+            pointer-events: none;
         }
 
-        /* LOWER */
-        .lower { display: grid; grid-template-columns: 1fr 300px; gap: 20px; align-items: start; }
-        .left { display: flex; flex-direction: column; gap: 20px; }
-        .right { display: flex; flex-direction: column; gap: 20px; }
+        .booking-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 80px;
+            align-items: start;
+        }
 
-        .card { background: var(--white); border-radius: var(--r); box-shadow: var(--sh); padding: 26px 28px 30px; }
+        .booking-info h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.1;
+            color: var(--text);
+            margin-bottom: 24px;
+        }
 
-        .card-title { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600; color: var(--ink); padding-bottom: 14px; margin-bottom: 18px; border-bottom: 1px solid var(--line); }
+        .booking-info h2 span { color: var(--gold-light); font-style: italic; }
 
-        /* TAGS */
-        .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .tag { background: var(--champagne); color: var(--gold-dk); font-size: 12px; font-weight: 500; padding: 5px 14px; border-radius: 99px; border: 1px solid var(--gold-lt); }
+        .booking-info p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 36px;
+        }
 
-        /* WORK */
-        .work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .thumb { aspect-ratio: 1; border-radius: 8px; overflow: hidden; cursor: pointer; }
-        .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s; }
-        .thumb:hover img { transform: scale(1.07); }
+        .booking-perks {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
 
-        /* CONTACT */
-        .info-list { display: flex; flex-direction: column; gap: 13px; }
-        .info-row { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--ink-2); }
-        .info-icon { width: 30px; height: 30px; background: var(--champagne); border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
+        .perk {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
 
-        /* SCHEDULE */
-        .sched { display: flex; flex-direction: column; gap: 7px; }
-        .sched-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 12px; border-radius: 7px; background: var(--cream); font-size: 13px; }
-        .sched-row.off { opacity: .4; }
-        .sched-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
-        .sched-row.off .sched-dot { background: var(--line); }
-        .sched-day { font-weight: 500; color: var(--ink); width: 36px; }
-        .sched-hrs { color: var(--ink-2); font-size: 12.5px; }
+        .perk-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(201,169,110,0.08);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
 
-        /* RATINGS */
-        .rating-top { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
-        .rating-big { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 600; color: var(--gold); line-height: 1; }
-        .stars { color: var(--gold); font-size: 13px; letter-spacing: 1px; margin-bottom: 3px; }
-        .rating-sub { font-size: 11.5px; color: var(--ink-3); }
-        .bar-row { display: flex; align-items: center; gap: 9px; margin-bottom: 6px; font-size: 11.5px; color: var(--ink-3); }
-        .bar-n { width: 8px; text-align: right; }
-        .bar-bg { flex: 1; height: 4px; border-radius: 99px; background: var(--champagne); overflow: hidden; }
-        .bar-fill { height: 100%; border-radius: 99px; background: var(--gold); }
+        .perk-text { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+        .perk-text strong { color: var(--text); font-weight: 400; display: block; margin-bottom: 2px; }
 
-        /* BOOKING FORM */
-        .booking-body { padding: 32px 40px 40px; }
+        /* FORM */
+        .booking-form {
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-lg);
+            padding: 44px 40px;
+        }
 
-        .booking-grid {
+        .form-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .form-subtitle {
+            font-size: 0.72rem;
+            color: var(--text-faint);
+            letter-spacing: 0.06em;
+            margin-bottom: 32px;
+        }
+
+        .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 14px;
         }
 
-        .field-group { display: flex; flex-direction: column; gap: 7px; }
-        .field-full { grid-column: 1 / -1; }
+        .form-group {
+            margin-bottom: 14px;
+        }
 
-        .field-label {
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: .1em;
+        .form-group label {
+            display: block;
+            font-size: 0.62rem;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--ink-3);
+            color: var(--text-faint);
+            margin-bottom: 7px;
         }
 
-        .field-optional {
-            font-size: 10px;
-            color: var(--ink-3);
-            font-weight: 400;
-            text-transform: none;
-            letter-spacing: 0;
-            margin-left: 4px;
-        }
-
-        .field-input {
-            background: var(--cream);
-            border: 1.5px solid var(--line);
-            border-radius: 8px;
-            padding: 12px 16px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 13.5px;
-            color: var(--ink);
-            outline: none;
-            transition: border-color .18s, background .18s;
+        .form-control {
             width: 100%;
-        }
-
-        .field-input::placeholder { color: var(--ink-3); }
-        .field-input:focus { border-color: var(--gold); background: var(--white); }
-
-        .field-select-wrap { position: relative; }
-
-        .field-select {
+            background: var(--surface-2);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 300;
+            padding: 11px 14px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
             appearance: none;
-            -webkit-appearance: none;
-            cursor: pointer;
-            padding-right: 40px;
         }
 
-        .select-arrow {
+        .form-control:focus {
+            border-color: var(--gold-dim);
+            box-shadow: 0 0 0 3px rgba(201,169,110,0.06);
+        }
+
+        .form-control::placeholder { color: var(--text-faint); }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        /* Custom select */
+        .select-wrap {
+            position: relative;
+        }
+
+        .select-wrap::after {
+            content: '▾';
             position: absolute;
             right: 14px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--ink-3);
-            font-size: 18px;
+            color: var(--text-faint);
+            font-size: 0.7rem;
             pointer-events: none;
         }
 
-        .field-textarea {
-            resize: vertical;
-            min-height: 110px;
-            line-height: 1.6;
+        .form-control option {
+            background: var(--surface-2);
+            color: var(--text);
         }
 
-        .field-actions {
+        .form-divider {
+            height: 1px;
+            background: var(--border-soft);
+            margin: 24px 0;
+        }
+
+        .form-check {
             display: flex;
-            align-items: center;
-            gap: 20px;
-            padding-top: 4px;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 24px;
         }
 
-        .form-note {
-            font-size: 12px;
-            color: var(--ink-3);
-        }
-
-        .btn-group {
-            display: flex;
-        }
-
-        .btn-group .btn {
-            border-radius: 0;
-        }
-
-        .btn-group .btn:first-child {
-            border-radius: 8px 0 0 8px;
-        }
-
-        .btn-group .btn:last-child {
-            border-radius: 0 8px 8px 0;
-            border-left: none;
-        }
-
-        /* CHECKBOX */
-        .check-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .form-check input[type="checkbox"] {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid var(--border-soft);
+            border-radius: 3px;
+            background: var(--surface-2);
             cursor: pointer;
-            user-select: none;
-        }
-
-        .check-row input[type="checkbox"] { display: none; }
-
-        .check-box {
-            width: 20px; height: 20px;
-            border-radius: 5px;
-            border: 1.5px solid var(--line);
-            background: var(--cream);
             flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: border-color .18s, background .18s;
+            margin-top: 2px;
+            position: relative;
+            transition: border-color 0.2s, background 0.2s;
         }
 
-        .check-row input[type="checkbox"]:checked + .check-box {
+        .form-check input[type="checkbox"]:checked {
             background: var(--gold);
             border-color: var(--gold);
         }
 
-        .check-row input[type="checkbox"]:checked + .check-box::after {
-            content: '';
-            width: 5px; height: 9px;
-            border: 2px solid #fff;
-            border-top: none;
-            border-left: none;
-            transform: rotate(45deg) translateY(-1px);
-            display: block;
+        .form-check input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: var(--bg);
+            font-weight: 700;
         }
 
-        .check-label {
-            font-size: 13.5px;
-            color: var(--ink-2);
+        .form-check label {
+            font-size: 0.74rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            cursor: pointer;
         }
 
-        /* TRANSPORT FIELDS */
-        #transport-fields {
-            display: contents;
+        .btn-submit {
+            width: 100%;
+            background: var(--gold);
+            color: var(--bg);
+            border: none;
+            border-radius: var(--radius);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            padding: 15px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
         }
 
-        .transport-divider {
-            padding-top: 8px;
-            border-top: 1px solid var(--line);
-            margin-top: 4px;
+        .btn-submit:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201,169,110,0.2);
         }
 
+        /* ── MARQUEE ────────────────────────────── */
+        .marquee-strip {
+            position: relative; z-index: 1;
+            overflow: hidden;
+            border-top: 1px solid var(--border-soft);
+            border-bottom: 1px solid var(--border-soft);
+            padding: 18px 0;
+        }
 
+        .marquee-track {
+            display: flex;
+            gap: 0;
+            width: max-content;
+            animation: marquee 28s linear infinite;
+        }
 
-        @media (max-width: 740px) {
-            .hero { grid-template-columns: 1fr; }
-            .hero-img { height: 240px; }
-            .hero-body { padding: 24px; }
-            .about,
-            .services-head,
-            .booking-body { padding-left: 24px; padding-right: 24px; }
-            .about-lead,
-            .about-grid { grid-template-columns: 1fr; }
-            .services-grid { grid-template-columns: 1fr 1fr; }
-            .lower { grid-template-columns: 1fr; }
-            .booking-grid { grid-template-columns: 1fr; }
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            padding: 0 36px;
+            white-space: nowrap;
+        }
+
+        .marquee-dot {
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: var(--gold-dim);
+        }
+
+        .marquee-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.88rem;
+            font-style: italic;
+            letter-spacing: 0.1em;
+            color: var(--text-faint);
+        }
+
+        /* ── FOOTER ─────────────────────────────── */
+        footer {
+            position: relative; z-index: 1;
+            background: var(--surface);
+            border-top: 1px solid var(--border-soft);
+            padding: 60px 48px 40px;
+        }
+
+        .footer-grid {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: 1.4rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 14px;
+        }
+
+        .footer-brand-desc {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 260px;
+            margin-bottom: 24px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-btn {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            border: 1px solid var(--border-soft);
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: var(--text-faint);
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+            text-decoration: none;
+        }
+
+        .social-btn:hover { border-color: var(--border); color: var(--gold); }
+
+        .footer-col-title {
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-links a {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover { color: var(--text); }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-soft);
+        }
+
+        .footer-copy {
+            font-size: 0.68rem;
+            color: var(--text-faint);
+            letter-spacing: 0.06em;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-legal a {
+            font-size: 0.68rem;
+            color: var(--text-faint);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-legal a:hover { color: var(--text-muted); }
+
+        /* ── ANIMATIONS ─────────────────────────── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.15); }
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+        /* ── REVEAL ON SCROLL ───────────────────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ─────────────────────────── */
+        @media (max-width: 1024px) {
+            .cat-grid,
+            .provider-grid,
+            .services-layout { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+            .booking-inner { grid-template-columns: 1fr; gap: 48px; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 0 24px; }
+            .nav-links { display: none; }
+            .categories,
+            .providers,
+            .services-section,
+            .booking-section { padding: 60px 24px; }
+            .cat-grid,
+            .provider-grid,
+            .services-layout { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            footer { padding: 40px 24px 28px; }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .form-row { grid-template-columns: 1fr; }
+            .booking-form { padding: 28px 20px; }
         }
     </style>
 </head>
 <body>
-<div class="page">
 
-    <div class="hero">
-        <div class="hero-img">
-            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=520&h=680&fit=crop&crop=face" alt="Monique Delacroix">
-            <div class="badge"><div class="badge-dot"></div>Available Today</div>
-        </div>
-        <div class="hero-body">
-            <div>
-                <div class="eyebrow">Beauty · Tattoo · Wellness Marketplace</div>
-                <div class="hero-name">Cosmos</div>
-                <div class="hero-role">Polished provider profiles and premium booking flow</div>
-                <p class="hero-bio">Cosmos is a beauty, tattoo, and wellness marketplace concept built to help clients understand services quickly, compare professionals with confidence, and request appointments with the right provider.</p>
-                <div class="stats">
-                    <div class="stat"><div class="stat-n">3</div><div class="stat-l">Categories</div></div>
-                    <div class="stat"><div class="stat-n">1</div><div class="stat-l">Booking Flow</div></div>
-                    <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Front-End</div></div>
-                </div>
-            </div>
-            <div class="actions">
-                <button class="btn btn-gold">Request Booking</button>
-                <button class="btn btn-outline">Explore Services</button>
-            </div>
-        </div>
+<canvas id="starfield"></canvas>
+
+<!-- NAV -->
+<nav>
+    <a class="nav-logo" href="#">Cosmos</a>
+    <ul class="nav-links">
+        <li><a href="#categories">Services</a></li>
+        <li><a href="#providers">Providers</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#booking">Book</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">
+        Request a Session
+    </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-eyebrow">Premium Booking — Peoria, IL</div>
+    <h1 class="hero-title">Where <em>artistry</em><br>finds its client</h1>
+    <p class="hero-sub">Beauty, tattoo, and wellness — curated providers, seamless appointments</p>
+    <div class="hero-actions">
+        <a class="btn-primary" href="#providers">Browse Providers</a>
+        <a class="btn-ghost" href="#booking">How It Works</a>
     </div>
-
-    <section class="about">
-        <div class="about-lead">
-            <div>
-                <div class="eyebrow">Cosmos</div>
-                <h2 class="about-title">Beauty, tattoo, and wellness booking with a polished front-end experience.</h2>
-                <p class="about-copy">Cosmos is a beauty, tattoo, and wellness marketplace concept built as a polished front-end profile and booking experience. The project is designed to present service providers clearly, explain what they offer, and make it easier for clients to request appointments with the right professional.</p>
-            </div>
-            <div class="about-summary">
-                <div class="summary-label">Overview</div>
-                <div class="summary-item">
-                    <div class="summary-title">Static Website Prototype</div>
-                    <p class="summary-text">This repository contains a static website prototype for Cosmos focused on premium presentation, clear service communication, and a clean booking flow across multiple service categories.</p>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-title">Provider-First Profiles</div>
-                    <p class="summary-text">Professionals can be presented with biography, service listings, starting prices, availability, reputation signals, and portfolio or showcase content.</p>
-                </div>
-                <div class="summary-item">
-                    <div class="summary-title">Client Booking Flow</div>
-                    <p class="summary-text">Clients can request appointments with contact info, date and time preferences, service notes, provider preferences, and optional transportation details.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="about-grid">
-            <article class="about-card">
-                <h3>Stylist Services</h3>
-                <p>Cosmos supports salon and independent hair professionals with service descriptions, estimated timing, and pricing so clients know what to expect before booking.</p>
-                <ul class="about-list">
-                    <li>Haircuts and precision cuts</li>
-                    <li>Coloring and blonding services</li>
-                    <li>Balayage and lived-in color</li>
-                    <li>Extensions</li>
-                    <li>Scalp and hair treatments</li>
-                    <li>Bridal and event styling</li>
-                </ul>
-            </article>
-
-            <article class="about-card">
-                <h3>Tattoo Artist Services</h3>
-                <p>Cosmos gives tattoo professionals room to describe their style, rates, studio details, portfolio links, and booking requirements in a premium profile format.</p>
-                <ul class="about-list">
-                    <li>Custom tattoo consultations</li>
-                    <li>Small, medium, and large tattoo sessions</li>
-                    <li>Fine line, realism, blackwork, geometric, and illustrative work</li>
-                    <li>Cover-ups</li>
-                    <li>Touch-ups</li>
-                </ul>
-            </article>
-
-            <article class="about-card">
-                <h3>Massage And Wellness Services</h3>
-                <p>Massage therapists and wellness providers can present service types, client preferences, and intake notes that help them prepare for each appointment.</p>
-                <ul class="about-list">
-                    <li>Swedish massage</li>
-                    <li>Deep tissue massage</li>
-                    <li>Hot stone therapy</li>
-                    <li>Sports massage</li>
-                    <li>Prenatal massage</li>
-                    <li>Reflexology</li>
-                    <li>Lymphatic drainage</li>
-                    <li>Aromatherapy</li>
-                    <li>Thai massage</li>
-                </ul>
-            </article>
-
-            <article class="about-card">
-                <h3>Project Features</h3>
-                <p>Cosmos is built to make providers easier to compare and easier to book, while keeping the prototype lightweight and presentation-focused.</p>
-                <ul class="about-list">
-                    <li>Static single-page site in <code>index.html</code></li>
-                    <li>Premium editorial-style visual design</li>
-                    <li>Service cards with pricing and descriptions</li>
-                    <li>Booking form for multiple service categories</li>
-                    <li>Profile-focused layout for beauty and wellness professionals</li>
-                    <li>Responsive structure for smaller screens</li>
-                </ul>
-            </article>
-        </div>
-    </section>
-
-    <div class="services">
-        <div class="services-head">
-            <div>
-                <div class="eyebrow">What I Offer</div>
-                <div class="services-h1">Services &amp; Pricing</div>
-            </div>
-            <div class="services-note">All services begin with a consultation. Pricing reflects the work, not the clock.</div>
-        </div>
-        <div class="services-grid">
-            <div class="svc"><div class="svc-cat">Color</div><div class="svc-name">Signature Blonding</div><p class="svc-desc">Foilyage, highlights, and gloss for soft contrast and luminous movement between appointments.</p><div class="svc-price">From $220</div><div class="svc-meta">3–4 hrs · includes toner + blowout</div></div>
-            <div class="svc"><div class="svc-cat">Color</div><div class="svc-name">Lived-In Balayage</div><p class="svc-desc">Hand-painted dimension that grows out cleanly and looks expensive at every stage.</p><div class="svc-price">From $185</div><div class="svc-meta">2.5–3 hrs</div></div>
-            <div class="svc"><div class="svc-cat">Cut</div><div class="svc-name">Precision Cut</div><p class="svc-desc">Weight removal, face framing, and shape refinement that moves well long after you leave.</p><div class="svc-price">From $95</div><div class="svc-meta">60–90 min · all textures</div></div>
-            <div class="svc"><div class="svc-cat">Extensions</div><div class="svc-name">Tape-In Extensions</div><p class="svc-desc">Seamless volume and length with a focus on blend, comfort, and scalp health.</p><div class="svc-price">From $380</div><div class="svc-meta">Consultation required</div></div>
-            <div class="svc"><div class="svc-cat">Wellness</div><div class="svc-name">Scalp Renewal</div><p class="svc-desc">Detox, massage, steam, and bond repair — the foundation behind every great result.</p><div class="svc-price">From $75</div><div class="svc-meta">60 min · add-on or standalone</div></div>
-            <div class="svc"><div class="svc-cat">Events</div><div class="svc-name">Bridal + Occasion</div><p class="svc-desc">Refined updos and event styling that holds on camera and still feels like you.</p><div class="svc-price">From $150</div><div class="svc-meta">Trial session included</div></div>
-        </div>
+    <div class="hero-scroll">
+        <span class="scroll-label">Explore</span>
+        <div class="scroll-line"></div>
     </div>
+</section>
 
-
-    <!-- ADD SERVICE FORM -->
-    <div class="services">
-        <div class="services-head">
-            <div>
-                <div class="eyebrow">Manage Offerings</div>
-                <div class="services-h1">Add a Service</div>
-            </div>
-            <div class="services-note">New services appear on your profile immediately after saving.</div>
-        </div>
-        <div class="booking-body">
-            <div class="booking-grid">
-
-                <div class="field-group">
-                    <label class="field-label">Service Name</label>
-                    <input class="field-input" type="text" placeholder="e.g. Lived-In Balayage">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Category</label>
-                    <div class="field-select-wrap">
-                        <select class="field-input field-select">
-                            <option value="" disabled selected>Select a category</option>
-                            <option>Color</option>
-                            <option>Cut</option>
-                            <option>Extensions</option>
-                            <option>Wellness</option>
-                            <option>Events</option>
-                            <option>Treatment</option>
-                            <option>Other</option>
-                        </select>
-                        <div class="select-arrow">&#8964;</div>
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Starting Price</label>
-                    <input class="field-input" type="text" placeholder="e.g. 185">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Duration</label>
-                    <input class="field-input" type="text" placeholder="e.g. 2.5–3 hrs">
-                </div>
-
-                <div class="field-group field-full">
-                    <label class="field-label">Description</label>
-                    <textarea class="field-input field-textarea" placeholder="Describe the service — what it includes, who it's for, what results to expect..."></textarea>
-                </div>
-
-                <div class="field-group field-full">
-                    <label class="field-label">Additional Notes <span class="field-optional">optional</span></label>
-                    <input class="field-input" type="text" placeholder="e.g. Consultation required · includes toner + blowout">
-                </div>
-
-                <div class="field-group field-full field-actions">
-                    <div class="btn-group">
-                        <button class="btn btn-gold" style="padding: 14px 40px; font-size: 14px;">Save Service</button>
-                        <button class="btn btn-outline" style="padding: 14px 28px; font-size: 14px;">Clear</button>
-                    </div>
-                    <span class="form-note">Service will be visible on your profile immediately.</span>
-                </div>
-
-            </div>
-        </div>
+<!-- MARQUEE -->
+<div class="marquee-strip">
+    <div class="marquee-track" id="marquee">
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Hair & Color</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Custom Tattoos</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Swedish Massage</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Balayage & Blonding</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Fine Line Ink</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Deep Tissue</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Bridal Styling</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Cover-Ups</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Hot Stone Therapy</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Extensions</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Hair & Color</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Custom Tattoos</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Swedish Massage</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Balayage & Blonding</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Fine Line Ink</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Deep Tissue</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Bridal Styling</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Cover-Ups</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Hot Stone Therapy</span></div>
+        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Extensions</span></div>
     </div>
-
-    <!-- BOOKING FORM -->
-    <div class="services">
-        <div class="services-head">
-            <div>
-                <div class="eyebrow">Reserve Your Chair</div>
-                <div class="services-h1">Book an Appointment</div>
-            </div>
-            <div class="services-note">Appointments confirmed within 24 hours. New clients start with a complimentary consultation.</div>
-        </div>
-        <div class="booking-body">
-            <div class="booking-grid">
-
-                <div class="field-group">
-                    <label class="field-label">First Name</label>
-                    <input class="field-input" type="text" placeholder="Your first name">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Last Name</label>
-                    <input class="field-input" type="text" placeholder="Your last name">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Email</label>
-                    <input class="field-input" type="email" placeholder="you@email.com">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Phone</label>
-                    <input class="field-input" type="tel" placeholder="(000) 000-0000">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Appointment Type</label>
-                    <div class="field-select-wrap">
-                        <select class="field-input field-select" id="appt-type" onchange="showApptFields(this.value)">
-                            <option value="" disabled selected>Select a type</option>
-                            <option value="stylist">Stylist</option>
-                            <option value="tattoo">Tattoo Artist</option>
-                            <option value="massage">Masseuse</option>
-                        </select>
-                        <div class="select-arrow">&#8964;</div>
-                    </div>
-                </div>
-
-                <div class="field-group" id="service-field" style="display:none">
-                    <label class="field-label">Service</label>
-                    <div class="field-select-wrap">
-                        <select class="field-input field-select" id="service-select">
-                            <option value="" disabled selected>Select a service</option>
-                        </select>
-                        <div class="select-arrow">&#8964;</div>
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Preferred Date</label>
-                    <input class="field-input" type="date">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Preferred Time</label>
-                    <input class="field-input" type="time">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Duration</label>
-                    <div class="field-select-wrap">
-                        <select class="field-input field-select">
-                            <option value="" disabled selected>Estimated length</option>
-                            <option>30 min</option>
-                            <option>60 min</option>
-                            <option>90 min</option>
-                            <option>2 hrs</option>
-                            <option>3 hrs</option>
-                            <option>4+ hrs</option>
-                        </select>
-                        <div class="select-arrow">&#8964;</div>
-                    </div>
-                </div>
-
-                <!-- STYLIST FIELDS -->
-                <div id="fields-stylist" class="appt-fields" style="display:none">
-                    <div class="field-group field-full transport-divider">
-                        <div class="eyebrow" style="color:var(--gold);">Stylist Details</div>
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Stylist Preference <span class="field-optional">optional</span></label>
-                        <input class="field-input" type="text" placeholder="Request a specific stylist">
-                    </div>
-                    <div class="field-group field-full">
-                        <label class="field-label">Hair Notes <span class="field-optional">optional</span></label>
-                        <textarea class="field-input field-textarea" style="min-height:80px" placeholder="Hair history, inspiration photos, concerns..."></textarea>
-                    </div>
-                </div>
-
-                <!-- TATTOO FIELDS -->
-                <div id="fields-tattoo" class="appt-fields" style="display:none">
-                    <div class="field-group field-full transport-divider">
-                        <div class="eyebrow" style="color:var(--gold);">Tattoo Details</div>
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Placement</label>
-                        <input class="field-input" type="text" placeholder="e.g. Inner forearm, left shoulder">
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Approximate Size</label>
-                        <div class="field-select-wrap">
-                            <select class="field-input field-select">
-                                <option value="" disabled selected>Select size</option>
-                                <option>Small — under 2"</option>
-                                <option>Medium — 2–4"</option>
-                                <option>Large — 4–6"</option>
-                                <option>Extra Large — 6"+</option>
-                                <option>Full sleeve / back piece</option>
-                            </select>
-                            <div class="select-arrow">&#8964;</div>
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Style</label>
-                        <div class="field-select-wrap">
-                            <select class="field-input field-select">
-                                <option value="" disabled selected>Select a style</option>
-                                <option>Fine Line</option>
-                                <option>Traditional / Old School</option>
-                                <option>Neo Traditional</option>
-                                <option>Blackwork</option>
-                                <option>Realism</option>
-                                <option>Watercolor</option>
-                                <option>Geometric</option>
-                                <option>Japanese</option>
-                                <option>Illustrative</option>
-                                <option>Cover-Up</option>
-                            </select>
-                            <div class="select-arrow">&#8964;</div>
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Artist Preference <span class="field-optional">optional</span></label>
-                        <input class="field-input" type="text" placeholder="Request a specific artist">
-                    </div>
-                    <div class="field-group field-full">
-                        <label class="field-label">Design Description</label>
-                        <textarea class="field-input field-textarea" style="min-height:80px" placeholder="Describe the design, any reference images, colors, or ideas..."></textarea>
-                    </div>
-                    <div class="field-group field-full">
-                        <label class="field-label">Reference Images <span class="field-optional">optional</span></label>
-                        <input class="field-input" type="url" placeholder="Link to mood board, Pinterest, or Instagram">
-                    </div>
-                </div>
-
-                <!-- MASSAGE FIELDS -->
-                <div id="fields-massage" class="appt-fields" style="display:none">
-                    <div class="field-group field-full transport-divider">
-                        <div class="eyebrow" style="color:var(--gold);">Massage Details</div>
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Modality</label>
-                        <div class="field-select-wrap">
-                            <select class="field-input field-select">
-                                <option value="" disabled selected>Select a modality</option>
-                                <option>Swedish</option>
-                                <option>Deep Tissue</option>
-                                <option>Hot Stone</option>
-                                <option>Sports Massage</option>
-                                <option>Prenatal</option>
-                                <option>Reflexology</option>
-                                <option>Lymphatic Drainage</option>
-                                <option>Aromatherapy</option>
-                                <option>Thai Massage</option>
-                            </select>
-                            <div class="select-arrow">&#8964;</div>
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Pressure Preference</label>
-                        <div class="field-select-wrap">
-                            <select class="field-input field-select">
-                                <option value="" disabled selected>Select pressure</option>
-                                <option>Light</option>
-                                <option>Medium</option>
-                                <option>Firm</option>
-                                <option>Deep</option>
-                            </select>
-                            <div class="select-arrow">&#8964;</div>
-                        </div>
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Therapist Preference <span class="field-optional">optional</span></label>
-                        <input class="field-input" type="text" placeholder="Request a specific therapist">
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Focus Areas <span class="field-optional">optional</span></label>
-                        <input class="field-input" type="text" placeholder="e.g. Lower back, shoulders, neck">
-                    </div>
-                    <div class="field-group field-full">
-                        <label class="field-label">Health Notes <span class="field-optional">optional</span></label>
-                        <textarea class="field-input field-textarea" style="min-height:80px" placeholder="Injuries, conditions, sensitivities, or anything the therapist should know..."></textarea>
-                    </div>
-                </div>
-
-                <div class="field-group field-full">
-                    <label class="check-row">
-                        <input type="checkbox" id="transport-toggle" onchange="document.getElementById('transport-fields').style.display = this.checked ? 'contents' : 'none'">
-                        <div class="check-box"></div>
-                        <span class="check-label">I'd like to request transportation</span>
-                    </label>
-                </div>
-
-                <!-- Transportation fields — hidden by default -->
-                <div id="transport-fields" style="display:none; contents: unset;" class="transport-fields">
-                    <div class="field-group field-full transport-divider">
-                        <div class="eyebrow" style="color: var(--gold);">Transportation Details</div>
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Pickup Address</label>
-                        <input class="field-input" type="text" placeholder="Street address">
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">City / ZIP</label>
-                        <input class="field-input" type="text" placeholder="City, IL 60000">
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Pickup Time</label>
-                        <input class="field-input" type="time">
-                    </div>
-                    <div class="field-group">
-                        <label class="field-label">Return Trip?</label>
-                        <div class="field-select-wrap">
-                            <select class="field-input field-select">
-                                <option value="" disabled selected>Select</option>
-                                <option>Yes — round trip</option>
-                                <option>No — one way only</option>
-                            </select>
-                            <div class="select-arrow">&#8964;</div>
-                        </div>
-                    </div>
-                    <div class="field-group field-full">
-                        <label class="field-label">Transportation Notes <span class="field-optional">optional</span></label>
-                        <input class="field-input" type="text" placeholder="Gate code, building instructions, accessibility needs...">
-                    </div>
-                </div>
-
-                <div class="field-group field-full field-actions">
-                    <button class="btn btn-gold" style="padding: 14px 40px; font-size: 14px;">Request Appointment</button>
-                    <span class="form-note">We'll confirm your time within 24 hours.</span>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const services = {
-            stylist: [
-                'Signature Blonding — From $220',
-                'Lived-In Balayage — From $185',
-                'Precision Cut — From $95',
-                'Tape-In Extensions — From $380',
-                'Scalp Renewal — From $75',
-                'Bridal + Occasion — From $150'
-            ],
-            tattoo: [
-                'Custom Design Consultation — From $100',
-                'Small Tattoo (under 2") — From $150',
-                'Medium Tattoo (2–4") — From $250',
-                'Large Tattoo (4–6") — From $400',
-                'Extra Large / Sleeve — From $800',
-                'Cover-Up — From $300',
-                'Touch-Up — From $80'
-            ],
-            massage: [
-                'Swedish — $90 / 60 min',
-                'Deep Tissue — $110 / 60 min',
-                'Hot Stone — $120 / 60 min',
-                'Sports Massage — $110 / 60 min',
-                'Prenatal — $95 / 60 min',
-                'Reflexology — $85 / 45 min',
-                'Lymphatic Drainage — $100 / 60 min',
-                'Aromatherapy — $95 / 60 min',
-                'Thai Massage — $110 / 60 min'
-            ]
-        };
-
-        function showApptFields(type) {
-            document.querySelectorAll('.appt-fields').forEach(el => el.style.display = 'none');
-
-            const serviceField = document.getElementById('service-field');
-            const serviceSelect = document.getElementById('service-select');
-
-            if (type && services[type]) {
-                serviceSelect.innerHTML = '<option value="" disabled selected>Select a service</option>';
-                services[type].forEach(s => {
-                    const opt = document.createElement('option');
-                    opt.textContent = s;
-                    serviceSelect.appendChild(opt);
-                });
-                serviceField.style.display = 'flex';
-            } else {
-                serviceField.style.display = 'none';
-            }
-
-            if (type) {
-                const el = document.getElementById('fields-' + type);
-                if (el) el.style.display = 'contents';
-            }
-        }
-    </script>
-
-
-    <!-- TATTOO ARTIST FORM -->
-    <div class="services">
-        <div class="services-head">
-            <div>
-                <div class="eyebrow">Artist Registration</div>
-                <div class="services-h1">Tattoo Artist Profile</div>
-            </div>
-            <div class="services-note">Complete your profile to start accepting bookings and showcasing your portfolio.</div>
-        </div>
-        <div class="booking-body">
-            <div class="booking-grid">
-
-                <div class="field-group">
-                    <label class="field-label">Artist Name</label>
-                    <input class="field-input" type="text" placeholder="Name or studio alias">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Studio / Shop Name</label>
-                    <input class="field-input" type="text" placeholder="Where do you work?">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Email</label>
-                    <input class="field-input" type="email" placeholder="you@studio.com">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Phone</label>
-                    <input class="field-input" type="tel" placeholder="(000) 000-0000">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Primary Style</label>
-                    <div class="field-select-wrap">
-                        <select class="field-input field-select">
-                            <option value="" disabled selected>Select your style</option>
-                            <option>Fine Line</option>
-                            <option>Traditional / Old School</option>
-                            <option>Neo Traditional</option>
-                            <option>Blackwork</option>
-                            <option>Realism</option>
-                            <option>Watercolor</option>
-                            <option>Geometric</option>
-                            <option>Japanese</option>
-                            <option>Illustrative</option>
-                            <option>Cover-Up Specialist</option>
-                            <option>Other</option>
-                        </select>
-                        <div class="select-arrow">&#8964;</div>
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Years of Experience</label>
-                    <input class="field-input" type="text" placeholder="e.g. 6">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Starting Rate</label>
-                    <input class="field-input" type="text" placeholder="e.g. $150 / hr or $200 minimum">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Deposit Required</label>
-                    <div class="field-select-wrap">
-                        <select class="field-input field-select">
-                            <option value="" disabled selected>Select</option>
-                            <option>Yes — required to book</option>
-                            <option>No — pay day of</option>
-                        </select>
-                        <div class="select-arrow">&#8964;</div>
-                    </div>
-                </div>
-
-                <div class="field-group field-full">
-                    <label class="field-label">Bio</label>
-                    <textarea class="field-input field-textarea" placeholder="Tell clients about your background, influences, and what makes your work distinctive..."></textarea>
-                </div>
-
-                <div class="field-group field-full">
-                    <label class="field-label">Portfolio URL <span class="field-optional">optional</span></label>
-                    <input class="field-input" type="url" placeholder="https://instagram.com/yourhandle">
-                </div>
-
-                <div class="field-group field-full field-actions">
-                    <div class="btn-group">
-                        <button class="btn btn-gold" style="padding: 14px 40px; font-size: 14px;">Save Artist Profile</button>
-                        <button class="btn btn-outline" style="padding: 14px 28px; font-size: 14px;">Clear</button>
-                    </div>
-                    <span class="form-note">Profile goes live after admin review.</span>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- NEW CLIENT FORM -->
-    <!-- ADD STYLIST FORM -->
-    <div class="services">
-        <div class="services-head">
-            <div>
-                <div class="eyebrow">Team Management</div>
-                <div class="services-h1">Add a Stylist</div>
-            </div>
-            <div class="services-note">New stylists are added to the team roster and can start accepting bookings immediately.</div>
-        </div>
-        <div class="booking-body">
-            <div class="booking-grid">
-
-                <div class="field-group">
-                    <label class="field-label">First Name</label>
-                    <input class="field-input" type="text" placeholder="Stylist first name">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Last Name</label>
-                    <input class="field-input" type="text" placeholder="Stylist last name">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Email</label>
-                    <input class="field-input" type="email" placeholder="stylist@salon.com">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Phone</label>
-                    <input class="field-input" type="tel" placeholder="(000) 000-0000">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Title / Role</label>
-                    <div class="field-select-wrap">
-                        <select class="field-input field-select">
-                            <option value="" disabled selected>Select a role</option>
-                            <option>Junior Stylist</option>
-                            <option>Stylist</option>
-                            <option>Senior Stylist</option>
-                            <option>Color Specialist</option>
-                            <option>Creative Director</option>
-                            <option>Booth Renter</option>
-                        </select>
-                        <div class="select-arrow">&#8964;</div>
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Years of Experience</label>
-                    <input class="field-input" type="text" placeholder="e.g. 5">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Chair / Station</label>
-                    <input class="field-input" type="text" placeholder="e.g. Chair 4, Main Floor">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Start Date</label>
-                    <input class="field-input" type="date">
-                </div>
-
-                <div class="field-group field-full">
-                    <label class="field-label">Specialties <span class="field-optional">optional</span></label>
-                    <input class="field-input" type="text" placeholder="e.g. Balayage, Precision Cut, Textured Hair">
-                </div>
-
-                <div class="field-group field-full">
-                    <label class="field-label">Bio <span class="field-optional">optional</span></label>
-                    <textarea class="field-input field-textarea" placeholder="A short bio displayed on the stylist's public profile..."></textarea>
-                </div>
-
-                <div class="field-group field-full field-actions">
-                    <div class="btn-group">
-                        <button class="btn btn-gold" style="padding: 14px 40px; font-size: 14px;">Add Stylist</button>
-                        <button class="btn btn-outline" style="padding: 14px 28px; font-size: 14px;">Clear</button>
-                    </div>
-                    <span class="form-note">Stylist will appear on the team roster immediately.</span>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- MASSEUSE FORM -->
-    <div class="services">
-        <div class="services-head">
-            <div>
-                <div class="eyebrow">Wellness Team</div>
-                <div class="services-h1">Add a Masseuse</div>
-            </div>
-            <div class="services-note">Complete the profile to list the therapist and their available modalities.</div>
-        </div>
-        <div class="booking-body">
-            <div class="booking-grid">
-
-                <div class="field-group">
-                    <label class="field-label">First Name</label>
-                    <input class="field-input" type="text" placeholder="Therapist first name">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Last Name</label>
-                    <input class="field-input" type="text" placeholder="Therapist last name">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Email</label>
-                    <input class="field-input" type="email" placeholder="therapist@salon.com">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Phone</label>
-                    <input class="field-input" type="tel" placeholder="(000) 000-0000">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Primary Modality</label>
-                    <div class="field-select-wrap">
-                        <select class="field-input field-select">
-                            <option value="" disabled selected>Select a modality</option>
-                            <option>Swedish</option>
-                            <option>Deep Tissue</option>
-                            <option>Hot Stone</option>
-                            <option>Sports Massage</option>
-                            <option>Prenatal</option>
-                            <option>Reflexology</option>
-                            <option>Lymphatic Drainage</option>
-                            <option>Aromatherapy</option>
-                            <option>Thai Massage</option>
-                            <option>Other</option>
-                        </select>
-                        <div class="select-arrow">&#8964;</div>
-                    </div>
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">License Number</label>
-                    <input class="field-input" type="text" placeholder="State license #">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Session Rate</label>
-                    <input class="field-input" type="text" placeholder="e.g. $90 / 60 min">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Years of Experience</label>
-                    <input class="field-input" type="text" placeholder="e.g. 4">
-                </div>
-
-                <div class="field-group field-full">
-                    <label class="field-label">Additional Modalities <span class="field-optional">optional</span></label>
-                    <input class="field-input" type="text" placeholder="e.g. Hot Stone, Aromatherapy, Prenatal">
-                </div>
-
-                <div class="field-group field-full">
-                    <label class="field-label">Bio <span class="field-optional">optional</span></label>
-                    <textarea class="field-input field-textarea" placeholder="Describe the therapist's approach, training, and what clients can expect..."></textarea>
-                </div>
-
-                <div class="field-group field-full field-actions">
-                    <div class="btn-group">
-                        <button class="btn btn-gold" style="padding: 14px 40px; font-size: 14px;">Add Masseuse</button>
-                        <button class="btn btn-outline" style="padding: 14px 28px; font-size: 14px;">Clear</button>
-                    </div>
-                    <span class="form-note">Profile goes live after admin review.</span>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- NEW CLIENT FORM -->
-    <div class="services">
-        <div class="services-head">
-            <div>
-                <div class="eyebrow">Welcome</div>
-                <div class="services-h1">New Client Intake</div>
-            </div>
-            <div class="services-note">Help us get to know you before your first visit. Takes less than two minutes.</div>
-        </div>
-        <div class="booking-body">
-            <div class="booking-grid">
-
-                <div class="field-group">
-                    <label class="field-label">First Name</label>
-                    <input class="field-input" type="text" placeholder="Your first name">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Last Name</label>
-                    <input class="field-input" type="text" placeholder="Your last name">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Email</label>
-                    <input class="field-input" type="email" placeholder="you@email.com">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Phone</label>
-                    <input class="field-input" type="tel" placeholder="(000) 000-0000">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">Date of Birth</label>
-                    <input class="field-input" type="date">
-                </div>
-
-                <div class="field-group">
-                    <label class="field-label">How Did You Hear About Us?</label>
-                    <div class="field-select-wrap">
-                        <select class="field-input field-select">
-                            <option value="" disabled selected>Select one</option>
-                            <option>Instagram</option>
-                            <option>Google Search</option>
-                            <option>Friend / Referral</option>
-                            <option>Walk-In</option>
-                            <option>Yelp</option>
-                            <option>Other</option>
-                        </select>
-                        <div class="select-arrow">&#8964;</div>
-                    </div>
-                </div>
-
-                <div class="field-group field-full">
-                    <label class="field-label">What Service Are You Interested In?</label>
-                    <div class="field-select-wrap">
-                        <select class="field-input field-select">
-                            <option value="" disabled selected>Select a service</option>
-                            <option>Signature Blonding — From $220</option>
-                            <option>Lived-In Balayage — From $185</option>
-                            <option>Precision Cut — From $95</option>
-                            <option>Tape-In Extensions — From $380</option>
-                            <option>Scalp Renewal — From $75</option>
-                            <option>Bridal + Occasion — From $150</option>
-                            <option>Not sure yet</option>
-                        </select>
-                        <div class="select-arrow">&#8964;</div>
-                    </div>
-                </div>
-
-                <div class="field-group field-full">
-                    <label class="field-label">Hair History <span class="field-optional">optional</span></label>
-                    <textarea class="field-input field-textarea" placeholder="Any recent color, chemical treatments, or damage we should know about before your appointment..."></textarea>
-                </div>
-
-                <div class="field-group field-full">
-                    <label class="field-label">Allergies or Sensitivities <span class="field-optional">optional</span></label>
-                    <input class="field-input" type="text" placeholder="e.g. PPD allergy, sensitive scalp, fragrance sensitivity">
-                </div>
-
-                <div class="field-group field-full">
-                    <label class="check-row">
-                        <input type="checkbox">
-                        <div class="check-box"></div>
-                        <span class="check-label">I agree to the cancellation policy — 24 hours notice required</span>
-                    </label>
-                </div>
-
-                <div class="field-group field-full field-actions">
-                    <button class="btn btn-gold" style="padding: 14px 40px; font-size: 14px;">Submit Intake Form</button>
-                    <span class="form-note">Your info is kept private and never shared.</span>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
 </div>
 
-<!-- CHAT WIDGET -->
-<div id="chat-widget">
-
-    <div id="chat-window">
-        <div id="chat-head">
-            <div id="chat-head-left">
-                <div id="chat-ava">M</div>
-                <div>
-                    <div id="chat-who">Monique Delacroix</div>
-                    <div id="chat-online"><span class="online-dot"></span>Online now</div>
+<!-- CATEGORIES -->
+<section class="section" id="categories">
+    <div class="categories">
+        <div class="section-label">What We Offer</div>
+        <h2 class="section-title">Three worlds of<br><span>personal care</span></h2>
+        <div class="cat-grid">
+            <div class="cat-card cat-beauty reveal">
+                <div class="cat-bg"></div>
+                <div class="cat-content">
+                    <div class="cat-number">01 /</div>
+                    <div class="cat-name">Beauty<br>& Hair</div>
+                    <div class="cat-desc">Precision cuts, vibrant color, extensions, and bridal styling from independent salon professionals.</div>
+                    <a class="cat-link" href="#pricing">View Services</a>
                 </div>
             </div>
-            <div id="chat-x" onclick="toggleChat()">✕</div>
+            <div class="cat-card cat-tattoo reveal" style="transition-delay:0.1s">
+                <div class="cat-bg"></div>
+                <div class="cat-content">
+                    <div class="cat-number">02 /</div>
+                    <div class="cat-name">Tattoo<br>& Ink</div>
+                    <div class="cat-desc">Custom consultations, fine line, blackwork, realism, geometric, and cover-up sessions.</div>
+                    <a class="cat-link" href="#pricing">View Services</a>
+                </div>
+            </div>
+            <div class="cat-card cat-wellness reveal" style="transition-delay:0.2s">
+                <div class="cat-bg"></div>
+                <div class="cat-content">
+                    <div class="cat-number">03 /</div>
+                    <div class="cat-name">Massage<br>& Wellness</div>
+                    <div class="cat-desc">Swedish, deep tissue, hot stone, prenatal, lymphatic drainage, and therapeutic modalities.</div>
+                    <a class="cat-link" href="#pricing">View Services</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROVIDERS -->
+<section class="section" id="providers">
+    <div class="providers">
+        <div class="providers-header reveal">
+            <div>
+                <div class="section-label">Featured Providers</div>
+                <h2 class="section-title">Meet the<br><span>artists</span></h2>
+            </div>
+            <a class="btn-ghost" href="#booking">See All Providers</a>
         </div>
 
-        <div id="chat-msgs">
-            <div class="msg-in">
-                <div class="msg-bubble">Hey! 👋 Ready to book or have a question? I'm here.</div>
-                <div class="msg-time">Just now</div>
+        <div class="provider-grid">
+
+            <!-- Provider 1 -->
+            <div class="provider-card reveal">
+                <div class="provider-hero-img provider-img-beauty">
+                    <div class="provider-avatar">M</div>
+                    <div class="provider-badge">★ Top Rated</div>
+                </div>
+                <div class="provider-body">
+                    <div class="provider-name">Marisol Vega</div>
+                    <div class="provider-title">Senior Colorist & Stylist</div>
+                    <p class="provider-bio">Specialist in lived-in color and advanced blonding. 9 years behind the chair, now independent with a curated clientele who value true craftsmanship.</p>
+                    <div class="provider-stats">
+                        <div class="pstat">
+                            <span class="pstat-val">312</span>
+                            <span class="pstat-label">Reviews</span>
+                        </div>
+                        <div class="pstat">
+                            <span class="pstat-val">4.9</span>
+                            <span class="pstat-label">Rating</span>
+                        </div>
+                        <div class="pstat">
+                            <span class="pstat-val">9yr</span>
+                            <span class="pstat-label">Experience</span>
+                        </div>
+                    </div>
+                    <div class="provider-services">
+                        <span class="service-tag">Balayage</span>
+                        <span class="service-tag">Blonding</span>
+                        <span class="service-tag">Precision Cut</span>
+                        <span class="service-tag">Extensions</span>
+                    </div>
+                    <div class="provider-footer">
+                        <div class="provider-rate">From $85<span>/ service</span></div>
+                        <button class="btn-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Provider 2 -->
+            <div class="provider-card reveal" style="transition-delay:0.12s">
+                <div class="provider-hero-img provider-img-tattoo">
+                    <div class="provider-avatar">J</div>
+                    <div class="provider-badge">Custom Work</div>
+                </div>
+                <div class="provider-body">
+                    <div class="provider-name">Jordan Ash</div>
+                    <div class="provider-title">Fine Line & Blackwork Artist</div>
+                    <p class="provider-bio">Meticulous fine line and geometric specialist. Every piece is designed from scratch. Booking 6–8 weeks out — consultation required for all large work.</p>
+                    <div class="provider-stats">
+                        <div class="pstat">
+                            <span class="pstat-val">187</span>
+                            <span class="pstat-label">Reviews</span>
+                        </div>
+                        <div class="pstat">
+                            <span class="pstat-val">5.0</span>
+                            <span class="pstat-label">Rating</span>
+                        </div>
+                        <div class="pstat">
+                            <span class="pstat-val">6yr</span>
+                            <span class="pstat-label">Experience</span>
+                        </div>
+                    </div>
+                    <div class="provider-services">
+                        <span class="service-tag">Fine Line</span>
+                        <span class="service-tag">Geometric</span>
+                        <span class="service-tag">Blackwork</span>
+                        <span class="service-tag">Cover-Ups</span>
+                    </div>
+                    <div class="provider-footer">
+                        <div class="provider-rate">From $150<span>/ session</span></div>
+                        <button class="btn-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Provider 3 -->
+            <div class="provider-card reveal" style="transition-delay:0.24s">
+                <div class="provider-hero-img provider-img-wellness">
+                    <div class="provider-avatar">A</div>
+                    <div class="provider-badge">Licensed LMT</div>
+                </div>
+                <div class="provider-body">
+                    <div class="provider-name">Amara Wells</div>
+                    <div class="provider-title">Licensed Massage Therapist</div>
+                    <p class="provider-bio">Certified in Swedish, deep tissue, prenatal, and lymphatic drainage. Focuses on therapeutic outcomes, not just relaxation. Every session is intake-first.</p>
+                    <div class="provider-stats">
+                        <div class="pstat">
+                            <span class="pstat-val">264</span>
+                            <span class="pstat-label">Reviews</span>
+                        </div>
+                        <div class="pstat">
+                            <span class="pstat-val">4.8</span>
+                            <span class="pstat-label">Rating</span>
+                        </div>
+                        <div class="pstat">
+                            <span class="pstat-val">11yr</span>
+                            <span class="pstat-label">Experience</span>
+                        </div>
+                    </div>
+                    <div class="provider-services">
+                        <span class="service-tag">Deep Tissue</span>
+                        <span class="service-tag">Swedish</span>
+                        <span class="service-tag">Prenatal</span>
+                        <span class="service-tag">Hot Stone</span>
+                    </div>
+                    <div class="provider-footer">
+                        <div class="provider-rate">From $95<span>/ session</span></div>
+                        <button class="btn-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES / PRICING -->
+<section class="section" id="pricing">
+    <div class="services-section">
+        <div class="section-label reveal">Services & Pricing</div>
+        <h2 class="section-title reveal">Transparent rates,<br><span>no surprises</span></h2>
+
+        <div class="services-layout">
+
+            <!-- Beauty -->
+            <div class="service-col reveal">
+                <div class="service-col-icon">✦</div>
+                <div class="service-col-title">Beauty & Hair</div>
+                <ul class="service-list">
+                    <li class="service-item">
+                        <span class="service-item-name">Precision Cut</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $55</span>
+                            <span class="service-time">45 – 60 min</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Balayage / Lived-In Color</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $140</span>
+                            <span class="service-time">2.5 – 4 hrs</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Full Color Service</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $95</span>
+                            <span class="service-time">1.5 – 2.5 hrs</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Extensions (set)</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $300</span>
+                            <span class="service-time">3 – 5 hrs</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Scalp Treatment</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $65</span>
+                            <span class="service-time">45 min</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Bridal / Event Styling</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $185</span>
+                            <span class="service-time">2 – 3 hrs</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Tattoo -->
+            <div class="service-col reveal" style="transition-delay:0.12s">
+                <div class="service-col-icon">◈</div>
+                <div class="service-col-title">Tattoo & Ink</div>
+                <ul class="service-list">
+                    <li class="service-item">
+                        <span class="service-item-name">Consultation</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">Free</span>
+                            <span class="service-time">30 – 45 min</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Small Piece</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $100</span>
+                            <span class="service-time">1 – 2 hrs</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Medium Piece</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $250</span>
+                            <span class="service-time">2 – 4 hrs</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Large / Full Session</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">$150 / hr</span>
+                            <span class="service-time">4 – 8 hrs</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Cover-Up</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $200</span>
+                            <span class="service-time">2 – 5 hrs</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Touch-Up</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $60</span>
+                            <span class="service-time">30 – 60 min</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Wellness -->
+            <div class="service-col reveal" style="transition-delay:0.24s">
+                <div class="service-col-icon">◎</div>
+                <div class="service-col-title">Massage & Wellness</div>
+                <ul class="service-list">
+                    <li class="service-item">
+                        <span class="service-item-name">Swedish (60 min)</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $85</span>
+                            <span class="service-time">60 min</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Deep Tissue (90 min)</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $120</span>
+                            <span class="service-time">90 min</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Hot Stone Therapy</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $130</span>
+                            <span class="service-time">75 – 90 min</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Prenatal Massage</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $100</span>
+                            <span class="service-time">60 min</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Lymphatic Drainage</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $110</span>
+                            <span class="service-time">60 min</span>
+                        </div>
+                    </li>
+                    <li class="service-item">
+                        <span class="service-item-name">Thai / Reflexology</span>
+                        <div class="service-item-meta">
+                            <span class="service-price">from $95</span>
+                            <span class="service-time">60 – 90 min</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- BOOKING FORM -->
+<section class="booking-section" id="booking">
+    <div class="booking-inner">
+
+        <div class="booking-info reveal">
+            <div class="section-label">Book a Session</div>
+            <h2>Request your<br><span>appointment</span></h2>
+            <p>Fill out your preferences and a provider will follow up within 24 hours to confirm availability and any intake details.</p>
+            <div class="booking-perks">
+                <div class="perk">
+                    <div class="perk-icon">◈</div>
+                    <div class="perk-text">
+                        <strong>No hidden fees</strong>
+                        Pricing is communicated upfront — what you see is your starting rate.
+                    </div>
+                </div>
+                <div class="perk">
+                    <div class="perk-icon">✦</div>
+                    <div class="perk-text">
+                        <strong>Vetted professionals</strong>
+                        Every provider on Cosmos is independently reviewed and credentialed.
+                    </div>
+                </div>
+                <div class="perk">
+                    <div class="perk-icon">◎</div>
+                    <div class="perk-text">
+                        <strong>Cancel up to 24 hrs out</strong>
+                        Life happens. Rescheduling and cancellation is always straightforward.
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div id="chat-input-row">
-            <input id="chat-input" class="field-input" type="text" placeholder="Type a message..." onkeydown="if(event.key==='Enter') sendMsg()">
-            <button id="chat-send" onclick="sendMsg()">&#10148;</button>
+        <div class="booking-form reveal" style="transition-delay:0.15s">
+            <div class="form-title">Request a Session</div>
+            <div class="form-subtitle">All fields marked are required</div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fname">First Name</label>
+                    <input class="form-control" type="text" id="fname" placeholder="First name" />
+                </div>
+                <div class="form-group">
+                    <label for="lname">Last Name</label>
+                    <input class="form-control" type="text" id="lname" placeholder="Last name" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input class="form-control" type="email" id="email" placeholder="you@email.com" />
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input class="form-control" type="tel" id="phone" placeholder="(555) 000-0000" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Service Category</label>
+                <div class="select-wrap">
+                    <select class="form-control" id="category">
+                        <option value="" disabled selected>Select a category</option>
+                        <option value="beauty">Beauty & Hair</option>
+                        <option value="tattoo">Tattoo & Ink</option>
+                        <option value="wellness">Massage & Wellness</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="service">Specific Service</label>
+                <div class="select-wrap">
+                    <select class="form-control" id="service">
+                        <option value="" disabled selected>Select a service</option>
+                        <option value="cut">Precision Cut</option>
+                        <option value="color">Color / Balayage</option>
+                        <option value="extensions">Extensions</option>
+                        <option value="bridal">Bridal Styling</option>
+                        <option value="tattoo-consult">Tattoo Consultation</option>
+                        <option value="tattoo-small">Small Tattoo</option>
+                        <option value="tattoo-large">Large / Full Session</option>
+                        <option value="swedish">Swedish Massage</option>
+                        <option value="deep-tissue">Deep Tissue</option>
+                        <option value="hot-stone">Hot Stone Therapy</option>
+                        <option value="prenatal">Prenatal Massage</option>
+                        <option value="other">Other (describe below)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="date">Preferred Date</label>
+                    <input class="form-control" type="date" id="date" />
+                </div>
+                <div class="form-group">
+                    <label for="time">Preferred Time</label>
+                    <div class="select-wrap">
+                        <select class="form-control" id="time">
+                            <option value="" disabled selected>Any time</option>
+                            <option>Morning (8am – 12pm)</option>
+                            <option>Afternoon (12pm – 4pm)</option>
+                            <option>Evening (4pm – 7pm)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="provider">Provider Preference</label>
+                <div class="select-wrap">
+                    <select class="form-control" id="provider">
+                        <option value="" disabled selected>No preference</option>
+                        <option>Marisol Vega (Hair & Color)</option>
+                        <option>Jordan Ash (Tattoo)</option>
+                        <option>Amara Wells (Massage)</option>
+                        <option>No preference — match me</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="notes">Session Notes</label>
+                <textarea class="form-control" id="notes" placeholder="Describe what you're looking for, any reference images, health notes, or special requests…"></textarea>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="form-check">
+                <input type="checkbox" id="transport" />
+                <label for="transport">I may need transportation assistance to my appointment</label>
+            </div>
+
+            <div class="form-check">
+                <input type="checkbox" id="firsttime" checked />
+                <label for="firsttime">This is my first time booking through Cosmos</label>
+            </div>
+
+            <button class="btn-submit" onclick="handleSubmit(event)">Send Booking Request →</button>
         </div>
     </div>
+</section>
 
-    <div id="chat-bubble" onclick="toggleChat()">
-        <div id="chat-bubble-ava">M</div>
-        <div id="chat-bubble-text">
-            <div id="chat-bubble-name">Monique</div>
-            <div id="chat-bubble-sub">Chat with me</div>
+<!-- FOOTER -->
+<footer>
+    <div class="footer-grid">
+        <div>
+            <div class="footer-brand-name">Cosmos</div>
+            <p class="footer-brand-desc">A premium marketplace connecting beauty, tattoo, and wellness providers with clients who value craft.</p>
+            <div class="footer-social">
+                <a class="social-btn" href="#" title="Instagram">in</a>
+                <a class="social-btn" href="#" title="TikTok">tk</a>
+                <a class="social-btn" href="#" title="Facebook">fb</a>
+            </div>
         </div>
-        <div id="chat-unread">1</div>
+        <div>
+            <div class="footer-col-title">Services</div>
+            <ul class="footer-links">
+                <li><a href="#">Beauty & Hair</a></li>
+                <li><a href="#">Tattoo & Ink</a></li>
+                <li><a href="#">Massage & Wellness</a></li>
+                <li><a href="#">Bridal Packages</a></li>
+            </ul>
+        </div>
+        <div>
+            <div class="footer-col-title">Company</div>
+            <ul class="footer-links">
+                <li><a href="#">About Cosmos</a></li>
+                <li><a href="#">For Providers</a></li>
+                <li><a href="#">How It Works</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+        </div>
+        <div>
+            <div class="footer-col-title">Support</div>
+            <ul class="footer-links">
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Cancellation Policy</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Accessibility</a></li>
+            </ul>
+        </div>
     </div>
-
-</div>
-
-<style>
-    #chat-widget {
-        position: fixed;
-        bottom: 28px;
-        right: 28px;
-        z-index: 9999;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 12px;
-        font-family: 'DM Sans', sans-serif;
-    }
-
-    /* Bubble */
-    #chat-bubble {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: var(--white);
-        border-radius: 99px;
-        padding: 10px 18px 10px 10px;
-        box-shadow: 0 8px 32px rgba(60,40,10,.18);
-        cursor: pointer;
-        transition: transform .2s, box-shadow .2s;
-        border: 1.5px solid var(--gold-lt);
-        position: relative;
-    }
-
-    #chat-bubble:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(60,40,10,.22); }
-
-    #chat-bubble-ava {
-        width: 40px; height: 40px;
-        border-radius: 50%;
-        background: var(--gold);
-        color: #fff;
-        font-size: 16px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-
-    #chat-bubble-name { font-size: 13px; font-weight: 500; color: var(--ink); line-height: 1.2; }
-    #chat-bubble-sub { font-size: 11px; color: var(--ink-3); }
-
-    #chat-unread {
-        position: absolute;
-        top: -4px; right: -4px;
-        width: 18px; height: 18px;
-        background: var(--gold);
-        color: #fff;
-        font-size: 10px;
-        font-weight: 600;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    /* Window */
-    #chat-window {
-        display: none;
-        width: 340px;
-        background: var(--white);
-        border-radius: 16px;
-        box-shadow: 0 16px 60px rgba(60,40,10,.2);
-        overflow: hidden;
-        border: 1.5px solid var(--gold-lt);
-        flex-direction: column;
-    }
-
-    #chat-window.open { display: flex; }
-
-    #chat-head {
-        background: var(--gold);
-        padding: 14px 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    #chat-head-left { display: flex; align-items: center; gap: 10px; }
-
-    #chat-ava {
-        width: 36px; height: 36px;
-        border-radius: 50%;
-        background: rgba(255,255,255,.25);
-        color: #fff;
-        font-size: 15px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-
-    #chat-who { font-size: 13px; font-weight: 500; color: #fff; }
-
-    #chat-online {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 11px;
-        color: rgba(255,255,255,.8);
-        margin-top: 1px;
-    }
-
-    .online-dot {
-        width: 6px; height: 6px;
-        border-radius: 50%;
-        background: #b6f5b6;
-        flex-shrink: 0;
-    }
-
-    #chat-x {
-        color: rgba(255,255,255,.8);
-        font-size: 14px;
-        cursor: pointer;
-        padding: 4px;
-        transition: color .15s;
-    }
-
-    #chat-x:hover { color: #fff; }
-
-    #chat-msgs {
-        flex: 1;
-        padding: 16px 14px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        max-height: 300px;
-        overflow-y: auto;
-        background: var(--cream);
-    }
-
-    .msg-in, .msg-out { display: flex; flex-direction: column; }
-    .msg-out { align-items: flex-end; }
-
-    .msg-bubble {
-        max-width: 80%;
-        padding: 10px 14px;
-        border-radius: 14px;
-        font-size: 13px;
-        line-height: 1.55;
-    }
-
-    .msg-in .msg-bubble {
-        background: var(--white);
-        color: var(--ink);
-        border-bottom-left-radius: 4px;
-        border: 1px solid var(--line);
-    }
-
-    .msg-out .msg-bubble {
-        background: var(--gold);
-        color: #fff;
-        border-bottom-right-radius: 4px;
-    }
-
-    .msg-time {
-        font-size: 10px;
-        color: var(--ink-3);
-        margin-top: 4px;
-        padding: 0 4px;
-    }
-
-    #chat-input-row {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 12px 14px;
-        border-top: 1px solid var(--line);
-        background: var(--white);
-    }
-
-    #chat-input-row .field-input {
-        flex: 1;
-        padding: 10px 14px;
-        font-size: 13px;
-        border-radius: 99px;
-    }
-
-    #chat-send {
-        width: 36px; height: 36px;
-        border-radius: 50%;
-        background: var(--gold);
-        color: #fff;
-        border: none;
-        font-size: 14px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        transition: background .18s;
-    }
-
-    #chat-send:hover { background: var(--gold-dk); }
-
-    .typing-bubble {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        padding: 12px 16px;
-    }
-
-    .dot {
-        width: 7px; height: 7px;
-        border-radius: 50%;
-        background: var(--ink-3);
-        animation: bounce 1.2s infinite ease-in-out;
-    }
-
-    .dot:nth-child(2) { animation-delay: .2s; }
-    .dot:nth-child(3) { animation-delay: .4s; }
-
-    @keyframes bounce {
-        0%, 60%, 100% { transform: translateY(0); opacity: .4; }
-        30% { transform: translateY(-6px); opacity: 1; }
-    }
-</style>
+    <div class="footer-bottom">
+        <div class="footer-copy">© 2025 Cosmos. All rights reserved.</div>
+        <div class="footer-legal">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Cookie Settings</a>
+        </div>
+    </div>
+</footer>
 
 <script>
-    function toggleChat() {
-        const win = document.getElementById('chat-window');
-        const unread = document.getElementById('chat-unread');
-        const isOpen = win.classList.contains('open');
-        win.classList.toggle('open', !isOpen);
-        if (!isOpen && unread) unread.style.display = 'none';
-    }
+    // ── STARFIELD ───────────────────────────────────────────────────────────
+    (function() {
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        let W, H;
 
-    function sendMsg() {
-        const input = document.getElementById('chat-input');
-        const msgs = document.getElementById('chat-msgs');
-        const text = input.value.trim();
-        if (!text) return;
+        function resize() {
+            W = canvas.width  = window.innerWidth;
+            H = canvas.height = window.innerHeight;
+        }
 
-        const out = document.createElement('div');
-        out.className = 'msg-out';
-        out.innerHTML = `<div class="msg-bubble">${text}</div><div class="msg-time">Just now</div>`;
-        msgs.appendChild(out);
-        input.value = '';
-        msgs.scrollTop = msgs.scrollHeight;
+        function initStars() {
+            stars = [];
+            const count = Math.floor((W * H) / 6000);
+            for (let i = 0; i < count; i++) {
+                stars.push({
+                    x: Math.random() * W,
+                    y: Math.random() * H,
+                    r: Math.random() * 0.9 + 0.1,
+                    a: Math.random(),
+                    speed: Math.random() * 0.0004 + 0.0001,
+                    phase: Math.random() * Math.PI * 2,
+                });
+            }
+        }
 
-        // Typing indicator
-        const typing = document.createElement('div');
-        typing.className = 'msg-in';
-        typing.id = 'typing-indicator';
-        typing.innerHTML = `<div class="msg-bubble typing-bubble"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
-        msgs.appendChild(typing);
-        msgs.scrollTop = msgs.scrollHeight;
+        function draw(t) {
+            ctx.clearRect(0, 0, W, H);
+            stars.forEach(s => {
+                const alpha = s.a * (0.4 + 0.6 * Math.sin(t * s.speed * 1000 + s.phase));
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(232,213,168,${alpha})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(draw);
+        }
 
+        window.addEventListener('resize', () => { resize(); initStars(); });
+        resize();
+        initStars();
+        requestAnimationFrame(draw);
+    })();
+
+    // ── SCROLL REVEAL ───────────────────────────────────────────────────────
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observer.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── NAV SCROLL STYLE ────────────────────────────────────────────────────
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        nav.style.borderBottomColor = window.scrollY > 40
+            ? 'rgba(201,169,110,0.12)'
+            : 'rgba(255,255,255,0.06)';
+    });
+
+    // ── FORM SUBMIT ─────────────────────────────────────────────────────────
+    function handleSubmit(e) {
+        e.preventDefault();
+        const btn = document.querySelector('.btn-submit');
+        const orig = btn.textContent;
+        btn.textContent = 'Request Sent ✓';
+        btn.style.background = '#2d4a2d';
+        btn.style.color = '#8fc98f';
+        btn.disabled = true;
         setTimeout(() => {
-            const replies = [
-                "Thanks for reaching out! I'll get back to you shortly.",
-                "Great question — let me check on that for you.",
-                "I'd love to help with that. Can you share a bit more?",
-                "Got it! I'll follow up within the hour.",
-            ];
-            const reply = replies[Math.floor(Math.random() * replies.length)];
-
-            // Remove typing indicator
-            const indicator = document.getElementById('typing-indicator');
-            if (indicator) indicator.remove();
-
-            const inn = document.createElement('div');
-            inn.className = 'msg-in';
-            inn.innerHTML = `<div class="msg-bubble">${reply}</div><div class="msg-time">Just now</div>`;
-            msgs.appendChild(inn);
-            msgs.scrollTop = msgs.scrollHeight;
-        }, 1400);
+            btn.textContent = orig;
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.disabled = false;
+        }, 4000);
     }
 </script>
-
 </body>
 </html>
