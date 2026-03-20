@@ -2,1831 +2,2255 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cosmos — Beauty, Tattoo & Wellness</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Cosmos — Book Your Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         :root {
-            --bg:          #09080a;
-            --surface:     #111013;
-            --surface-2:   #1a181d;
-            --border:      rgba(201,169,110,0.14);
-            --border-soft: rgba(255,255,255,0.06);
-            --gold:        #c9a96e;
-            --gold-light:  #e8d5a8;
-            --gold-dim:    rgba(201,169,110,0.35);
-            --text:        #f0ebe7;
-            --text-muted:  #8c8789;
-            --text-faint:  #4a484c;
-            --accent:      #e4c98a;
-            --radius:      4px;
-            --radius-lg:   10px;
+            --cream: #faf7f2;
+            --warm: #f0e9de;
+            --stone: #c9b99a;
+            --ink: #1a1714;
+            --accent: #b85c38;
+            --muted: #7a6e63;
         }
 
+        * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-
         body {
-            background: var(--bg);
-            color: var(--text);
             font-family: 'DM Sans', sans-serif;
-            font-weight: 300;
-            line-height: 1.65;
+            background-color: var(--cream);
+            color: var(--ink);
             overflow-x: hidden;
         }
 
-        /* ── CANVAS STARS ─────────────────────── */
-        #starfield {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.55;
+        .display { font-family: 'Cormorant Garamond', serif; }
+
+        /* Container */
+        .container {
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            padding-left: 2.5rem;
+            padding-right: 2.5rem;
         }
 
-        /* ── NAV ───────────────────────────────── */
+        @media (max-width: 768px) {
+            .container { padding-left: 1.25rem; padding-right: 1.25rem; }
+        }
+
+        /* Grain texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+        }
+
+        /* Nav */
         nav {
             position: fixed;
             top: 0; left: 0; right: 0;
             z-index: 100;
+            background: rgba(250,247,242,0.88);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201,185,154,0.25);
+        }
+
+        .nav-inner {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 48px;
-            height: 72px;
-            background: rgba(9,8,10,0.72);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border-soft);
+            padding-top: 1.25rem;
+            padding-bottom: 1.25rem;
         }
 
         .nav-logo {
             font-family: 'Cormorant Garamond', serif;
+            font-size: 1.65rem;
             font-weight: 300;
-            font-size: 1.55rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--gold-light);
-            text-decoration: none;
+            letter-spacing: 0.12em;
+            color: var(--ink);
         }
 
-        .nav-links {
-            display: flex;
-            gap: 36px;
-            list-style: none;
-        }
+        .nav-logo span { color: var(--accent); }
 
         .nav-links a {
-            font-size: 0.72rem;
-            letter-spacing: 0.14em;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--text-muted);
+            color: var(--muted);
             text-decoration: none;
+            margin-left: 2rem;
             transition: color 0.2s;
         }
+        .nav-links a:hover { color: var(--ink); }
 
-        .nav-links a:hover { color: var(--gold-light); }
-
-        .nav-cta {
-            font-size: 0.7rem;
-            letter-spacing: 0.14em;
+        .btn-primary {
+            background: var(--ink);
+            color: var(--cream);
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--bg);
-            background: var(--gold);
+            padding: 0.65rem 1.5rem;
             border: none;
-            padding: 9px 22px;
-            border-radius: var(--radius);
             cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
             font-family: 'DM Sans', sans-serif;
             font-weight: 500;
-            transition: background 0.2s, transform 0.15s;
         }
+        .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
 
-        .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+        .btn-outline {
+            background: transparent;
+            color: var(--ink);
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.65rem 1.5rem;
+            border: 1px solid var(--ink);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+        }
+        .btn-outline:hover { background: var(--ink); color: var(--cream); }
 
-        /* ── HERO ──────────────────────────────── */
+        /* Hero */
         .hero {
+            padding-top: 5rem;
             position: relative;
-            z-index: 1;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 120px 24px 80px;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background:
-                    radial-gradient(ellipse 70% 55% at 50% 60%, rgba(201,169,110,0.07) 0%, transparent 70%),
-                    radial-gradient(ellipse 40% 30% at 20% 80%, rgba(120,80,160,0.06) 0%, transparent 60%),
-                    radial-gradient(ellipse 35% 25% at 80% 20%, rgba(80,120,180,0.05) 0%, transparent 55%);
-            pointer-events: none;
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
         }
 
-        .hero-eyebrow {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.65rem;
-            letter-spacing: 0.28em;
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5rem 3rem 5rem 0;
+            position: relative;
+            z-index: 2;
+        }
+        justify-content: center;
+        padding: 5rem 3rem 5rem 2.5rem;
+        max-width: 640px;
+        margin-left: auto;
+        position: relative;
+        z-index: 2;
+        }
+
+        .eyebrow {
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 24px;
-            opacity: 0;
-            animation: fadeUp 0.8s ease 0.2s forwards;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
         }
 
         .hero-title {
             font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3.5rem, 6vw, 5.5rem);
             font-weight: 300;
-            font-size: clamp(4rem, 10vw, 9rem);
-            line-height: 0.92;
-            letter-spacing: -0.01em;
-            color: var(--text);
-            margin-bottom: 12px;
-            opacity: 0;
-            animation: fadeUp 1s ease 0.35s forwards;
+            line-height: 1.05;
+            margin-bottom: 1.75rem;
+            color: var(--ink);
         }
 
         .hero-title em {
             font-style: italic;
-            color: var(--gold-light);
+            color: var(--accent);
         }
 
         .hero-sub {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1rem, 2.5vw, 1.45rem);
-            font-weight: 300;
-            font-style: italic;
-            color: var(--text-muted);
-            margin-top: 20px;
-            margin-bottom: 52px;
-            max-width: 500px;
-            opacity: 0;
-            animation: fadeUp 1s ease 0.5s forwards;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
-            opacity: 0;
-            animation: fadeUp 1s ease 0.65s forwards;
-        }
-
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--gold);
-            color: var(--bg);
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            padding: 14px 32px;
-            border-radius: var(--radius);
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-        }
-
-        .btn-primary:hover {
-            background: var(--gold-light);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(201,169,110,0.25);
-        }
-
-        .btn-ghost {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: transparent;
-            color: var(--text-muted);
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 400;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            padding: 14px 32px;
-            border-radius: var(--radius);
-            text-decoration: none;
-            border: 1px solid var(--border-soft);
-            cursor: pointer;
-            transition: color 0.2s, border-color 0.2s;
-        }
-
-        .btn-ghost:hover {
-            color: var(--gold-light);
-            border-color: var(--border);
-        }
-
-        .hero-scroll {
-            position: absolute;
-            bottom: 36px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            opacity: 0;
-            animation: fadeIn 1s ease 1.2s forwards;
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 48px;
-            background: linear-gradient(to bottom, var(--gold-dim), transparent);
-            animation: scrollPulse 2s ease infinite;
-        }
-
-        .scroll-label {
-            font-size: 0.6rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--text-faint);
-        }
-
-        /* ── CATEGORIES ─────────────────────────── */
-        .section { position: relative; z-index: 1; }
-
-        .categories {
-            padding: 100px 48px;
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-
-        .section-label {
-            font-family: 'DM Mono', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 0.26em;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 16px;
-        }
-
-        .section-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 300;
-            font-size: clamp(2rem, 4vw, 3.2rem);
-            line-height: 1.1;
-            color: var(--text);
-            margin-bottom: 60px;
-        }
-
-        .section-title span { color: var(--gold-light); font-style: italic; }
-
-        .cat-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2px;
-        }
-
-        .cat-card {
-            position: relative;
-            overflow: hidden;
-            aspect-ratio: 3/4;
-            cursor: pointer;
-            background: var(--surface);
-        }
-
-        .cat-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(160deg, transparent 40%, rgba(0,0,0,0.85) 100%);
-            z-index: 1;
-            transition: opacity 0.4s;
-        }
-
-        .cat-card:hover::before { opacity: 0.6; }
-
-        .cat-bg {
-            position: absolute;
-            inset: 0;
-            transition: transform 0.6s ease;
-        }
-
-        .cat-card:hover .cat-bg { transform: scale(1.04); }
-
-        /* Gradient bg art per card */
-        .cat-beauty .cat-bg {
-            background:
-                    radial-gradient(ellipse 80% 60% at 60% 30%, #3a2040 0%, #1a0e20 50%, #0d0a10 100%),
-                    repeating-linear-gradient(45deg, rgba(201,169,110,0.03) 0px, rgba(201,169,110,0.03) 1px, transparent 1px, transparent 12px);
-        }
-
-        .cat-tattoo .cat-bg {
-            background:
-                    radial-gradient(ellipse 70% 80% at 40% 60%, #0f1a2a 0%, #080e18 60%, #060809 100%),
-                    repeating-linear-gradient(135deg, rgba(100,140,200,0.03) 0px, transparent 1px, transparent 10px);
-        }
-
-        .cat-wellness .cat-bg {
-            background:
-                    radial-gradient(ellipse 70% 60% at 50% 40%, #1a2a1a 0%, #0e180e 55%, #080a08 100%),
-                    repeating-linear-gradient(90deg, rgba(80,160,80,0.03) 0px, transparent 1px, transparent 14px);
-        }
-
-        /* Decorative orb on each card */
-        .cat-beauty .cat-bg::after {
-            content: '';
-            position: absolute;
-            width: 220px; height: 220px;
-            border-radius: 50%;
-            top: -40px; right: -40px;
-            background: radial-gradient(circle, rgba(180,120,200,0.18), transparent 70%);
-        }
-
-        .cat-content {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            padding: 32px 28px;
-            z-index: 2;
-        }
-
-        .cat-number {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 0.7rem;
-            letter-spacing: 0.2em;
-            color: var(--gold-dim);
-            margin-bottom: 10px;
-        }
-
-        .cat-name {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 300;
-            font-size: 2.1rem;
-            line-height: 1.05;
-            color: var(--text);
-            margin-bottom: 10px;
-        }
-
-        .cat-desc {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 18px;
-            max-width: 240px;
-        }
-
-        .cat-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.65rem;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--gold);
-            text-decoration: none;
-            transition: gap 0.2s;
-        }
-
-        .cat-link:hover { gap: 12px; }
-        .cat-link::after { content: '→'; }
-
-        /* ── DIVIDER ────────────────────────────── */
-        .divider {
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(to right, transparent, var(--border), transparent);
-            position: relative; z-index: 1;
-        }
-
-        /* ── PROVIDERS ──────────────────────────── */
-        .providers {
-            padding: 100px 48px;
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-
-        .providers-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 60px;
-            flex-wrap: wrap;
-            gap: 24px;
-        }
-
-        .provider-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-
-        .provider-card {
-            background: var(--surface);
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            transition: border-color 0.3s, transform 0.3s;
-        }
-
-        .provider-card:hover {
-            border-color: var(--border);
-            transform: translateY(-4px);
-        }
-
-        .provider-hero-img {
-            height: 220px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .provider-img-beauty {
-            background:
-                    radial-gradient(ellipse 100% 100% at 50% 0%, #3d1e50 0%, #1c0e28 60%, #100a16 100%);
-        }
-
-        .provider-img-tattoo {
-            background:
-                    radial-gradient(ellipse 100% 100% at 30% 100%, #0e2038 0%, #07111e 60%, #060810 100%);
-        }
-
-        .provider-img-wellness {
-            background:
-                    radial-gradient(ellipse 100% 100% at 70% 0%, #183018 0%, #0c180c 60%, #080a08 100%);
-        }
-
-        .provider-avatar {
-            position: absolute;
-            bottom: -28px;
-            left: 24px;
-            width: 58px;
-            height: 58px;
-            border-radius: 50%;
-            border: 2px solid var(--gold-dim);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
-            font-weight: 300;
-            color: var(--gold-light);
-            background: var(--surface-2);
-        }
-
-        .provider-badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: rgba(201,169,110,0.12);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 4px 12px;
-            font-size: 0.6rem;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--gold);
-        }
-
-        .provider-body {
-            padding: 44px 24px 24px;
-        }
-
-        .provider-name {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
-            font-weight: 400;
-            color: var(--text);
-            margin-bottom: 2px;
-        }
-
-        .provider-title {
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            color: var(--gold);
-            text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-
-        .provider-bio {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .provider-stats {
-            display: flex;
-            gap: 0;
-            border-top: 1px solid var(--border-soft);
-            border-bottom: 1px solid var(--border-soft);
-            margin-bottom: 20px;
-        }
-
-        .pstat {
-            flex: 1;
-            padding: 14px 0;
-            text-align: center;
-        }
-
-        .pstat + .pstat {
-            border-left: 1px solid var(--border-soft);
-        }
-
-        .pstat-val {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            font-weight: 400;
-            color: var(--text);
-            display: block;
-        }
-
-        .pstat-label {
-            font-size: 0.6rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--text-faint);
-        }
-
-        .provider-services {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 20px;
-        }
-
-        .service-tag {
-            font-size: 0.62rem;
-            letter-spacing: 0.08em;
-            color: var(--text-muted);
-            background: var(--surface-2);
-            border: 1px solid var(--border-soft);
-            border-radius: 20px;
-            padding: 4px 10px;
-        }
-
-        .provider-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .provider-rate {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
-            color: var(--gold-light);
-        }
-
-        .provider-rate span {
-            font-size: 0.65rem;
-            font-family: 'DM Sans', sans-serif;
-            color: var(--text-faint);
-            margin-left: 4px;
-            font-weight: 300;
-        }
-
-        .btn-book {
-            font-size: 0.65rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--gold);
-            background: transparent;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 8px 18px;
-            cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            transition: background 0.2s, color 0.2s, border-color 0.2s;
-        }
-
-        .btn-book:hover {
-            background: var(--gold);
-            color: var(--bg);
-            border-color: var(--gold);
-        }
-
-        /* ── SERVICES ───────────────────────────── */
-        .services-section {
-            padding: 100px 48px;
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-
-        .services-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 2px;
-            margin-top: 60px;
-        }
-
-        .service-col {
-            background: var(--surface);
-            border: 1px solid var(--border-soft);
-            padding: 40px 32px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-col::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: var(--gold-dim);
-        }
-
-        .service-col:nth-child(2)::before { background: rgba(100,140,200,0.35); }
-        .service-col:nth-child(3)::before { background: rgba(80,160,80,0.3); }
-
-        .service-col-icon {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-        }
-
-        .service-col-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
-            font-weight: 300;
-            color: var(--text);
-            margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-soft);
-        }
-
-        .service-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .service-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 0;
-            border-bottom: 1px solid var(--border-soft);
-            transition: padding-left 0.2s;
-            cursor: pointer;
-        }
-
-        .service-item:hover { padding-left: 8px; }
-        .service-item:last-child { border-bottom: none; }
-
-        .service-item-name {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            transition: color 0.2s;
-        }
-
-        .service-item:hover .service-item-name { color: var(--text); }
-
-        .service-item-meta {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 2px;
-        }
-
-        .service-price {
-            font-family: 'Cormorant Garamond', serif;
             font-size: 1rem;
-            color: var(--gold);
+            line-height: 1.75;
+            color: var(--muted);
+            max-width: 400px;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
         }
 
-        .service-time {
-            font-size: 0.6rem;
-            color: var(--text-faint);
-            letter-spacing: 0.08em;
-        }
+        .hero-ctas { display: flex; gap: 1rem; align-items: center; }
 
-        /* ── BOOKING ────────────────────────────── */
-        .booking-section {
+        .hero-right {
             position: relative;
-            z-index: 1;
-            padding: 120px 48px;
             overflow: hidden;
         }
 
-        .booking-section::before {
-            content: '';
+        .hero-img-grid {
             position: absolute;
             inset: 0;
-            background:
-                    radial-gradient(ellipse 60% 80% at 10% 50%, rgba(201,169,110,0.04) 0%, transparent 60%),
-                    radial-gradient(ellipse 50% 60% at 90% 50%, rgba(120,80,160,0.04) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        .booking-inner {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1.4fr;
-            gap: 80px;
-            align-items: start;
-        }
-
-        .booking-info h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 300;
-            font-size: clamp(2rem, 4vw, 3rem);
-            line-height: 1.1;
-            color: var(--text);
-            margin-bottom: 24px;
-        }
-
-        .booking-info h2 span { color: var(--gold-light); font-style: italic; }
-
-        .booking-info p {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-            margin-bottom: 36px;
-        }
-
-        .booking-perks {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .perk {
-            display: flex;
-            gap: 14px;
-            align-items: flex-start;
-        }
-
-        .perk-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: rgba(201,169,110,0.08);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .perk-text { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
-        .perk-text strong { color: var(--text); font-weight: 400; display: block; margin-bottom: 2px; }
-
-        /* FORM */
-        .booking-form {
-            background: var(--surface);
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-lg);
-            padding: 44px 40px;
-        }
-
-        .form-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
-            font-weight: 300;
-            color: var(--text);
-            margin-bottom: 6px;
-        }
-
-        .form-subtitle {
-            font-size: 0.72rem;
-            color: var(--text-faint);
-            letter-spacing: 0.06em;
-            margin-bottom: 32px;
-        }
-
-        .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 14px;
+            grid-template-rows: 1fr 1fr;
+            gap: 3px;
         }
 
-        .form-group {
-            margin-bottom: 14px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.62rem;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--text-faint);
-            margin-bottom: 7px;
-        }
-
-        .form-control {
-            width: 100%;
-            background: var(--surface-2);
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius);
-            color: var(--text);
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.82rem;
-            font-weight: 300;
-            padding: 11px 14px;
-            outline: none;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            appearance: none;
-        }
-
-        .form-control:focus {
-            border-color: var(--gold-dim);
-            box-shadow: 0 0 0 3px rgba(201,169,110,0.06);
-        }
-
-        .form-control::placeholder { color: var(--text-faint); }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 90px;
-        }
-
-        /* Custom select */
-        .select-wrap {
+        .hero-img-cell {
+            background: var(--warm);
             position: relative;
-        }
-
-        .select-wrap::after {
-            content: '▾';
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-faint);
-            font-size: 0.7rem;
-            pointer-events: none;
-        }
-
-        .form-control option {
-            background: var(--surface-2);
-            color: var(--text);
-        }
-
-        input:-webkit-autofill,
-        input:-webkit-autofill:hover,
-        input:-webkit-autofill:focus,
-        input:-webkit-autofill:active {
-            -webkit-box-shadow: 0 0 0 1000px var(--surface-2) inset !important;
-            -webkit-text-fill-color: var(--text) !important;
-            caret-color: var(--text);
-            transition: background-color 9999s ease-in-out 0s;
-        }
-
-        .form-divider {
-            height: 1px;
-            background: var(--border-soft);
-            margin: 24px 0;
-        }
-
-        .form-check {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 24px;
-        }
-
-        .form-check input[type="checkbox"] {
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            border: 1px solid var(--border-soft);
-            border-radius: 3px;
-            background: var(--surface-2);
-            cursor: pointer;
-            flex-shrink: 0;
-            margin-top: 2px;
-            position: relative;
-            transition: border-color 0.2s, background 0.2s;
-        }
-
-        .form-check input[type="checkbox"]:checked {
-            background: var(--gold);
-            border-color: var(--gold);
-        }
-
-        .form-check input[type="checkbox"]:checked::after {
-            content: '✓';
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            color: var(--bg);
-            font-weight: 700;
-        }
-
-        .form-check label {
-            font-size: 0.74rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-            cursor: pointer;
-        }
-
-        .btn-submit {
-            width: 100%;
-            background: var(--gold);
-            color: var(--bg);
-            border: none;
-            border-radius: var(--radius);
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            padding: 15px;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-        }
-
-        .btn-submit:hover {
-            background: var(--gold-light);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(201,169,110,0.2);
-        }
-
-        /* ── MARQUEE ────────────────────────────── */
-        .marquee-strip {
-            position: relative; z-index: 1;
             overflow: hidden;
-            border-top: 1px solid var(--border-soft);
-            border-bottom: 1px solid var(--border-soft);
-            padding: 18px 0;
         }
 
-        .marquee-track {
-            display: flex;
-            gap: 0;
-            width: max-content;
-            animation: marquee 28s linear infinite;
+        /* Placeholder images using CSS art */
+        .cell-1 { background: linear-gradient(135deg, #e8d5c4 0%, #d4b896 100%); }
+        .cell-2 { background: linear-gradient(135deg, #c9b99a 0%, #b8a082 100%); grid-row: 1 / 3; }
+        .cell-3 { background: linear-gradient(135deg, #d9c8b4 0%, #c4a880 100%); }
+
+        .cell-label {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background: rgba(250,247,242,0.9);
+            padding: 0.3rem 0.75rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink);
+            font-weight: 500;
         }
 
-        .marquee-item {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-            padding: 0 36px;
+        .hero-overlay-card {
+            position: absolute;
+            bottom: 3rem;
+            left: -2rem;
+            background: white;
+            padding: 1.25rem 1.5rem;
+            box-shadow: 0 20px 60px rgba(26,23,20,0.12);
+            z-index: 10;
+            min-width: 220px;
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--ink);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Marquee */
+        .marquee-wrap {
+            background: var(--ink);
+            color: var(--cream);
+            padding: 1rem 0;
+            overflow: hidden;
             white-space: nowrap;
         }
 
-        .marquee-dot {
-            width: 4px; height: 4px;
-            border-radius: 50%;
-            background: var(--gold-dim);
+        .marquee-inner {
+            display: inline-block;
+            animation: marquee 18s linear infinite;
         }
 
-        .marquee-text {
+        .marquee-inner span {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 0.88rem;
+            font-size: 1.1rem;
             font-style: italic;
-            letter-spacing: 0.1em;
-            color: var(--text-faint);
-        }
-
-        /* ── FOOTER ─────────────────────────────── */
-        footer {
-            position: relative; z-index: 1;
-            background: var(--surface);
-            border-top: 1px solid var(--border-soft);
-            padding: 60px 48px 40px;
-        }
-
-        .footer-grid {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 48px;
-        }
-
-        .footer-brand-name {
-            font-family: 'Cormorant Garamond', serif;
             font-weight: 300;
-            font-size: 1.4rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--gold-light);
-            margin-bottom: 14px;
+            letter-spacing: 0.05em;
+            margin: 0 2.5rem;
         }
 
-        .footer-brand-desc {
-            font-size: 0.76rem;
-            color: var(--text-muted);
-            line-height: 1.7;
-            max-width: 260px;
-            margin-bottom: 24px;
-        }
-
-        .footer-social {
-            display: flex;
-            gap: 10px;
-        }
-
-        .social-btn {
-            width: 34px; height: 34px;
-            border-radius: 50%;
-            border: 1px solid var(--border-soft);
-            background: transparent;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.7rem;
-            color: var(--text-faint);
-            cursor: pointer;
-            transition: border-color 0.2s, color 0.2s;
-            text-decoration: none;
-        }
-
-        .social-btn:hover { border-color: var(--border); color: var(--gold); }
-
-        .footer-col-title {
-            font-size: 0.62rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 20px;
-        }
-
-        .footer-links {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .footer-links a {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-links a:hover { color: var(--text); }
-
-        .footer-bottom {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 24px;
-            border-top: 1px solid var(--border-soft);
-        }
-
-        .footer-copy {
-            font-size: 0.68rem;
-            color: var(--text-faint);
-            letter-spacing: 0.06em;
-        }
-
-        .footer-legal {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-legal a {
-            font-size: 0.68rem;
-            color: var(--text-faint);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-legal a:hover { color: var(--text-muted); }
-
-        /* ── ANIMATIONS ─────────────────────────── */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(24px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-        }
-
-        @keyframes scrollPulse {
-            0%, 100% { opacity: 0.4; transform: scaleY(1); }
-            50% { opacity: 1; transform: scaleY(1.15); }
+        .marquee-inner .dot {
+            color: var(--accent);
+            font-style: normal;
+            margin: 0 0.5rem;
         }
 
         @keyframes marquee {
             from { transform: translateX(0); }
-            to   { transform: translateX(-50%); }
+            to { transform: translateX(-50%); }
         }
 
-        /* ── REVEAL ON SCROLL ───────────────────── */
-        .reveal {
+        /* Categories */
+        .categories-section {
+            padding: 6rem 0;
+            background: var(--cream);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            line-height: 1.15;
+        }
+
+        .section-title em { font-style: italic; color: var(--accent); }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5px;
+        }
+
+        .category-card {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            group: true;
+        }
+
+        .cat-bg {
+            position: absolute;
+            inset: 0;
+            transition: transform 0.5s ease;
+        }
+
+        .category-card:hover .cat-bg { transform: scale(1.04); }
+
+        .cat-bg-1 { background: linear-gradient(160deg, #e2cdb8 0%, #c9a87a 40%, #b88a5a 100%); }
+        .cat-bg-2 { background: linear-gradient(160deg, #c4b5a8 0%, #a89080 40%, #8a7060 100%); }
+        .cat-bg-3 { background: linear-gradient(160deg, #d4c4b0 0%, #b89870 40%, #9a7850 100%); }
+
+        .cat-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(26,23,20,0.7) 0%, transparent 60%);
+        }
+
+        .cat-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .cat-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: white;
+            line-height: 1.1;
+            margin-bottom: 0.4rem;
+        }
+
+        .cat-count {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .cat-arrow {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 2rem;
+            height: 2rem;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
+            transform: translateY(4px);
+            transition: all 0.3s;
         }
 
-        .reveal.visible {
+        .category-card:hover .cat-arrow {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* ── RESPONSIVE ─────────────────────────── */
-        @media (max-width: 1024px) {
-            .cat-grid,
-            .provider-grid,
-            .services-layout { grid-template-columns: 1fr 1fr; }
-            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
-            .booking-inner { grid-template-columns: 1fr; gap: 48px; }
+        /* How it works */
+        .hiw-section {
+            padding: 6rem 0;
+            background: var(--warm);
+            position: relative;
+            overflow: hidden;
         }
 
-        @media (max-width: 768px) {
-            nav { padding: 0 24px; }
-            .nav-links { display: none; }
-            .categories,
-            .providers,
-            .services-section,
-            .booking-section { padding: 60px 24px; }
-            .cat-grid,
-            .provider-grid,
-            .services-layout { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; }
-            footer { padding: 40px 24px 28px; }
-            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
-            .form-row { grid-template-columns: 1fr; }
-            .booking-form { padding: 28px 20px; }
+        .hiw-bg-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18rem;
+            font-weight: 300;
+            color: rgba(201,185,154,0.18);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            color: var(--stone);
+            line-height: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--ink);
+            margin-bottom: 0.75rem;
+        }
+
+        .step-desc {
+            font-size: 0.9rem;
+            line-height: 1.75;
+            color: var(--muted);
+            font-weight: 300;
+        }
+
+        .step-divider {
+            width: 2rem;
+            height: 1px;
+            background: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        /* Featured Pros */
+        .pros-section {
+            padding: 6rem 0;
+            background: var(--cream);
+        }
+
+        .pros-scroll {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .pro-card {
+            background: white;
+            border: 1px solid rgba(201,185,154,0.3);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .pro-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(26,23,20,0.1);
+        }
+
+        .pro-avatar {
+            aspect-ratio: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .av-1 { background: linear-gradient(135deg, #dcc4a8, #c4a080); }
+        .av-2 { background: linear-gradient(135deg, #b8a090, #9a7868); }
+        .av-3 { background: linear-gradient(135deg, #ccc0b0, #a89078); }
+        .av-4 { background: linear-gradient(135deg, #d4b8a0, #b89070); }
+
+        .pro-badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: var(--ink);
+            color: var(--cream);
+            font-size: 0.6rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.25rem 0.6rem;
+        }
+
+        .pro-info { padding: 1.25rem; }
+
+        .pro-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--ink);
+            margin-bottom: 0.2rem;
+        }
+
+        .pro-role {
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .pro-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .stars { color: var(--accent); font-size: 0.75rem; letter-spacing: 0.05em; }
+        .rating-num { font-size: 0.8rem; color: var(--muted); }
+
+        .pro-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .price-tag {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: var(--ink);
+        }
+
+        .book-btn {
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            padding: 0.3rem 0.75rem;
+            cursor: pointer;
+            background: transparent;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .book-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* CTA Banner */
+        .cta-section {
+            background: var(--ink);
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-inner {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .cta-accent-line {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent), transparent);
+        }
+
+        .cta-bg-shape {
+            position: absolute;
+            right: -5rem;
+            top: -5rem;
+            width: 30rem;
+            height: 30rem;
+            border: 1px solid rgba(201,185,154,0.1);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .cta-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 300;
+            color: var(--cream);
+            line-height: 1.15;
+        }
+
+        .cta-title em { font-style: italic; color: var(--stone); }
+
+        .cta-right { display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .cta-desc {
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: rgba(250,247,242,0.6);
+            font-weight: 300;
+        }
+
+        .cta-features {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .cta-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+            color: rgba(250,247,242,0.7);
+        }
+
+        .cta-feature::before {
+            content: '';
+            width: 1rem;
+            height: 1px;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .cta-btns { display: flex; gap: 1rem; }
+
+        .btn-light {
+            background: var(--cream);
+            color: var(--ink);
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.8rem 1.75rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+        }
+        .btn-light:hover { background: var(--stone); color: var(--ink); }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--stone);
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.8rem 1.75rem;
+            border: 1px solid rgba(201,185,154,0.3);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+        }
+        .btn-ghost:hover { border-color: var(--stone); color: var(--cream); }
+
+        /* Footer */
+        footer {
+            background: var(--cream);
+            border-top: 1px solid rgba(201,185,154,0.3);
+            padding: 3rem 0 2rem;
+        }
+
+        .footer-inner {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 0.12em;
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-brand span { color: var(--accent); }
+
+        .footer-desc {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: var(--muted);
+            font-weight: 300;
+            max-width: 250px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--ink);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .footer-col ul { list-style: none; padding: 0; margin: 0; }
+
+        .footer-col ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-col ul li a {
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 300;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul li a:hover { color: var(--ink); }
+
+        .footer-bottom {
+            padding: 1.5rem 0;
+            background: var(--cream);
+            border-top: 1px solid rgba(201,185,154,0.15);
+        }
+
+        .footer-bottom-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-copy {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 300;
+        }
+
+        /* Fade in animation */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.7s ease forwards;
+        }
+
+        .fade-up-1 { animation-delay: 0.1s; opacity: 0; }
+        .fade-up-2 { animation-delay: 0.25s; opacity: 0; }
+        .fade-up-3 { animation-delay: 0.4s; opacity: 0; }
+        .fade-up-4 { animation-delay: 0.55s; opacity: 0; }
+
+        /* Decorative line */
+        .deco-line {
+            width: 3rem;
+            height: 1px;
+            background: var(--stone);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Avatar circles in hero */
+        .avatar-stack { display: flex; align-items: center; margin-top: 2rem; }
+        .avatar-circle {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 50%;
+            border: 2px solid var(--cream);
+            margin-left: -0.5rem;
+            overflow: hidden;
+        }
+
+        .avatar-circle:first-child { margin-left: 0; }
+        .av-s-1 { background: linear-gradient(135deg, #d4b8a0, #b89070); }
+        .av-s-2 { background: linear-gradient(135deg, #c4a080, #a07858); }
+        .av-s-3 { background: linear-gradient(135deg, #b8a090, #987060); }
+        .av-s-4 { background: linear-gradient(135deg, #ccc0b0, #a89078); }
+
+        .avatar-text {
+            margin-left: 1rem;
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        .avatar-text strong { display: block; font-weight: 500; color: var(--ink); }
+
+        /* Search bar */
+        .search-bar {
+            display: flex;
+            align-items: stretch;
+            background: white;
+            border: 1px solid rgba(201,185,154,0.4);
+            box-shadow: 0 4px 20px rgba(26,23,20,0.06);
+            max-width: 520px;
+            margin-top: 2rem;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 0.9rem 1.25rem;
+            font-size: 0.85rem;
+            font-family: 'DM Sans', sans-serif;
+            background: transparent;
+            color: var(--ink);
+        }
+
+        .search-bar input::placeholder { color: var(--muted); }
+
+        .search-bar select {
+            border: none;
+            border-left: 1px solid rgba(201,185,154,0.3);
+            outline: none;
+            padding: 0.9rem 1rem;
+            font-size: 0.8rem;
+            font-family: 'DM Sans', sans-serif;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+        }
+
+        .search-btn {
+            background: var(--ink);
+            color: var(--cream);
+            border: none;
+            padding: 0 1.25rem;
+            cursor: pointer;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-family: 'DM Sans', sans-serif;
+            transition: background 0.2s;
+        }
+
+        .search-btn:hover { background: var(--accent); }
+
+        /* Testimonials — carousel style */
+        .testi-section {
+            padding: 6rem 0;
+            background: var(--warm);
+            overflow: hidden;
+        }
+
+        .testi-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .testi-rating-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .testi-rating-badge .rating-score {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--ink);
+        }
+
+        .testi-rating-badge .rating-stars {
+            color: var(--accent);
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        .testi-rating-badge .rating-sep {
+            width: 1px;
+            height: 1rem;
+            background: rgba(201,185,154,0.5);
+        }
+
+        .testi-body {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .testi-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .testi-big-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 7rem;
+            line-height: 0.7;
+            color: var(--stone);
+            font-weight: 300;
+            opacity: 0.5;
+            user-select: none;
+        }
+
+        .testi-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--ink);
+            line-height: 1.3;
+        }
+
+        .testi-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testi-nav-btn {
+            width: 2.25rem;
+            height: 2.25rem;
+            border: 1px solid rgba(201,185,154,0.6);
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--muted);
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .testi-nav-btn:hover {
+            background: var(--ink);
+            color: var(--cream);
+            border-color: var(--ink);
+        }
+
+        .testi-nav-track {
+            flex: 1;
+            height: 1px;
+            background: rgba(201,185,154,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testi-nav-progress {
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            background: var(--ink);
+            transition: width 0.4s ease;
+        }
+
+        /* Carousel viewport */
+        .testi-carousel-wrap {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .testi-carousel-track {
+            display: flex;
+            gap: 1.25rem;
+            transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .testi-card {
+            background: white;
+            padding: 2rem;
+            min-width: 300px;
+            flex: 0 0 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 1.25rem;
+            border: 1px solid rgba(201,185,154,0.2);
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .testi-card:hover {
+            box-shadow: 0 12px 40px rgba(26,23,20,0.08);
+            transform: translateY(-2px);
+        }
+
+        .testi-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            font-style: italic;
+            line-height: 1.75;
+            color: var(--ink);
+            font-weight: 300;
+            flex: 1;
+        }
+
+        .testi-card-stars {
+            color: var(--accent);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+        }
+
+        .testi-author-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(201,185,154,0.2);
+        }
+
+        .testi-avatar {
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            color: white;
+            font-weight: 400;
+        }
+
+        .av-t1 { background: linear-gradient(135deg, #c9a87a, #b88a5a); }
+        .av-t2 { background: linear-gradient(135deg, #a89078, #887058); }
+        .av-t3 { background: linear-gradient(135deg, #b89870, #987850); }
+        .av-t4 { background: linear-gradient(135deg, #c0a888, #a08060); }
+        .av-t5 { background: linear-gradient(135deg, #b8a090, #987870); }
+
+        .testi-author-info { display: flex; flex-direction: column; }
+        .testi-author-name {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--ink);
+        }
+        .testi-author-time {
+            font-size: 0.72rem;
+            color: var(--muted);
+            margin-top: 0.1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .testi-section { padding: 4rem 2rem; }
+            .testi-body { grid-template-columns: 1fr; gap: 2rem; }
+            .testi-card { min-width: 260px; flex: 0 0 260px; }
+        }
+
+        /* ── Booking Form ── */
+        .booking-section {
+            padding: 6rem 0;
+            background: var(--cream);
+            position: relative;
+        }
+
+        .booking-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 5rem;
+            align-items: start;
+            margin-top: 3rem;
+        }
+
+        .booking-left { position: sticky; top: 6rem; }
+
+        .booking-left p {
+            font-size: 0.95rem;
+            line-height: 1.75;
+            color: var(--muted);
+            font-weight: 300;
+            margin-top: 1rem;
+            max-width: 340px;
+        }
+
+        .booking-perks { margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+
+        .perk {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .perk-icon {
+            width: 2rem;
+            height: 2rem;
+            background: var(--warm);
+            border: 1px solid rgba(201,185,154,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .provider-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3px;
+            margin-bottom: 2rem;
+            background: var(--warm);
+            border: 1px solid rgba(201,185,154,0.4);
+            padding: 4px;
+        }
+
+        .ptab {
+            padding: 0.85rem 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+            transition: all 0.2s;
+            background: transparent;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .ptab .tab-icon { font-size: 1.3rem; }
+        .ptab.active { background: var(--ink); color: var(--cream); }
+        .ptab:not(.active):hover { background: rgba(26,23,20,0.06); color: var(--ink); }
+
+        .booking-form {
+            background: white;
+            border: 1px solid rgba(201,185,154,0.3);
+            padding: 2.5rem;
+        }
+
+        .form-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: var(--ink);
+            margin-bottom: 0.2rem;
+        }
+
+        .form-subtitle {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            letter-spacing: 0.02em;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        .form-group.full { grid-column: 1 / -1; }
+
+        .form-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            border: 1px solid rgba(201,185,154,0.4);
+            background: var(--cream);
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--ink);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 100%;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--stone);
+            box-shadow: 0 0 0 3px rgba(201,185,154,0.15);
+        }
+
+        .form-textarea { resize: vertical; min-height: 80px; }
+
+        .form-select-wrap { position: relative; }
+        .form-select-wrap::after {
+            content: '↓';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.75rem;
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        .service-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .chip {
+            padding: 0.45rem 1rem;
+            font-size: 0.74rem;
+            letter-spacing: 0.05em;
+            border: 1px solid rgba(201,185,154,0.5);
+            background: var(--cream);
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .chip:hover { border-color: var(--ink); color: var(--ink); }
+        .chip.selected { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.25rem;
+        }
+
+        .slot {
+            padding: 0.5rem 0.25rem;
+            text-align: center;
+            font-size: 0.73rem;
+            border: 1px solid rgba(201,185,154,0.4);
+            background: var(--cream);
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+            user-select: none;
+        }
+
+        .slot:hover { border-color: var(--ink); color: var(--ink); }
+        .slot.selected { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+        .slot.unavailable { opacity: 0.32; cursor: not-allowed; background: var(--warm); pointer-events: none; }
+
+        .service-panel { display: none; }
+        .service-panel.active { display: block; }
+
+        .form-divider {
+            grid-column: 1 / -1;
+            height: 1px;
+            background: rgba(201,185,154,0.25);
+        }
+
+        .submit-btn {
+            width: 100%;
+            grid-column: 1 / -1;
+            background: var(--ink);
+            color: var(--cream);
+            border: none;
+            padding: 1rem;
+            font-size: 0.78rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            transition: background 0.2s, transform 0.15s;
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn:hover { background: var(--accent); transform: translateY(-1px); }
+
+        .form-note {
+            grid-column: 1 / -1;
+            font-size: 0.72rem;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        .booking-success {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 3rem 2rem;
+            min-height: 280px;
+        }
+
+        .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+
+        .success-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+        }
+
+        .success-msg { font-size: 0.9rem; color: var(--muted); line-height: 1.6; max-width: 300px; }
+
+        /* ── Custom Dropdown (csd) ── */
+        .csd-wrap {
+            position: relative;
+            user-select: none;
+        }
+
+        .csd-trigger {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: var(--cream);
+            border: 1px solid rgba(201,185,154,0.4);
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .csd-trigger:hover {
+            border-color: var(--stone);
+        }
+
+        .csd-wrap.open .csd-trigger {
+            border-color: var(--stone);
+            box-shadow: 0 0 0 3px rgba(201,185,154,0.15);
+        }
+
+        .csd-value {
+            font-size: 0.875rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--ink);
+        }
+
+        .csd-value.placeholder {
+            color: var(--muted);
+        }
+
+        .csd-arrow {
+            font-size: 0.7rem;
+            color: var(--muted);
+            transition: transform 0.2s;
+            flex-shrink: 0;
+            margin-left: 0.5rem;
+        }
+
+        .csd-wrap.open .csd-arrow {
+            transform: rotate(180deg);
+        }
+
+        .csd-list {
+            display: none;
+            position: absolute;
+            top: calc(100% + 2px);
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid rgba(201,185,154,0.4);
+            border-top: none;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            z-index: 200;
+            max-height: 220px;
+            overflow-y: auto;
+            box-shadow: 0 8px 30px rgba(26,23,20,0.1);
+        }
+
+        .csd-wrap.open .csd-list {
+            display: block;
+        }
+
+        .csd-option {
+            padding: 0.7rem 1rem;
+            font-size: 0.875rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--muted);
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+            border-bottom: 1px solid rgba(201,185,154,0.15);
+        }
+
+        .csd-option:last-child { border-bottom: none; }
+
+        .csd-option:hover {
+            background: var(--warm);
+            color: var(--ink);
+        }
+
+        .csd-option.csd-selected {
+            background: var(--ink);
+            color: var(--cream);
+        }
+
+        .csd-option.csd-selected:hover {
+            background: var(--accent);
+        }
+
+        /* price tag on service options */
+        .csd-option-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .csd-price {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            letter-spacing: 0.03em;
+        }
+
+        @media (max-width: 1024px) {
+            .booking-section { padding: 4rem 0; }
+            .booking-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+            .booking-left { position: static; }
+            .time-slots { grid-template-columns: repeat(3, 1fr); }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full { grid-column: 1; }
+            .hero { grid-template-columns: 1fr; min-height: auto; }
+            .hero-right { height: 60vw; }
+            .hero-left { padding: 5rem 0 3rem; }
+            .categories-section, .hiw-section, .pros-section, .testi-section { padding: 4rem 0; }
+            .category-grid, .steps-grid, .pros-scroll { grid-template-columns: repeat(2, 1fr); }
+            .cta-inner { grid-template-columns: 1fr; }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+            .testi-body { grid-template-columns: 1fr; gap: 2rem; }
+            .testi-card { min-width: 260px; flex: 0 0 260px; }
         }
     </style>
 </head>
 <body>
 
-<canvas id="starfield"></canvas>
-
 <!-- NAV -->
 <nav>
-    <a class="nav-logo" href="#">Cosmos</a>
-    <ul class="nav-links">
-        <li><a href="#categories">Services</a></li>
-        <li><a href="#providers">Providers</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="#booking">Book</a></li>
-    </ul>
-    <button class="nav-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">
-        Request a Session
-    </button>
+    <div class="container">
+        <div class="nav-inner">
+            <div class="nav-logo">Cosm<span>os</span></div>
+            <div class="nav-links" style="display:flex;align-items:center;">
+                <a href="#">Explore</a>
+                <a href="#">How It Works</a>
+                <a href="#">For Professionals</a>
+                <button class="btn-primary" style="margin-left:2rem;">Book Now</button>
+            </div>
+        </div>
+    </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-    <div class="hero-eyebrow">Premium Booking — Peoria, IL</div>
-    <h1 class="hero-title">Where <em>artistry</em><br>finds its client</h1>
-    <p class="hero-sub">Beauty, tattoo, and wellness — curated providers, seamless appointments</p>
-    <div class="hero-actions">
-        <a class="btn-primary" href="#providers">Browse Providers</a>
-        <a class="btn-ghost" href="#booking">How It Works</a>
-    </div>
-    <div class="hero-scroll">
-        <span class="scroll-label">Explore</span>
-        <div class="scroll-line"></div>
-    </div>
-</section>
-
-<!-- MARQUEE -->
-<div class="marquee-strip">
-    <div class="marquee-track" id="marquee">
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Hair & Color</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Custom Tattoos</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Swedish Massage</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Balayage & Blonding</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Fine Line Ink</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Deep Tissue</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Bridal Styling</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Cover-Ups</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Hot Stone Therapy</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Extensions</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Hair & Color</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Custom Tattoos</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Swedish Massage</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Balayage & Blonding</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Fine Line Ink</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Deep Tissue</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Bridal Styling</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Cover-Ups</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Hot Stone Therapy</span></div>
-        <div class="marquee-item"><div class="marquee-dot"></div><span class="marquee-text">Extensions</span></div>
-    </div>
-</div>
-
-<!-- CATEGORIES -->
-<section class="section" id="categories">
-    <div class="categories">
-        <div class="section-label">What We Offer</div>
-        <h2 class="section-title">Three worlds of<br><span>personal care</span></h2>
-        <div class="cat-grid">
-            <div class="cat-card cat-beauty reveal">
-                <div class="cat-bg"></div>
-                <div class="cat-content">
-                    <div class="cat-number">01 /</div>
-                    <div class="cat-name">Beauty<br>& Hair</div>
-                    <div class="cat-desc">Precision cuts, vibrant color, extensions, and bridal styling from independent salon professionals.</div>
-                    <a class="cat-link" href="#pricing">View Services</a>
+    <div class="container">
+        <div class="hero-left">
+            <p class="eyebrow fade-up fade-up-1">The Curated Beauty Marketplace by Cosmos</p>
+            <h1 class="hero-title fade-up fade-up-2">
+                Find your <em>perfect</em><br>
+                artist, stylist,<br>
+                or healer.
+            </h1>
+            <p class="hero-sub fade-up fade-up-3">
+                Cosmos connects you with top-tier stylists, masseuses, and tattoo artists in your city — all bookable in seconds.
+            </p>
+            <div class="search-bar fade-up fade-up-3">
+                <input type="text" placeholder="Search by service or name…"/>
+                <select>
+                    <option>All Services</option>
+                    <option>Hair & Style</option>
+                    <option>Massage</option>
+                    <option>Tattoo</option>
+                </select>
+                <button class="search-btn">Search</button>
+            </div>
+            <div class="avatar-stack fade-up fade-up-4">
+                <div class="avatar-circle av-s-1"></div>
+                <div class="avatar-circle av-s-2"></div>
+                <div class="avatar-circle av-s-3"></div>
+                <div class="avatar-circle av-s-4"></div>
+                <div class="avatar-text">
+                    <strong>2,400+ professionals</strong>
+                    ready to book today
                 </div>
             </div>
-            <div class="cat-card cat-tattoo reveal" style="transition-delay:0.1s">
-                <div class="cat-bg"></div>
-                <div class="cat-content">
-                    <div class="cat-number">02 /</div>
-                    <div class="cat-name">Tattoo<br>& Ink</div>
-                    <div class="cat-desc">Custom consultations, fine line, blackwork, realism, geometric, and cover-up sessions.</div>
-                    <a class="cat-link" href="#pricing">View Services</a>
-                </div>
-            </div>
-            <div class="cat-card cat-wellness reveal" style="transition-delay:0.2s">
-                <div class="cat-bg"></div>
-                <div class="cat-content">
-                    <div class="cat-number">03 /</div>
-                    <div class="cat-name">Massage<br>& Wellness</div>
-                    <div class="cat-desc">Swedish, deep tissue, hot stone, prenatal, lymphatic drainage, and therapeutic modalities.</div>
-                    <a class="cat-link" href="#pricing">View Services</a>
-                </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="hero-img-grid">
+                <div class="hero-img-cell cell-1"><div class="cell-label">Styling</div></div>
+                <div class="hero-img-cell cell-2"><div class="cell-label">Tattoo Art</div></div>
+                <div class="hero-img-cell cell-3"><div class="cell-label">Massage</div></div>
             </div>
         </div>
     </div>
 </section>
-
-<div class="divider"></div>
-
-<!-- PROVIDERS -->
-<section class="section" id="providers">
-    <div class="providers">
-        <div class="providers-header reveal">
+<section class="categories-section">
+    <div class="container">
+        <div class="section-header">
             <div>
-                <div class="section-label">Featured Providers</div>
-                <h2 class="section-title">Meet the<br><span>artists</span></h2>
+                <div class="deco-line"></div>
+                <h2 class="section-title">Browse by<br><em>category</em></h2>
             </div>
-            <a class="btn-ghost" href="#booking">See All Providers</a>
+            <button class="btn-outline">View All Services</button>
         </div>
-
-        <div class="provider-grid">
-
-            <!-- Provider 1 -->
-            <div class="provider-card reveal">
-                <div class="provider-hero-img provider-img-beauty">
-                    <div class="provider-avatar">M</div>
-                    <div class="provider-badge">★ Top Rated</div>
+        <div class="category-grid">
+            <div class="category-card">
+                <div class="cat-bg cat-bg-1"></div>
+                <div class="cat-content">
+                    <div class="cat-icon">✂️</div>
+                    <div class="cat-name">Hair &<br>Styling</div>
+                    <div class="cat-count">840 professionals</div>
                 </div>
-                <div class="provider-body">
-                    <div class="provider-name">Marisol Vega</div>
-                    <div class="provider-title">Senior Colorist & Stylist</div>
-                    <p class="provider-bio">Specialist in lived-in color and advanced blonding. 9 years behind the chair, now independent with a curated clientele who value true craftsmanship.</p>
-                    <div class="provider-stats">
-                        <div class="pstat">
-                            <span class="pstat-val">312</span>
-                            <span class="pstat-label">Reviews</span>
-                        </div>
-                        <div class="pstat">
-                            <span class="pstat-val">4.9</span>
-                            <span class="pstat-label">Rating</span>
-                        </div>
-                        <div class="pstat">
-                            <span class="pstat-val">9yr</span>
-                            <span class="pstat-label">Experience</span>
-                        </div>
-                    </div>
-                    <div class="provider-services">
-                        <span class="service-tag">Balayage</span>
-                        <span class="service-tag">Blonding</span>
-                        <span class="service-tag">Precision Cut</span>
-                        <span class="service-tag">Extensions</span>
-                    </div>
-                    <div class="provider-footer">
-                        <div class="provider-rate">From $85<span>/ service</span></div>
-                        <button class="btn-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
-                    </div>
-                </div>
+                <div class="cat-arrow">→</div>
             </div>
-
-            <!-- Provider 2 -->
-            <div class="provider-card reveal" style="transition-delay:0.12s">
-                <div class="provider-hero-img provider-img-tattoo">
-                    <div class="provider-avatar">J</div>
-                    <div class="provider-badge">Custom Work</div>
+            <div class="category-card">
+                <div class="cat-bg cat-bg-2"></div>
+                <div class="cat-content">
+                    <div class="cat-icon">🤲</div>
+                    <div class="cat-name">Massage &<br>Wellness</div>
+                    <div class="cat-count">620 professionals</div>
                 </div>
-                <div class="provider-body">
-                    <div class="provider-name">Jordan Ash</div>
-                    <div class="provider-title">Fine Line & Blackwork Artist</div>
-                    <p class="provider-bio">Meticulous fine line and geometric specialist. Every piece is designed from scratch. Booking 6–8 weeks out — consultation required for all large work.</p>
-                    <div class="provider-stats">
-                        <div class="pstat">
-                            <span class="pstat-val">187</span>
-                            <span class="pstat-label">Reviews</span>
-                        </div>
-                        <div class="pstat">
-                            <span class="pstat-val">5.0</span>
-                            <span class="pstat-label">Rating</span>
-                        </div>
-                        <div class="pstat">
-                            <span class="pstat-val">6yr</span>
-                            <span class="pstat-label">Experience</span>
-                        </div>
-                    </div>
-                    <div class="provider-services">
-                        <span class="service-tag">Fine Line</span>
-                        <span class="service-tag">Geometric</span>
-                        <span class="service-tag">Blackwork</span>
-                        <span class="service-tag">Cover-Ups</span>
-                    </div>
-                    <div class="provider-footer">
-                        <div class="provider-rate">From $150<span>/ session</span></div>
-                        <button class="btn-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
-                    </div>
-                </div>
+                <div class="cat-arrow">→</div>
             </div>
-
-            <!-- Provider 3 -->
-            <div class="provider-card reveal" style="transition-delay:0.24s">
-                <div class="provider-hero-img provider-img-wellness">
-                    <div class="provider-avatar">A</div>
-                    <div class="provider-badge">Licensed LMT</div>
+            <div class="category-card">
+                <div class="cat-bg cat-bg-3"></div>
+                <div class="cat-content">
+                    <div class="cat-icon">🖋️</div>
+                    <div class="cat-name">Tattoo<br>Artists</div>
+                    <div class="cat-count">410 professionals</div>
                 </div>
-                <div class="provider-body">
-                    <div class="provider-name">Amara Wells</div>
-                    <div class="provider-title">Licensed Massage Therapist</div>
-                    <p class="provider-bio">Certified in Swedish, deep tissue, prenatal, and lymphatic drainage. Focuses on therapeutic outcomes, not just relaxation. Every session is intake-first.</p>
-                    <div class="provider-stats">
-                        <div class="pstat">
-                            <span class="pstat-val">264</span>
-                            <span class="pstat-label">Reviews</span>
-                        </div>
-                        <div class="pstat">
-                            <span class="pstat-val">4.8</span>
-                            <span class="pstat-label">Rating</span>
-                        </div>
-                        <div class="pstat">
-                            <span class="pstat-val">11yr</span>
-                            <span class="pstat-label">Experience</span>
-                        </div>
-                    </div>
-                    <div class="provider-services">
-                        <span class="service-tag">Deep Tissue</span>
-                        <span class="service-tag">Swedish</span>
-                        <span class="service-tag">Prenatal</span>
-                        <span class="service-tag">Hot Stone</span>
-                    </div>
-                    <div class="provider-footer">
-                        <div class="provider-rate">From $95<span>/ session</span></div>
-                        <button class="btn-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book Now</button>
-                    </div>
-                </div>
+                <div class="cat-arrow">→</div>
             </div>
-
         </div>
     </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- SERVICES / PRICING -->
-<section class="section" id="pricing">
-    <div class="services-section">
-        <div class="section-label reveal">Services & Pricing</div>
-        <h2 class="section-title reveal">Transparent rates,<br><span>no surprises</span></h2>
-
-        <div class="services-layout">
-
-            <!-- Beauty -->
-            <div class="service-col reveal">
-                <div class="service-col-icon">✦</div>
-                <div class="service-col-title">Beauty & Hair</div>
-                <ul class="service-list">
-                    <li class="service-item">
-                        <span class="service-item-name">Precision Cut</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $55</span>
-                            <span class="service-time">45 – 60 min</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Balayage / Lived-In Color</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $140</span>
-                            <span class="service-time">2.5 – 4 hrs</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Full Color Service</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $95</span>
-                            <span class="service-time">1.5 – 2.5 hrs</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Extensions (set)</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $300</span>
-                            <span class="service-time">3 – 5 hrs</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Scalp Treatment</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $65</span>
-                            <span class="service-time">45 min</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Bridal / Event Styling</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $185</span>
-                            <span class="service-time">2 – 3 hrs</span>
-                        </div>
-                    </li>
-                </ul>
+<!-- HOW IT WORKS -->
+<section class="hiw-section">
+    <div class="hiw-bg-text">Cosmos</div>
+    <div class="container">
+        <div style="text-align:center;margin-bottom:4rem;position:relative;z-index:2;">
+            <div class="deco-line" style="margin:0 auto 1.5rem;"></div>
+            <h2 class="section-title">How it <em>works</em></h2>
+        </div>
+        <div class="steps-grid">
+            <div>
+                <div class="step-number">01</div>
+                <div class="step-divider"></div>
+                <div class="step-title">Discover</div>
+                <div class="step-desc">Browse curated profiles of vetted professionals. Filter by specialty, location, style, price range, and availability.</div>
             </div>
-
-            <!-- Tattoo -->
-            <div class="service-col reveal" style="transition-delay:0.12s">
-                <div class="service-col-icon">◈</div>
-                <div class="service-col-title">Tattoo & Ink</div>
-                <ul class="service-list">
-                    <li class="service-item">
-                        <span class="service-item-name">Consultation</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">Free</span>
-                            <span class="service-time">30 – 45 min</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Small Piece</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $100</span>
-                            <span class="service-time">1 – 2 hrs</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Medium Piece</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $250</span>
-                            <span class="service-time">2 – 4 hrs</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Large / Full Session</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">$150 / hr</span>
-                            <span class="service-time">4 – 8 hrs</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Cover-Up</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $200</span>
-                            <span class="service-time">2 – 5 hrs</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Touch-Up</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $60</span>
-                            <span class="service-time">30 – 60 min</span>
-                        </div>
-                    </li>
-                </ul>
+            <div>
+                <div class="step-number">02</div>
+                <div class="step-divider"></div>
+                <div class="step-title">Book</div>
+                <div class="step-desc">Choose a time that works for you. Secure your appointment in seconds with instant confirmation and calendar sync.</div>
             </div>
-
-            <!-- Wellness -->
-            <div class="service-col reveal" style="transition-delay:0.24s">
-                <div class="service-col-icon">◎</div>
-                <div class="service-col-title">Massage & Wellness</div>
-                <ul class="service-list">
-                    <li class="service-item">
-                        <span class="service-item-name">Swedish (60 min)</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $85</span>
-                            <span class="service-time">60 min</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Deep Tissue (90 min)</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $120</span>
-                            <span class="service-time">90 min</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Hot Stone Therapy</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $130</span>
-                            <span class="service-time">75 – 90 min</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Prenatal Massage</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $100</span>
-                            <span class="service-time">60 min</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Lymphatic Drainage</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $110</span>
-                            <span class="service-time">60 min</span>
-                        </div>
-                    </li>
-                    <li class="service-item">
-                        <span class="service-item-name">Thai / Reflexology</span>
-                        <div class="service-item-meta">
-                            <span class="service-price">from $95</span>
-                            <span class="service-time">60 – 90 min</span>
-                        </div>
-                    </li>
-                </ul>
+            <div>
+                <div class="step-number">03</div>
+                <div class="step-divider"></div>
+                <div class="step-title">Experience</div>
+                <div class="step-desc">Show up and enjoy. Afterward, leave a review and build your relationship with professionals you love.</div>
             </div>
+        </div>
+    </div>
+</section>
 
+<!-- FEATURED PROS -->
+<section class="pros-section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <div class="deco-line"></div>
+                <h2 class="section-title">Featured<br><em>professionals</em></h2>
+            </div>
+            <button class="btn-outline">View All</button>
+        </div>
+        <div class="pros-scroll">
+            <div class="pro-card">
+                <div class="pro-avatar av-1"><div class="pro-badge">Top Rated</div></div>
+                <div class="pro-info">
+                    <div class="pro-name">Sarai Mbeki</div>
+                    <div class="pro-role">Master Stylist</div>
+                    <div class="pro-rating"><span class="stars">★★★★★</span><span class="rating-num">5.0 (214 reviews)</span></div>
+                    <div class="pro-price"><span class="price-tag">from $85</span><button class="book-btn">Book</button></div>
+                </div>
+            </div>
+            <div class="pro-card">
+                <div class="pro-avatar av-2"><div class="pro-badge">New</div></div>
+                <div class="pro-info">
+                    <div class="pro-name">Tomás Vega</div>
+                    <div class="pro-role">Tattoo Artist</div>
+                    <div class="pro-rating"><span class="stars">★★★★★</span><span class="rating-num">4.9 (87 reviews)</span></div>
+                    <div class="pro-price"><span class="price-tag">from $120</span><button class="book-btn">Book</button></div>
+                </div>
+            </div>
+            <div class="pro-card">
+                <div class="pro-avatar av-3"></div>
+                <div class="pro-info">
+                    <div class="pro-name">Lila Chen</div>
+                    <div class="pro-role">Massage Therapist</div>
+                    <div class="pro-rating"><span class="stars">★★★★★</span><span class="rating-num">4.8 (163 reviews)</span></div>
+                    <div class="pro-price"><span class="price-tag">from $95</span><button class="book-btn">Book</button></div>
+                </div>
+            </div>
+            <div class="pro-card">
+                <div class="pro-avatar av-4"><div class="pro-badge">Top Rated</div></div>
+                <div class="pro-info">
+                    <div class="pro-name">Nia Osei</div>
+                    <div class="pro-role">Color Specialist</div>
+                    <div class="pro-rating"><span class="stars">★★★★★</span><span class="rating-num">5.0 (301 reviews)</span></div>
+                    <div class="pro-price"><span class="price-tag">from $110</span><button class="book-btn">Book</button></div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- BOOKING FORM -->
 <section class="booking-section" id="booking">
-    <div class="booking-inner">
+    <div class="container">
+        <div style="text-align:center;">
+            <div class="deco-line" style="margin:0 auto 1.5rem;"></div>
+            <h2 class="section-title">Book your <em>appointment</em></h2>
+            <p style="font-size:0.9rem;color:var(--muted);margin-top:0.75rem;font-weight:300;">Choose your professional, pick your services, and we'll handle the rest.</p>
+        </div>
 
-        <div class="booking-info reveal">
-            <div class="section-label">Book a Session</div>
-            <h2>Request your<br><span>appointment</span></h2>
-            <p>Fill out your preferences and a provider will follow up within 24 hours to confirm availability and any intake details.</p>
-            <div class="booking-perks">
-                <div class="perk">
-                    <div class="perk-icon">◈</div>
-                    <div class="perk-text">
-                        <strong>No hidden fees</strong>
-                        Pricing is communicated upfront — what you see is your starting rate.
+        <div class="booking-wrap">
+            <!-- Left info panel -->
+            <div class="booking-left">
+                <div class="deco-line"></div>
+                <h3 class="section-title" style="font-size:1.8rem;">Why book<br>with <em>Cosmos?</em></h3>
+                <p>Every professional is vetted, reviewed, and ready to deliver an exceptional experience — on your schedule.</p>
+                <div class="booking-perks">
+                    <div class="perk">
+                        <div class="perk-icon">✓</div>
+                        <span>Instant confirmation & reminders</span>
+                    </div>
+                    <div class="perk">
+                        <div class="perk-icon">🔒</div>
+                        <span>Secure payments, cancel anytime</span>
+                    </div>
+                    <div class="perk">
+                        <div class="perk-icon">★</div>
+                        <span>Verified reviews from real clients</span>
+                    </div>
+                    <div class="perk">
+                        <div class="perk-icon">↩</div>
+                        <span>Free rebooking within 24 hours</span>
                     </div>
                 </div>
-                <div class="perk">
-                    <div class="perk-icon">✦</div>
-                    <div class="perk-text">
-                        <strong>Vetted professionals</strong>
-                        Every provider on Cosmos is independently reviewed and credentialed.
-                    </div>
+            </div>
+
+            <!-- Right form panel -->
+            <div>
+                <!-- Provider type tabs -->
+                <div class="provider-tabs" role="tablist">
+                    <button class="ptab active" onclick="switchTab('stylist', this)" role="tab">
+                        <span class="tab-icon">✂️</span>Stylist
+                    </button>
+                    <button class="ptab" onclick="switchTab('massage', this)" role="tab">
+                        <span class="tab-icon">🤲</span>Massage
+                    </button>
+                    <button class="ptab" onclick="switchTab('tattoo', this)" role="tab">
+                        <span class="tab-icon">🖋️</span>Tattoo Artist
+                    </button>
                 </div>
-                <div class="perk">
-                    <div class="perk-icon">◎</div>
-                    <div class="perk-text">
-                        <strong>Cancel up to 24 hrs out</strong>
-                        Life happens. Rescheduling and cancellation is always straightforward.
+
+                <div class="booking-form">
+                    <!-- Success state -->
+                    <div class="booking-success" id="bookingSuccess">
+                        <div class="success-icon">✦</div>
+                        <div class="success-title">You're all set!</div>
+                        <p class="success-msg">Your appointment request has been sent. You'll receive a confirmation shortly.</p>
+                        <button class="btn-outline" style="margin-top:1.5rem;" onclick="resetForm()">Book Another</button>
+                    </div>
+
+                    <!-- Form body -->
+                    <div id="formBody">
+                        <div class="form-title" id="formTitle">Book a Stylist</div>
+                        <div class="form-subtitle" id="formSubtitle">Hair, color, braids & more — tailored to you.</div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">First Name</label>
+                                <input class="form-input" type="text" placeholder="Maya"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Last Name</label>
+                                <input class="form-input" type="text" placeholder="Rivera"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input class="form-input" type="email" placeholder="maya@example.com"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone</label>
+                                <input class="form-input" type="tel" placeholder="(312) 555-0100"/>
+                            </div>
+
+                            <div class="form-divider"></div>
+
+                            <!-- Professional picker -->
+                            <div class="form-group full">
+                                <label class="form-label" id="proLabel">Choose a Stylist</label>
+                                <div class="csd-wrap" id="proDropdown">
+                                    <div class="csd-trigger" onclick="toggleDropdown('proDropdown')">
+                                        <span class="csd-value" id="proDropdown-val">Select a professional…</span>
+                                        <span class="csd-arrow">↓</span>
+                                    </div>
+                                    <ul class="csd-list" id="proDropdown-list"></ul>
+                                </div>
+                            </div>
+
+                            <!-- Service picker (populated dynamically) -->
+                            <div class="form-group full" id="serviceGroup" style="display:none;">
+                                <label class="form-label" id="serviceLabel">Select Service</label>
+                                <div class="csd-wrap" id="serviceDropdown">
+                                    <div class="csd-trigger" onclick="toggleDropdown('serviceDropdown')">
+                                        <span class="csd-value" id="serviceDropdown-val">Select a service…</span>
+                                        <span class="csd-arrow">↓</span>
+                                    </div>
+                                    <ul class="csd-list" id="serviceDropdown-list"></ul>
+                                </div>
+                            </div>
+
+                            <!-- Stylist extra: hair type -->
+                            <div class="form-group full service-panel" id="extras-stylist" style="display:none;">
+                                <label class="form-label">Hair Type</label>
+                                <div class="csd-wrap" id="hairDropdown">
+                                    <div class="csd-trigger" onclick="toggleDropdown('hairDropdown')">
+                                        <span class="csd-value" id="hairDropdown-val">Select hair type…</span>
+                                        <span class="csd-arrow">↓</span>
+                                    </div>
+                                    <ul class="csd-list" id="hairDropdown-list">
+                                        <li class="csd-option" onclick="pickOption('hairDropdown','Straight')">Straight</li>
+                                        <li class="csd-option" onclick="pickOption('hairDropdown','Wavy')">Wavy</li>
+                                        <li class="csd-option" onclick="pickOption('hairDropdown','Curly')">Curly</li>
+                                        <li class="csd-option" onclick="pickOption('hairDropdown','Coily / Natural')">Coily / Natural</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Massage extra: duration -->
+                            <div class="form-group full service-panel" id="extras-massage" style="display:none;">
+                                <label class="form-label">Session Duration</label>
+                                <div class="csd-wrap" id="durDropdown">
+                                    <div class="csd-trigger" onclick="toggleDropdown('durDropdown')">
+                                        <span class="csd-value" id="durDropdown-val">60 minutes</span>
+                                        <span class="csd-arrow">↓</span>
+                                    </div>
+                                    <ul class="csd-list" id="durDropdown-list">
+                                        <li class="csd-option" onclick="pickOption('durDropdown','30 minutes')">30 minutes</li>
+                                        <li class="csd-option csd-selected" onclick="pickOption('durDropdown','60 minutes')">60 minutes</li>
+                                        <li class="csd-option" onclick="pickOption('durDropdown','90 minutes')">90 minutes</li>
+                                        <li class="csd-option" onclick="pickOption('durDropdown','120 minutes')">120 minutes</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Tattoo extra: placement -->
+                            <div class="form-group full service-panel" id="extras-tattoo" style="display:none;">
+                                <label class="form-label">Placement Area</label>
+                                <div class="csd-wrap" id="placDropdown">
+                                    <div class="csd-trigger" onclick="toggleDropdown('placDropdown')">
+                                        <span class="csd-value" id="placDropdown-val">Select placement…</span>
+                                        <span class="csd-arrow">↓</span>
+                                    </div>
+                                    <ul class="csd-list" id="placDropdown-list">
+                                        <li class="csd-option" onclick="pickOption('placDropdown','Arm / Sleeve')">Arm / Sleeve</li>
+                                        <li class="csd-option" onclick="pickOption('placDropdown','Wrist / Hand')">Wrist / Hand</li>
+                                        <li class="csd-option" onclick="pickOption('placDropdown','Back / Shoulder')">Back / Shoulder</li>
+                                        <li class="csd-option" onclick="pickOption('placDropdown','Chest / Ribcage')">Chest / Ribcage</li>
+                                        <li class="csd-option" onclick="pickOption('placDropdown','Leg / Ankle')">Leg / Ankle</li>
+                                        <li class="csd-option" onclick="pickOption('placDropdown','Neck')">Neck</li>
+                                        <li class="csd-option" onclick="pickOption('placDropdown','Other')">Other</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Date & time -->
+                            <div class="form-group">
+                                <label class="form-label">Preferred Date</label>
+                                <input class="form-input" type="date"/>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Location / City</label>
+                                <input class="form-input" type="text" placeholder="Chicago, IL"/>
+                            </div>
+
+                            <div class="form-group full">
+                                <label class="form-label">Available Times</label>
+                                <div class="time-slots">
+                                    <div class="slot unavailable">9:00 AM</div>
+                                    <div class="slot selected" onclick="selectSlot(this)">10:00 AM</div>
+                                    <div class="slot" onclick="selectSlot(this)">11:00 AM</div>
+                                    <div class="slot unavailable">12:00 PM</div>
+                                    <div class="slot" onclick="selectSlot(this)">1:00 PM</div>
+                                    <div class="slot" onclick="selectSlot(this)">2:00 PM</div>
+                                    <div class="slot unavailable">3:00 PM</div>
+                                    <div class="slot" onclick="selectSlot(this)">4:00 PM</div>
+                                </div>
+                            </div>
+
+                            <!-- Tattoo reference -->
+                            <div class="form-group full" id="ref-tattoo" style="display:none;">
+                                <label class="form-label">Reference / Inspiration (optional)</label>
+                                <input class="form-input" type="text" placeholder="Paste an image URL or describe your idea…"/>
+                            </div>
+
+                            <div class="form-group full">
+                                <label class="form-label">Special Requests or Notes</label>
+                                <textarea class="form-textarea" id="notesField" placeholder="Any allergies, preferences, or details…"></textarea>
+                            </div>
+
+                            <div class="form-divider"></div>
+                            <button class="submit-btn" onclick="submitForm()">Confirm Booking Request</button>
+                            <p class="form-note">No payment required now — your pro will confirm within 2 hours.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="booking-form reveal" style="transition-delay:0.15s">
-            <div class="form-title">Request a Session</div>
-            <div class="form-subtitle">All fields marked are required</div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="fname">First Name</label>
-                    <input class="form-control" type="text" id="fname" placeholder="First name" />
-                </div>
-                <div class="form-group">
-                    <label for="lname">Last Name</label>
-                    <input class="form-control" type="text" id="lname" placeholder="Last name" />
+</section>
+<section class="testi-section">
+    <div class="container">
+        <div class="testi-header">
+            <div class="deco-line" style="margin:0 auto 1.5rem;"></div>
+            <h2 class="section-title">Reviews from <em>real people</em></h2>
+            <div class="testi-rating-badge">
+                <span class="rating-score">4.9 / 5</span>
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-sep"></span>
+                <span>Based on 2,841 reviews</span>
+            </div>
+        </div>
+        <div class="testi-body">
+            <div class="testi-left">
+                <div class="testi-big-quote">"</div>
+                <div class="testi-label">What our<br>customers are<br>saying</div>
+                <div class="testi-nav">
+                    <button class="testi-nav-btn" onclick="testitSlide(-1)">←</button>
+                    <div class="testi-nav-track"><div class="testi-nav-progress" id="testiProgress"></div></div>
+                    <button class="testi-nav-btn" onclick="testitSlide(1)">→</button>
                 </div>
             </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input class="form-control" type="email" id="email" placeholder="you@email.com" />
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input class="form-control" type="tel" id="phone" placeholder="(555) 000-0000" />
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="category">Service Category</label>
-                <div class="select-wrap">
-                    <select class="form-control" id="category">
-                        <option value="" disabled selected>Select a category</option>
-                        <option value="beauty">Beauty & Hair</option>
-                        <option value="tattoo">Tattoo & Ink</option>
-                        <option value="wellness">Massage & Wellness</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="service">Specific Service</label>
-                <div class="select-wrap">
-                    <select class="form-control" id="service">
-                        <option value="" disabled selected>Select a service</option>
-                        <option value="cut">Precision Cut</option>
-                        <option value="color">Color / Balayage</option>
-                        <option value="extensions">Extensions</option>
-                        <option value="bridal">Bridal Styling</option>
-                        <option value="tattoo-consult">Tattoo Consultation</option>
-                        <option value="tattoo-small">Small Tattoo</option>
-                        <option value="tattoo-large">Large / Full Session</option>
-                        <option value="swedish">Swedish Massage</option>
-                        <option value="deep-tissue">Deep Tissue</option>
-                        <option value="hot-stone">Hot Stone Therapy</option>
-                        <option value="prenatal">Prenatal Massage</option>
-                        <option value="other">Other (describe below)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="date">Preferred Date</label>
-                    <input class="form-control" type="date" id="date" />
-                </div>
-                <div class="form-group">
-                    <label for="time">Preferred Time</label>
-                    <div class="select-wrap">
-                        <select class="form-control" id="time">
-                            <option value="" disabled selected>Any time</option>
-                            <option>Morning (8am – 12pm)</option>
-                            <option>Afternoon (12pm – 4pm)</option>
-                            <option>Evening (4pm – 7pm)</option>
-                        </select>
+            <div class="testi-carousel-wrap">
+                <div class="testi-carousel-track" id="testiTrack">
+                    <div class="testi-card">
+                        <div class="testi-quote">"I found my go-to stylist within minutes of joining. The booking is seamless and I always feel completely taken care of."</div>
+                        <div class="testi-card-stars">★★★★★</div>
+                        <div class="testi-author-row">
+                            <div class="testi-avatar av-t1">M</div>
+                            <div class="testi-author-info"><span class="testi-author-name">Maya R.</span><span class="testi-author-time">1 day ago</span></div>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <div class="testi-quote">"My massage therapist was incredible. I've been back three times now. Cosmos makes it so easy to build real relationships with your practitioners."</div>
+                        <div class="testi-card-stars">★★★★★</div>
+                        <div class="testi-author-row">
+                            <div class="testi-avatar av-t2">J</div>
+                            <div class="testi-author-info"><span class="testi-author-name">James T.</span><span class="testi-author-time">3 days ago</span></div>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <div class="testi-quote">"I was nervous about my first tattoo but Tomás made the whole experience so comfortable. I'm already planning my next one."</div>
+                        <div class="testi-card-stars">★★★★★</div>
+                        <div class="testi-author-row">
+                            <div class="testi-avatar av-t3">P</div>
+                            <div class="testi-author-info"><span class="testi-author-name">Priya K.</span><span class="testi-author-time">1 week ago</span></div>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <div class="testi-quote">"Sarai did my color and I've never gotten so many compliments. Worth every penny — and the booking process took less than 2 minutes."</div>
+                        <div class="testi-card-stars">★★★★★</div>
+                        <div class="testi-author-row">
+                            <div class="testi-avatar av-t4">D</div>
+                            <div class="testi-author-info"><span class="testi-author-name">Dana L.</span><span class="testi-author-time">2 weeks ago</span></div>
+                        </div>
+                    </div>
+                    <div class="testi-card">
+                        <div class="testi-quote">"The platform is beautiful, but what really impressed me was the quality of professionals. Every single one has been exceptional."</div>
+                        <div class="testi-card-stars">★★★★★</div>
+                        <div class="testi-author-row">
+                            <div class="testi-avatar av-t5">R</div>
+                            <div class="testi-author-info"><span class="testi-author-name">Rafael M.</span><span class="testi-author-time">3 weeks ago</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
 
-            <div class="form-group">
-                <label for="provider">Provider Preference</label>
-                <div class="select-wrap">
-                    <select class="form-control" id="provider">
-                        <option value="" disabled selected>No preference</option>
-                        <option>Marisol Vega (Hair & Color)</option>
-                        <option>Jordan Ash (Tattoo)</option>
-                        <option>Amara Wells (Massage)</option>
-                        <option>No preference — match me</option>
-                    </select>
+<!-- CTA BANNER -->
+<section class="cta-section">
+    <div class="cta-accent-line"></div>
+    <div class="cta-bg-shape"></div>
+    <div class="container">
+        <div class="cta-inner">
+            <div>
+                <div class="deco-line" style="background:var(--stone);"></div>
+                <h2 class="cta-title">Are you a <em>professional?</em><br>Join Cosmos today.</h2>
+            </div>
+            <div class="cta-right">
+                <p class="cta-desc">Build your client base, manage bookings effortlessly, and grow your practice with a platform designed for creative professionals.</p>
+                <div class="cta-features">
+                    <div class="cta-feature">Zero commission on your first 30 bookings</div>
+                    <div class="cta-feature">Smart scheduling & calendar management</div>
+                    <div class="cta-feature">Portfolio showcase & client reviews</div>
+                    <div class="cta-feature">Instant payouts, no hidden fees</div>
+                </div>
+                <div class="cta-btns">
+                    <button class="btn-light">Apply as a Pro</button>
+                    <button class="btn-ghost">Learn More</button>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label for="notes">Session Notes</label>
-                <textarea class="form-control" id="notes" placeholder="Describe what you're looking for, any reference images, health notes, or special requests…"></textarea>
-            </div>
-
-            <div class="form-divider"></div>
-
-            <div class="form-check">
-                <input type="checkbox" id="transport" />
-                <label for="transport">I may need transportation assistance to my appointment</label>
-            </div>
-
-            <div class="form-check">
-                <input type="checkbox" id="firsttime" checked />
-                <label for="firsttime">This is my first time booking through Cosmos</label>
-            </div>
-
-            <button class="btn-submit" onclick="handleSubmit(event)">Send Booking Request →</button>
         </div>
     </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-    <div class="footer-grid">
-        <div>
-            <div class="footer-brand-name">Cosmos</div>
-            <p class="footer-brand-desc">A premium marketplace connecting beauty, tattoo, and wellness providers with clients who value craft.</p>
-            <div class="footer-social">
-                <a class="social-btn" href="#" title="Instagram">in</a>
-                <a class="social-btn" href="#" title="TikTok">tk</a>
-                <a class="social-btn" href="#" title="Facebook">fb</a>
+    <div class="container">
+        <div class="footer-inner">
+            <div>
+                <div class="footer-brand">Cosm<span>os</span></div>
+                <p class="footer-desc">The marketplace for stylists, masseuses, and tattoo artists. Beauty and wellness — curated.</p>
             </div>
-        </div>
-        <div>
-            <div class="footer-col-title">Services</div>
-            <ul class="footer-links">
-                <li><a href="#">Beauty & Hair</a></li>
-                <li><a href="#">Tattoo & Ink</a></li>
-                <li><a href="#">Massage & Wellness</a></li>
-                <li><a href="#">Bridal Packages</a></li>
-            </ul>
-        </div>
-        <div>
-            <div class="footer-col-title">Company</div>
-            <ul class="footer-links">
-                <li><a href="#">About Cosmos</a></li>
-                <li><a href="#">For Providers</a></li>
-                <li><a href="#">How It Works</a></li>
-                <li><a href="#">Blog</a></li>
-            </ul>
-        </div>
-        <div>
-            <div class="footer-col-title">Support</div>
-            <ul class="footer-links">
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Cancellation Policy</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Accessibility</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <div class="footer-copy">© 2025 Cosmos. All rights reserved.</div>
-        <div class="footer-legal">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Cookie Settings</a>
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="#">Hair & Styling</a></li>
+                    <li><a href="#">Massage & Wellness</a></li>
+                    <li><a href="#">Tattoo Artists</a></li>
+                    <li><a href="#">Browse All</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">For Professionals</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </footer>
 
+<div class="footer-bottom">
+    <div class="container">
+        <div class="footer-bottom-inner">
+            <span class="footer-copy">© 2026 Cosmos. All rights reserved.</span>
+            <span class="footer-copy">Designed with intention.</span>
+        </div>
+    </div>
+</div>
+
 <script>
-    // ── STARFIELD ───────────────────────────────────────────────────────────
-    (function() {
-        const canvas = document.getElementById('starfield');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
-        let W, H;
-
-        function resize() {
-            W = canvas.width  = window.innerWidth;
-            H = canvas.height = window.innerHeight;
+    // ─── Data ───────────────────────────────────────────────────────────────
+    const DATA = {
+        stylist: {
+            title: 'Book a Stylist',
+            subtitle: 'Hair, color, braids & more — tailored to you.',
+            notes: 'Any allergies, preferences, or details for your stylist…',
+            proLabel: 'Choose a Stylist',
+            serviceLabel: 'Select Service',
+            pros: [
+                {
+                    name: 'Sarai Mbeki', tag: 'Top Rated · 5.0★',
+                    services: [
+                        { name: 'Haircut & Blowout', price: '$85' },
+                        { name: 'Full Color', price: '$160' },
+                        { name: 'Highlights / Balayage', price: '$195' },
+                        { name: 'Keratin Treatment', price: '$250' },
+                        { name: 'Scalp Treatment', price: '$70' },
+                    ]
+                },
+                {
+                    name: 'Nia Osei', tag: 'Top Rated · 5.0★',
+                    services: [
+                        { name: 'Color Correction', price: '$220' },
+                        { name: 'Balayage', price: '$185' },
+                        { name: 'Braids & Locs', price: '$140' },
+                        { name: 'Extensions', price: '$300' },
+                    ]
+                },
+                {
+                    name: 'Jess Park', tag: '4.8★',
+                    services: [
+                        { name: 'Haircut', price: '$65' },
+                        { name: 'Blowout', price: '$55' },
+                        { name: 'Updo / Bridal', price: '$120' },
+                        { name: 'Deep Conditioning', price: '$60' },
+                    ]
+                },
+            ]
+        },
+        massage: {
+            title: 'Book a Massage Therapist',
+            subtitle: 'Relaxation, recovery, or wellness — your choice.',
+            notes: 'Any injuries, pressure preferences, or areas to focus on…',
+            proLabel: 'Choose a Therapist',
+            serviceLabel: 'Select Massage Type',
+            pros: [
+                {
+                    name: 'Lila Chen', tag: '4.8★',
+                    services: [
+                        { name: 'Swedish (60 min)', price: '$95' },
+                        { name: 'Swedish (90 min)', price: '$135' },
+                        { name: 'Deep Tissue (60 min)', price: '$110' },
+                        { name: 'Hot Stone (90 min)', price: '$155' },
+                        { name: 'Aromatherapy (60 min)', price: '$105' },
+                    ]
+                },
+                {
+                    name: 'Marcus Obi', tag: '4.9★',
+                    services: [
+                        { name: 'Sports Massage (60 min)', price: '$120' },
+                        { name: 'Deep Tissue (90 min)', price: '$160' },
+                        { name: 'Cupping Therapy (60 min)', price: '$115' },
+                        { name: 'Prenatal (60 min)', price: '$100' },
+                    ]
+                },
+                {
+                    name: 'Yuki Tanaka', tag: '5.0★',
+                    services: [
+                        { name: 'Reiki Session (60 min)', price: '$90' },
+                        { name: 'Reflexology (45 min)', price: '$80' },
+                        { name: 'Full Body Relaxation (90 min)', price: '$145' },
+                    ]
+                },
+            ]
+        },
+        tattoo: {
+            title: 'Book a Tattoo Artist',
+            subtitle: 'Custom ink from vetted, award-winning artists.',
+            notes: 'Describe your concept, size, colors, or paste a reference URL…',
+            proLabel: 'Choose an Artist',
+            serviceLabel: 'Select Style',
+            pros: [
+                {
+                    name: 'Tomás Vega', tag: '4.9★',
+                    services: [
+                        { name: 'Fine Line', price: 'from $120' },
+                        { name: 'Botanical / Floral', price: 'from $150' },
+                        { name: 'Geometric', price: 'from $140' },
+                        { name: 'Blackwork', price: 'from $130' },
+                    ]
+                },
+                {
+                    name: 'Ren Nakamura', tag: '5.0★',
+                    services: [
+                        { name: 'Watercolor', price: 'from $180' },
+                        { name: 'Neo-Traditional', price: 'from $165' },
+                        { name: 'Portrait / Realism', price: 'from $220' },
+                    ]
+                },
+                {
+                    name: 'Sofia Reyes', tag: '4.8★',
+                    services: [
+                        { name: 'Traditional / Old School', price: 'from $130' },
+                        { name: 'Cover-Up', price: 'from $160' },
+                        { name: 'Lettering / Script', price: 'from $100' },
+                        { name: 'Blackwork', price: 'from $140' },
+                    ]
+                },
+            ]
         }
+    };
 
-        function initStars() {
-            stars = [];
-            const count = Math.floor((W * H) / 6000);
-            for (let i = 0; i < count; i++) {
-                stars.push({
-                    x: Math.random() * W,
-                    y: Math.random() * H,
-                    r: Math.random() * 0.9 + 0.1,
-                    a: Math.random(),
-                    speed: Math.random() * 0.0004 + 0.0001,
-                    phase: Math.random() * Math.PI * 2,
-                });
-            }
-        }
+    let currentType = 'stylist';
 
-        function draw(t) {
-            ctx.clearRect(0, 0, W, H);
-            stars.forEach(s => {
-                const alpha = s.a * (0.4 + 0.6 * Math.sin(t * s.speed * 1000 + s.phase));
-                ctx.beginPath();
-                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(232,213,168,${alpha})`;
-                ctx.fill();
-            });
-            requestAnimationFrame(draw);
-        }
+    // ─── Tab switching ───────────────────────────────────────────────────────
+    function switchTab(type, btn) {
+        currentType = type;
+        document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
 
-        window.addEventListener('resize', () => { resize(); initStars(); });
-        resize();
-        initStars();
-        requestAnimationFrame(draw);
-    })();
+        const cfg = DATA[type];
+        document.getElementById('formTitle').textContent = cfg.title;
+        document.getElementById('formSubtitle').textContent = cfg.subtitle;
+        document.getElementById('notesField').placeholder = cfg.notes;
+        document.getElementById('proLabel').textContent = cfg.proLabel;
+        document.getElementById('serviceLabel').textContent = cfg.serviceLabel;
 
-    // ── SCROLL REVEAL ───────────────────────────────────────────────────────
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.classList.add('visible');
-                observer.unobserve(e.target);
-            }
+        // Reset pro dropdown
+        resetDropdown('proDropdown', cfg.proLabel === 'Choose a Stylist' ? 'Select a professional…' : 'Select a professional…');
+        resetDropdown('serviceDropdown', 'Select a service…');
+        document.getElementById('serviceGroup').style.display = 'none';
+
+        // Hide all extras
+        ['extras-stylist','extras-massage','extras-tattoo'].forEach(id => {
+            document.getElementById(id).style.display = 'none';
         });
-    }, { threshold: 0.12 });
+        document.getElementById('ref-tattoo').style.display = 'none';
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        // Build pro dropdown options
+        buildProOptions(type);
 
-    // ── NAV SCROLL STYLE ────────────────────────────────────────────────────
-    window.addEventListener('scroll', () => {
-        const nav = document.querySelector('nav');
-        nav.style.borderBottomColor = window.scrollY > 40
-            ? 'rgba(201,169,110,0.12)'
-            : 'rgba(255,255,255,0.06)';
+        closeAllDropdowns();
+    }
+
+    function buildProOptions(type) {
+        const list = document.getElementById('proDropdown-list');
+        list.innerHTML = '';
+        DATA[type].pros.forEach((pro, i) => {
+            const li = document.createElement('li');
+            li.className = 'csd-option';
+            li.innerHTML = `<div class="csd-option-row"><span>${pro.name}</span><span class="csd-price">${pro.tag}</span></div>`;
+            li.onclick = () => pickPro(type, i);
+            list.appendChild(li);
+        });
+    }
+
+    function pickPro(type, idx) {
+        const pro = DATA[type].pros[idx];
+        // Mark selected in pro list
+        document.querySelectorAll('#proDropdown-list .csd-option').forEach((el, i) => {
+            el.classList.toggle('csd-selected', i === idx);
+        });
+        setDropdownValue('proDropdown', pro.name);
+        closeDropdown('proDropdown');
+
+        // Build service dropdown
+        const svcList = document.getElementById('serviceDropdown-list');
+        svcList.innerHTML = '';
+        pro.services.forEach((svc, j) => {
+            const li = document.createElement('li');
+            li.className = 'csd-option';
+            li.innerHTML = `<div class="csd-option-row"><span>${svc.name}</span><span class="csd-price">${svc.price}</span></div>`;
+            li.onclick = () => pickService(j, svc.name, type);
+            svcList.appendChild(li);
+        });
+
+        resetDropdown('serviceDropdown', 'Select a service…');
+        document.getElementById('serviceGroup').style.display = 'flex';
+
+        // Hide extras until service picked
+        ['extras-stylist','extras-massage','extras-tattoo'].forEach(id => {
+            document.getElementById(id).style.display = 'none';
+        });
+        document.getElementById('ref-tattoo').style.display = 'none';
+    }
+
+    function pickService(idx, name, type) {
+        document.querySelectorAll('#serviceDropdown-list .csd-option').forEach((el, i) => {
+            el.classList.toggle('csd-selected', i === idx);
+        });
+        setDropdownValue('serviceDropdown', name);
+        closeDropdown('serviceDropdown');
+
+        // Show type-specific extra
+        const extraId = 'extras-' + type;
+        document.getElementById(extraId).style.display = 'flex';
+        if (type === 'tattoo') {
+            document.getElementById('ref-tattoo').style.display = 'flex';
+        }
+    }
+
+    // ─── Generic custom dropdown helpers ────────────────────────────────────
+    function toggleDropdown(id) {
+        const wrap = document.getElementById(id);
+        const isOpen = wrap.classList.contains('open');
+        closeAllDropdowns();
+        if (!isOpen) wrap.classList.add('open');
+    }
+
+    function closeDropdown(id) {
+        document.getElementById(id).classList.remove('open');
+    }
+
+    function closeAllDropdowns() {
+        document.querySelectorAll('.csd-wrap.open').forEach(el => el.classList.remove('open'));
+    }
+
+    function setDropdownValue(id, text) {
+        const val = document.getElementById(id + '-val');
+        val.textContent = text;
+        val.classList.remove('placeholder');
+    }
+
+    function resetDropdown(id, placeholder) {
+        const val = document.getElementById(id + '-val');
+        val.textContent = placeholder;
+        val.classList.add('placeholder');
+        document.querySelectorAll('#' + id + '-list .csd-option').forEach(el => el.classList.remove('csd-selected'));
+    }
+
+    function pickOption(id, value) {
+        document.querySelectorAll('#' + id + '-list .csd-option').forEach(el => {
+            el.classList.toggle('csd-selected', el.textContent.trim() === value);
+        });
+        setDropdownValue(id, value);
+        closeDropdown(id);
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', e => {
+        if (!e.target.closest('.csd-wrap')) closeAllDropdowns();
     });
 
-    // ── FORM SUBMIT ─────────────────────────────────────────────────────────
-    function handleSubmit(e) {
-        e.preventDefault();
-        const btn = document.querySelector('.btn-submit');
-        const orig = btn.textContent;
-        btn.textContent = 'Request Sent ✓';
-        btn.style.background = '#2d4a2d';
-        btn.style.color = '#8fc98f';
-        btn.disabled = true;
-        setTimeout(() => {
-            btn.textContent = orig;
-            btn.style.background = '';
-            btn.style.color = '';
-            btn.disabled = false;
-        }, 4000);
+    // ─── Time slots ──────────────────────────────────────────────────────────
+    function selectSlot(el) {
+        document.querySelectorAll('.slot:not(.unavailable)').forEach(s => s.classList.remove('selected'));
+        el.classList.add('selected');
     }
+
+    // ─── Submit / Reset ──────────────────────────────────────────────────────
+    function submitForm() {
+        document.getElementById('formBody').style.display = 'none';
+        document.getElementById('bookingSuccess').style.display = 'flex';
+    }
+
+    function resetForm() {
+        document.getElementById('formBody').style.display = 'block';
+        document.getElementById('bookingSuccess').style.display = 'none';
+        switchTab('stylist', document.querySelector('.ptab'));
+    }
+
+    // ─── Testimonial carousel ─────────────────────────────────────────────
+    let testiIndex = 0;
+    const TESTI_VISIBLE = 2.3; // cards visible at once
+
+    function testitSlide(dir) {
+        const track = document.getElementById('testiTrack');
+        const cards = track.querySelectorAll('.testi-card');
+        const total = cards.length;
+        const maxIndex = total - Math.floor(TESTI_VISIBLE);
+
+        testiIndex = Math.max(0, Math.min(testiIndex + dir, maxIndex));
+
+        const cardWidth = cards[0].offsetWidth + 20; // 20 = gap
+        track.style.transform = `translateX(-${testiIndex * cardWidth}px)`;
+
+        // Update progress bar
+        const pct = maxIndex > 0 ? (testiIndex / maxIndex) * 100 : 0;
+        document.getElementById('testiProgress').style.width = pct + '%';
+    }
+
+    // Init progress bar at 0
+    document.getElementById('testiProgress').style.width = '0%';
+    buildProOptions('stylist');
+    // Set placeholder classes on init
+    document.querySelectorAll('.csd-value').forEach(el => {
+        if (el.textContent.includes('…') || el.textContent.includes('Select')) {
+            el.classList.add('placeholder');
+        }
+    });
 </script>
 </body>
 </html>
